@@ -18,7 +18,20 @@ int main() {
         }
     }
     displayBlitzRGB(arr, DISPLAY_WIDTH, DISPLAY_HEIGHT);
-    displayQuit();
+
+    uint8_t running = 1;
+    while (running) {
+        input_t inp = pollInput();
+        printf("recvd input!!\n");
+        if (inp == INPUT_QUIT) {
+            printf("input was quit!\n");
+            displayQuit();
+            running = 0;
+        }
+    }
+
+
+    
 
     return 0;
 }

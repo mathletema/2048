@@ -9,6 +9,8 @@ SDL_Window *win;
 SDL_Renderer *ren;
 SDL_Texture *tex;
 
+SDL_Event event;
+
 uint8_t displayInit() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("SDL_Init Error: %s\n", SDL_GetError());
@@ -82,19 +84,23 @@ void displayBlitzRGB(color_t* buffer, uint8_t width, uint8_t height) {
 
 
 void displayQuit() {
-    // Set the screen to a blue color
-    // SDL_SetRenderDrawColor(ren, 0, 128, 255, 255);
-    // SDL_RenderClear(ren);
-    // SDL_RenderPresent(ren);
-
-    // Wait for 3 seconds
-    SDL_PumpEvents();
-    SDL_Delay(3000);
-
     SDL_DestroyRenderer(ren);
     SDL_DestroyWindow(win);
     SDL_Quit();
-
-    printf("Update screen!\n");
 }
 
+
+
+input_t pollInput() {
+    for (;;) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) return INPUT_QUIT;
+            if (event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.sym == SDLK_UP) return INPUT_KEY_UP;
+                if (event.key.keysym.sym == SDLK_DOWN) return INPUT_KEY_DOWN;
+                if (event.key.keysym.sym == SDLK_RIGHT) return INPUT_KEY_RIGHT;
+                if (event.key.keysym.sym == SDLK_LEFT) return INPUT_KEY_LEFT;
+            }
+        }
+    }
+}
