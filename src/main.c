@@ -4,27 +4,21 @@
 
 #include "display.h"
 #include "constants.h"
-#include "digits.h"
+#include "game.h"
 
 int main() {
     if(displayInit()) return 1;
 
     color_t arr[DISPLAY_WIDTH * DISPLAY_HEIGHT];
-    // uint8_t color = 0;
-    // color_t BLACK_COLOR = 0, WHITE_COLOR = -1;
-    // for (int i = 0; i < DISPLAY_HEIGHT; i++) {
-    //     if (i % 5 == 0) color = !color;
-    //     for (int j = 0; j < DISPLAY_WIDTH; j++) {
-    //         arr[i * DISPLAY_WIDTH + j] = (color ? BLACK_COLOR : WHITE_COLOR);
-    //     }
-    // }
+
     int board[] = {
-        2048, 1024, 0, 0,
-        2, 2, 8, 4,
-        0, 0, 0, 0,
-        0, 32, 0, 0
+        4, 2, 2, 0,
+        0, 0, 2, 0,
+        0, 0, 0, 2,
+        0, 0, 0, 0
     };
-    createBoard(arr, board);
+
+    drawBoard(arr, board);
     displayBlitzRGB(arr);
     
 
@@ -36,7 +30,15 @@ int main() {
             printf("input was quit!\n");
             displayQuit();
             running = 0;
+        } else {
+            if (inp == INPUT_KEY_UP) moveUp(board);
+            else if (inp == INPUT_KEY_DOWN) moveDown(board);
+            else if (inp == INPUT_KEY_LEFT) moveLeft(board);
+            else if (inp == INPUT_KEY_RIGHT) moveRight(board);
         }
+
+        drawBoard(arr, board);
+        displayBlitzRGB(arr);
     }
 
     return 0;
