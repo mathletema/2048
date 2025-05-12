@@ -4,7 +4,6 @@
 #include "constants.h"
 #include "color.h"
 
-
 uint8_t displayInit();
 void displayBlitzRGB(color_t* buffer);
 void displayQuit();
