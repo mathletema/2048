@@ -41,13 +41,13 @@ uint8_t displayInit() {
 }
 
 
-void displayBlitzRGB(color_t* buffer, uint8_t width, uint8_t height) {
+void displayBlitzRGB(color_t* buffer) {
     // Create the texture once
     if (tex == NULL) {
         tex = SDL_CreateTexture(ren,
             SDL_PIXELFORMAT_RGB565,    // Our buffer format (5-6-5)
             SDL_TEXTUREACCESS_STREAMING,
-            width, height);
+            DISPLAY_WIDTH, DISPLAY_HEIGHT);
 
         if (!tex) {
             printf("SDL_CreateTexture Error: %s\n", SDL_GetError());
@@ -56,7 +56,7 @@ void displayBlitzRGB(color_t* buffer, uint8_t width, uint8_t height) {
     }
 
     void *pixels;
-    int pitch = width;
+    int pitch = DISPLAY_WIDTH;
 
     if (SDL_LockTexture(tex, NULL, &pixels, &pitch) != 0) {
         // Lock failed
@@ -65,7 +65,7 @@ void displayBlitzRGB(color_t* buffer, uint8_t width, uint8_t height) {
     }
 
     // memcpy(pixels, buf, width*height);
-    for (int i = 0; i < width * height; i++) {
+    for (int i = 0; i < DISPLAY_WIDTH * DISPLAY_HEIGHT; i++) {
         ((color_t*) pixels)[i] = buffer[i];
     }
 
@@ -76,7 +76,8 @@ void displayBlitzRGB(color_t* buffer, uint8_t width, uint8_t height) {
     SDL_RenderClear(ren);
 
     // Copy texture to renderer and present
-    SDL_RenderCopy(ren, tex, NULL, NULL);
+    SDL_Rect area = { 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT };
+    SDL_RenderCopy(ren, tex, &area, &area);
     SDL_RenderPresent(ren);
 }
 
