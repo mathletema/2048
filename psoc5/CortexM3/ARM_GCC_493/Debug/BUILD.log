@@ -1,0 +1,21 @@
+--------------- Build Started: 05/13/2025 11:00:52 Project: Design01, Configuration: ARM GCC 4.9-2015-q1-update Debug ---------------
+The code generation step is up to date.
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/main.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -std=gnu99 -c .\main.c -o .\CortexM3\ARM_GCC_493\Debug\main.o
+In file included from .\main.c:14:0:
+.\display.h:22:16: warning: 'color565' defined but not used [-Wunused-function]
+ static color_t color565(uint8 red, uint8 green, uint8 blue) {
+                ^
+In file included from .\main.c:15:0:
+.\constants.h:36:14: warning: 'randomFloat' defined but not used [-Wunused-function]
+ static float randomFloat () { return (float) rand() / RAND_MAX; }    
+              ^
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/display.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -std=gnu99 -c .\display.c -o .\CortexM3\ARM_GCC_493\Debug\display.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_493\Debug/game.lst -g -D DEBUG -Wall -ffunction-sections -Og -ffat-lto-objects -std=gnu99 -c .\game.c -o .\CortexM3\ARM_GCC_493\Debug\game.o
+arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_493\Debug\Design01.a .\CortexM3\ARM_GCC_493\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_493\Debug\SPIM_1.o .\CortexM3\ARM_GCC_493\Debug\SPIM_1_PM.o .\CortexM3\ARM_GCC_493\Debug\SPIM_1_INT.o .\CortexM3\ARM_GCC_493\Debug\MISO.o .\CortexM3\ARM_GCC_493\Debug\MOSI.o .\CortexM3\ARM_GCC_493\Debug\SCLK.o .\CortexM3\ARM_GCC_493\Debug\SS.o .\CortexM3\ARM_GCC_493\Debug\DC.o .\CortexM3\ARM_GCC_493\Debug\RST.o .\CortexM3\ARM_GCC_493\Debug\LED.o .\CortexM3\ARM_GCC_493\Debug\SPIM_1_IntClock.o .\CortexM3\ARM_GCC_493\Debug\CyBootAsmGnu.o .\CortexM3\ARM_GCC_493\Debug\CyDmac.o .\CortexM3\ARM_GCC_493\Debug\CyFlash.o .\CortexM3\ARM_GCC_493\Debug\CyLib.o .\CortexM3\ARM_GCC_493\Debug\cyPm.o .\CortexM3\ARM_GCC_493\Debug\CySpc.o .\CortexM3\ARM_GCC_493\Debug\cyutils.o .\CortexM3\ARM_GCC_493\Debug\Input_Data.o .\CortexM3\ARM_GCC_493\Debug\Data_Available.o .\CortexM3\ARM_GCC_493\Debug\Buzzer.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_PM.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_AMux.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_xm.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_xp.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_ym.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_yp.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_ADC.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_ADC_PM.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_ADC_INT.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_ADC_AMux.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_ADC_Ext_CP_Clk.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_ADC_IRQ.o .\CortexM3\ARM_GCC_493\Debug\TouchScreen_ADC_theACLK.o
+arm-none-eabi-ar.exe: creating .\CortexM3\ARM_GCC_493\Debug\Design01.a
+arm-none-eabi-gcc.exe -Wl,--start-group -o .\CortexM3\ARM_GCC_493\Debug\Design01.elf .\CortexM3\ARM_GCC_493\Debug\main.o .\CortexM3\ARM_GCC_493\Debug\tft.o .\CortexM3\ARM_GCC_493\Debug\display.o .\CortexM3\ARM_GCC_493\Debug\game.o .\CortexM3\ARM_GCC_493\Debug\cells.o .\CortexM3\ARM_GCC_493\Debug\cymetadata.o .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o .\CortexM3\ARM_GCC_493\Debug\Design01.a "C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_493\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -g -ffunction-sections -Og -ffat-lto-objects -L Generated_Source\PSoC5 -Wl,-Map,.\CortexM3\ARM_GCC_493\Debug/Design01.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections -Wl,--end-group
+cyelftool.exe -C "C:\Users\student\Documents\PSoC Creator\Workspace02\Design01.cydsn\CortexM3\ARM_GCC_493\Debug\Design01.elf" --flash_row_size 256 --flash_size 262144
+cyelftool.exe -S "C:\Users\student\Documents\PSoC Creator\Workspace02\Design01.cydsn\CortexM3\ARM_GCC_493\Debug\Design01.elf"
+Flash used: 28416 of 262144 bytes (10.8%).
+SRAM used: 2789 of 65536 bytes (4.3%). Stack: 2048 bytes. Heap: 128 bytes.
+--------------- Build Succeeded: 05/13/2025 11:00:53 ---------------

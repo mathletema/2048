@@ -1,0 +1,2694 @@
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"game.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	__aeabi_i2f
+  19              		.global	__aeabi_fmul
+  20              		.section	.text.randomFloat,"ax",%progbits
+  21              		.align	2
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	randomFloat, %function
+  25              	randomFloat:
+  26              	.LFB63:
+  27              		.file 1 ".\\constants.h"
+   1:.\constants.h **** /* ========================================
+   2:.\constants.h ****  *
+   3:.\constants.h ****  * Copyright YOUR COMPANY, THE YEAR
+   4:.\constants.h ****  * All Rights Reserved
+   5:.\constants.h ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:.\constants.h ****  *
+   7:.\constants.h ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:.\constants.h ****  * WHICH IS THE PROPERTY OF your company.
+   9:.\constants.h ****  *
+  10:.\constants.h ****  * ========================================
+  11:.\constants.h **** */
+  12:.\constants.h **** 
+  13:.\constants.h **** /* [] END OF FILE */
+  14:.\constants.h **** 
+  15:.\constants.h **** #ifndef CONSTANTS_H
+  16:.\constants.h **** #define CONSTANTS_H
+  17:.\constants.h ****     
+  18:.\constants.h **** #include "stdlib.h"
+  19:.\constants.h **** 
+  20:.\constants.h **** #define DISPLAY_WIDTH 320
+  21:.\constants.h **** #define DISPLAY_HEIGHT 240
+  22:.\constants.h **** #define BOARD_SIZE 4
+  23:.\constants.h **** #define CELL_SIZE 60
+  24:.\constants.h **** #define BORDER_WIDTH 2
+  25:.\constants.h **** 
+  26:.\constants.h **** #define TARGET_SQUARE 11
+  27:.\constants.h ****     
+  28:.\constants.h **** #define TOUCH_CUTOFF 4096
+  29:.\constants.h ****     
+  30:.\constants.h **** #define RANDOM_MOVE_DELAY 500
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 2
+
+
+  31:.\constants.h ****     
+  32:.\constants.h ****     
+  33:.\constants.h **** // #define USE_TOUCH
+  34:.\constants.h **** // #define USE_KEYPAD
+  35:.\constants.h **** 
+  36:.\constants.h **** static float randomFloat () { return (float) rand() / RAND_MAX; }    
+  28              		.loc 1 36 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  36              		.loc 1 36 0
+  37 0002 FFF7FEFF 		bl	rand
+  38              	.LVL0:
+  39 0006 FFF7FEFF 		bl	__aeabi_i2f
+  40              	.LVL1:
+  41 000a 4FF04051 		mov	r1, #805306368
+  42 000e FFF7FEFF 		bl	__aeabi_fmul
+  43              	.LVL2:
+  44 0012 08BD     		pop	{r3, pc}
+  45              		.cfi_endproc
+  46              	.LFE63:
+  47              		.size	randomFloat, .-randomFloat
+  48              		.section	.text.rotate,"ax",%progbits
+  49              		.align	2
+  50              		.global	rotate
+  51              		.thumb
+  52              		.thumb_func
+  53              		.type	rotate, %function
+  54              	rotate:
+  55              	.LFB64:
+  56              		.file 2 ".\\game.c"
+   1:.\game.c      **** /* ========================================
+   2:.\game.c      ****  *
+   3:.\game.c      ****  * Copyright YOUR COMPANY, THE YEAR
+   4:.\game.c      ****  * All Rights Reserved
+   5:.\game.c      ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:.\game.c      ****  *
+   7:.\game.c      ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:.\game.c      ****  * WHICH IS THE PROPERTY OF your company.
+   9:.\game.c      ****  *
+  10:.\game.c      ****  * ========================================
+  11:.\game.c      **** */
+  12:.\game.c      **** 
+  13:.\game.c      **** /* [] END OF FILE */
+  14:.\game.c      **** 
+  15:.\game.c      **** #include "project.h"
+  16:.\game.c      **** #include "constants.h"
+  17:.\game.c      **** #include "stdlib.h"
+  18:.\game.c      **** 
+  19:.\game.c      **** /********************
+  20:.\game.c      ****  * HELPER FUNCTIONS *
+  21:.\game.c      ****  ********************/
+  22:.\game.c      **** 
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 3
+
+
+  23:.\game.c      **** void rotate(uint16* board) {
+  57              		.loc 2 23 0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 0
+  60              		@ frame_needed = 0, uses_anonymous_args = 0
+  61              		@ link register save eliminated.
+  62              	.LVL3:
+  63 0000 F0B4     		push	{r4, r5, r6, r7}
+  64              		.cfi_def_cfa_offset 16
+  65              		.cfi_offset 4, -16
+  66              		.cfi_offset 5, -12
+  67              		.cfi_offset 6, -8
+  68              		.cfi_offset 7, -4
+  69              	.LVL4:
+  70              	.LBB2:
+  24:.\game.c      ****     int tmp;
+  25:.\game.c      ****     for (int i = 0; i < BOARD_SIZE / 2; i++) {
+  71              		.loc 2 25 0
+  72 0002 0025     		movs	r5, #0
+  73 0004 26E0     		b	.L4
+  74              	.LVL5:
+  75              	.L5:
+  76              	.LBB3:
+  26:.\game.c      ****         for (int j = 0; j < BOARD_SIZE / 2; j++) {
+  27:.\game.c      ****             tmp = board[BOARD_SIZE * j + i];
+  77              		.loc 2 27 0 discriminator 3
+  78 0006 05EB8302 		add	r2, r5, r3, lsl #2
+  79 000a 30F81260 		ldrh	r6, [r0, r2, lsl #1]
+  80              	.LVL6:
+  28:.\game.c      ****             board[BOARD_SIZE * j + i] = board[BOARD_SIZE * (BOARD_SIZE - i - 1) + j];
+  81              		.loc 2 28 0 discriminator 3
+  82 000e C5F10301 		rsb	r1, r5, #3
+  83 0012 03EB8101 		add	r1, r3, r1, lsl #2
+  84 0016 30F81140 		ldrh	r4, [r0, r1, lsl #1]
+  85 001a 20F81240 		strh	r4, [r0, r2, lsl #1]	@ movhi
+  29:.\game.c      **** 			board[BOARD_SIZE * (BOARD_SIZE - i - 1) + j] = board[BOARD_SIZE * (BOARD_SIZE - j - 1) + BOARD_S
+  86              		.loc 2 29 0 discriminator 3
+  87 001e C3F10402 		rsb	r2, r3, #4
+  88 0022 C5EB8202 		rsb	r2, r5, r2, lsl #2
+  89 0026 6FF00044 		mvn	r4, #-2147483648
+  90 002a 2244     		add	r2, r2, r4
+  91 002c 30F81270 		ldrh	r7, [r0, r2, lsl #1]
+  92 0030 20F81170 		strh	r7, [r0, r1, lsl #1]	@ movhi
+  30:.\game.c      ****             board[BOARD_SIZE * (BOARD_SIZE - j - 1) + BOARD_SIZE - i - 1] = board[BOARD_SIZE * i + 
+  93              		.loc 2 30 0 discriminator 3
+  94 0034 691C     		adds	r1, r5, #1
+  95 0036 C3EB8101 		rsb	r1, r3, r1, lsl #2
+  96 003a 2144     		add	r1, r1, r4
+  97 003c 30F81140 		ldrh	r4, [r0, r1, lsl #1]
+  98 0040 20F81240 		strh	r4, [r0, r2, lsl #1]	@ movhi
+  31:.\game.c      ****             board[BOARD_SIZE * i + BOARD_SIZE - j - 1] = tmp;
+  99              		.loc 2 31 0 discriminator 3
+ 100 0044 20F81160 		strh	r6, [r0, r1, lsl #1]	@ movhi
+  26:.\game.c      ****             tmp = board[BOARD_SIZE * j + i];
+ 101              		.loc 2 26 0 discriminator 3
+ 102 0048 0133     		adds	r3, r3, #1
+ 103              	.LVL7:
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 4
+
+
+ 104 004a 00E0     		b	.L6
+ 105              	.LVL8:
+ 106              	.L7:
+ 107              	.LBE3:
+ 108 004c 0023     		movs	r3, #0
+ 109              	.L6:
+ 110              	.LVL9:
+ 111              	.LBB4:
+  26:.\game.c      ****             tmp = board[BOARD_SIZE * j + i];
+ 112              		.loc 2 26 0 is_stmt 0 discriminator 1
+ 113 004e 012B     		cmp	r3, #1
+ 114 0050 D9DD     		ble	.L5
+ 115              	.LBE4:
+  25:.\game.c      ****         for (int j = 0; j < BOARD_SIZE / 2; j++) {
+ 116              		.loc 2 25 0 is_stmt 1 discriminator 2
+ 117 0052 0135     		adds	r5, r5, #1
+ 118              	.LVL10:
+ 119              	.L4:
+  25:.\game.c      ****         for (int j = 0; j < BOARD_SIZE / 2; j++) {
+ 120              		.loc 2 25 0 is_stmt 0 discriminator 1
+ 121 0054 012D     		cmp	r5, #1
+ 122 0056 F9DD     		ble	.L7
+ 123              	.LBE2:
+  32:.\game.c      ****         }
+  33:.\game.c      ****     }
+  34:.\game.c      **** }
+ 124              		.loc 2 34 0 is_stmt 1
+ 125 0058 F0BC     		pop	{r4, r5, r6, r7}
+ 126              		.cfi_restore 7
+ 127              		.cfi_restore 6
+ 128              		.cfi_restore 5
+ 129              		.cfi_restore 4
+ 130              		.cfi_def_cfa_offset 0
+ 131              	.LVL11:
+ 132 005a 7047     		bx	lr
+ 133              		.cfi_endproc
+ 134              	.LFE64:
+ 135              		.size	rotate, .-rotate
+ 136              		.global	__aeabi_f2iz
+ 137              		.global	__aeabi_f2d
+ 138              		.global	__aeabi_dcmplt
+ 139              		.section	.text.addRandomTile,"ax",%progbits
+ 140              		.align	2
+ 141              		.global	addRandomTile
+ 142              		.thumb
+ 143              		.thumb_func
+ 144              		.type	addRandomTile, %function
+ 145              	addRandomTile:
+ 146              	.LFB65:
+  35:.\game.c      **** 
+  36:.\game.c      **** void addRandomTile(uint16* board) {
+ 147              		.loc 2 36 0
+ 148              		.cfi_startproc
+ 149              		@ args = 0, pretend = 0, frame = 0
+ 150              		@ frame_needed = 0, uses_anonymous_args = 0
+ 151              	.LVL12:
+ 152 0000 70B5     		push	{r4, r5, r6, lr}
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 5
+
+
+ 153              		.cfi_def_cfa_offset 16
+ 154              		.cfi_offset 4, -16
+ 155              		.cfi_offset 5, -12
+ 156              		.cfi_offset 6, -8
+ 157              		.cfi_offset 14, -4
+ 158 0002 0446     		mov	r4, r0
+ 159              	.LVL13:
+ 160              	.LBB5:
+  37:.\game.c      ****     int numEmpty = 0;
+  38:.\game.c      ****     for (int i = 0; i < BOARD_SIZE*BOARD_SIZE; i++) numEmpty += (board[i] == 0);
+ 161              		.loc 2 38 0
+ 162 0004 0023     		movs	r3, #0
+ 163              	.LBE5:
+  37:.\game.c      ****     int numEmpty = 0;
+ 164              		.loc 2 37 0
+ 165 0006 1D46     		mov	r5, r3
+ 166              	.LBB6:
+ 167              		.loc 2 38 0
+ 168 0008 05E0     		b	.L10
+ 169              	.LVL14:
+ 170              	.L11:
+ 171              		.loc 2 38 0 is_stmt 0 discriminator 3
+ 172 000a 34F81320 		ldrh	r2, [r4, r3, lsl #1]
+ 173 000e 002A     		cmp	r2, #0
+ 174 0010 08BF     		it	eq
+ 175 0012 0135     		addeq	r5, r5, #1
+ 176              	.LVL15:
+ 177 0014 0133     		adds	r3, r3, #1
+ 178              	.LVL16:
+ 179              	.L10:
+ 180              		.loc 2 38 0 discriminator 1
+ 181 0016 0F2B     		cmp	r3, #15
+ 182 0018 F7DD     		ble	.L11
+ 183              	.LBE6:
+  39:.\game.c      ****     int idx = randomFloat() * numEmpty;
+ 184              		.loc 2 39 0 is_stmt 1
+ 185 001a FFF7FEFF 		bl	randomFloat
+ 186              	.LVL17:
+ 187 001e 0646     		mov	r6, r0
+ 188 0020 2846     		mov	r0, r5
+ 189 0022 FFF7FEFF 		bl	__aeabi_i2f
+ 190              	.LVL18:
+ 191 0026 0146     		mov	r1, r0
+ 192 0028 3046     		mov	r0, r6
+ 193 002a FFF7FEFF 		bl	__aeabi_fmul
+ 194              	.LVL19:
+ 195 002e FFF7FEFF 		bl	__aeabi_f2iz
+ 196              	.LVL20:
+ 197              	.LBB7:
+  40:.\game.c      ****     int count = 0;
+  41:.\game.c      ****     for (int i = 0; i < BOARD_SIZE*BOARD_SIZE; i++) {
+ 198              		.loc 2 41 0
+ 199 0032 0023     		movs	r3, #0
+ 200              	.LBE7:
+  40:.\game.c      ****     int count = 0;
+ 201              		.loc 2 40 0
+ 202 0034 1946     		mov	r1, r3
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 6
+
+
+ 203              	.LBB8:
+ 204              		.loc 2 41 0
+ 205 0036 17E0     		b	.L12
+ 206              	.LVL21:
+ 207              	.L18:
+  42:.\game.c      ****         if (board[i] != 0) continue;
+ 208              		.loc 2 42 0
+ 209 0038 04EB4305 		add	r5, r4, r3, lsl #1
+ 210 003c 34F81320 		ldrh	r2, [r4, r3, lsl #1]
+ 211 0040 8AB9     		cbnz	r2, .L13
+  43:.\game.c      ****         if (count == idx) {
+ 212              		.loc 2 43 0
+ 213 0042 8142     		cmp	r1, r0
+ 214 0044 0ED1     		bne	.L14
+  44:.\game.c      ****             board[i] = (randomFloat() < 0.9) ? 1 : 2;
+ 215              		.loc 2 44 0
+ 216 0046 FFF7FEFF 		bl	randomFloat
+ 217              	.LVL22:
+ 218 004a FFF7FEFF 		bl	__aeabi_f2d
+ 219              	.LVL23:
+ 220 004e 08A3     		adr	r3, .L23
+ 221 0050 D3E90023 		ldrd	r2, [r3]
+ 222 0054 FFF7FEFF 		bl	__aeabi_dcmplt
+ 223              	.LVL24:
+ 224 0058 08B1     		cbz	r0, .L21
+ 225 005a 0123     		movs	r3, #1
+ 226 005c 00E0     		b	.L15
+ 227              	.L21:
+ 228 005e 0223     		movs	r3, #2
+ 229              	.L15:
+ 230              		.loc 2 44 0 is_stmt 0 discriminator 4
+ 231 0060 2B80     		strh	r3, [r5]	@ movhi
+  45:.\game.c      ****             return;
+ 232              		.loc 2 45 0 is_stmt 1 discriminator 4
+ 233 0062 70BD     		pop	{r4, r5, r6, pc}
+ 234              	.LVL25:
+ 235              	.L14:
+  46:.\game.c      ****         }
+  47:.\game.c      ****         count++;
+ 236              		.loc 2 47 0
+ 237 0064 0131     		adds	r1, r1, #1
+ 238              	.LVL26:
+ 239              	.L13:
+  41:.\game.c      ****         if (board[i] != 0) continue;
+ 240              		.loc 2 41 0 discriminator 2
+ 241 0066 0133     		adds	r3, r3, #1
+ 242              	.LVL27:
+ 243              	.L12:
+  41:.\game.c      ****         if (board[i] != 0) continue;
+ 244              		.loc 2 41 0 is_stmt 0 discriminator 1
+ 245 0068 0F2B     		cmp	r3, #15
+ 246 006a E5DD     		ble	.L18
+ 247 006c 70BD     		pop	{r4, r5, r6, pc}
+ 248              	.LVL28:
+ 249              	.L24:
+ 250 006e 00BF     		.align	3
+ 251              	.L23:
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 7
+
+
+ 252 0070 CDCCCCCC 		.word	-858993459
+ 253 0074 CCCCEC3F 		.word	1072483532
+ 254              	.LBE8:
+ 255              		.cfi_endproc
+ 256              	.LFE65:
+ 257              		.size	addRandomTile, .-addRandomTile
+ 258              		.section	.text.slideArray,"ax",%progbits
+ 259              		.align	2
+ 260              		.global	slideArray
+ 261              		.thumb
+ 262              		.thumb_func
+ 263              		.type	slideArray, %function
+ 264              	slideArray:
+ 265              	.LFB66:
+  48:.\game.c      ****     }
+  49:.\game.c      **** }
+  50:.\game.c      **** 
+  51:.\game.c      **** /******************
+  52:.\game.c      ****  * MOVEMENT LOGIC *
+  53:.\game.c      ****  ******************/
+  54:.\game.c      **** 
+  55:.\game.c      **** void slideArray(uint16* array, int* isMoved)
+  56:.\game.c      **** {
+ 266              		.loc 2 56 0 is_stmt 1
+ 267              		.cfi_startproc
+ 268              		@ args = 0, pretend = 0, frame = 0
+ 269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 270              		@ link register save eliminated.
+ 271              	.LVL29:
+ 272 0000 F0B4     		push	{r4, r5, r6, r7}
+ 273              		.cfi_def_cfa_offset 16
+ 274              		.cfi_offset 4, -16
+ 275              		.cfi_offset 5, -12
+ 276              		.cfi_offset 6, -8
+ 277              		.cfi_offset 7, -4
+ 278              	.LVL30:
+  57:.\game.c      ****     int p = 0; int q = 0;
+ 279              		.loc 2 57 0
+ 280 0002 0023     		movs	r3, #0
+ 281 0004 1C46     		mov	r4, r3
+  58:.\game.c      ****     // everything up to p-1 is frozen
+  59:.\game.c      ****     // trying to move element at q;
+  60:.\game.c      ****     while (q < BOARD_SIZE) {
+ 282              		.loc 2 60 0
+ 283 0006 21E0     		b	.L26
+ 284              	.LVL31:
+ 285              	.L32:
+  61:.\game.c      ****         if (array[q] == 0) { q++; }
+ 286              		.loc 2 61 0
+ 287 0008 5D00     		lsls	r5, r3, #1
+ 288 000a 30F81320 		ldrh	r2, [r0, r3, lsl #1]
+ 289 000e 0AB9     		cbnz	r2, .L27
+ 290              		.loc 2 61 0 is_stmt 0 discriminator 1
+ 291 0010 0133     		adds	r3, r3, #1
+ 292              	.LVL32:
+ 293 0012 1BE0     		b	.L26
+ 294              	.L27:
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 8
+
+
+  62:.\game.c      ****         else if (p == q) { q++; }
+ 295              		.loc 2 62 0 is_stmt 1
+ 296 0014 9C42     		cmp	r4, r3
+ 297 0016 01D1     		bne	.L29
+ 298              		.loc 2 62 0 is_stmt 0 discriminator 1
+ 299 0018 0133     		adds	r3, r3, #1
+ 300              	.LVL33:
+ 301 001a 17E0     		b	.L26
+ 302              	.L29:
+  63:.\game.c      ****         else if (array[p] == 0) { array[p] = array[q]; array[q] = 0; q++; *isMoved = 1; }
+ 303              		.loc 2 63 0 is_stmt 1
+ 304 001c 6700     		lsls	r7, r4, #1
+ 305 001e 30F81460 		ldrh	r6, [r0, r4, lsl #1]
+ 306 0022 3EB9     		cbnz	r6, .L30
+ 307              		.loc 2 63 0 is_stmt 0 discriminator 1
+ 308 0024 20F81420 		strh	r2, [r0, r4, lsl #1]	@ movhi
+ 309 0028 0022     		movs	r2, #0
+ 310 002a 4253     		strh	r2, [r0, r5]	@ movhi
+ 311 002c 0133     		adds	r3, r3, #1
+ 312              	.LVL34:
+ 313 002e 0122     		movs	r2, #1
+ 314 0030 0A60     		str	r2, [r1]
+ 315 0032 0BE0     		b	.L26
+ 316              	.L30:
+  64:.\game.c      ****         else if (array[p] == array[q]) { array[p] += 1; array[q] = 0; q++; p++; *isMoved = 1; }
+ 317              		.loc 2 64 0 is_stmt 1
+ 318 0034 B242     		cmp	r2, r6
+ 319 0036 08D1     		bne	.L31
+ 320              		.loc 2 64 0 is_stmt 0 discriminator 1
+ 321 0038 0136     		adds	r6, r6, #1
+ 322 003a C653     		strh	r6, [r0, r7]	@ movhi
+ 323 003c 0022     		movs	r2, #0
+ 324 003e 4253     		strh	r2, [r0, r5]	@ movhi
+ 325 0040 0133     		adds	r3, r3, #1
+ 326              	.LVL35:
+ 327 0042 0134     		adds	r4, r4, #1
+ 328              	.LVL36:
+ 329 0044 0122     		movs	r2, #1
+ 330 0046 0A60     		str	r2, [r1]
+ 331 0048 00E0     		b	.L26
+ 332              	.L31:
+  65:.\game.c      ****         else { p++; }
+ 333              		.loc 2 65 0 is_stmt 1
+ 334 004a 0134     		adds	r4, r4, #1
+ 335              	.LVL37:
+ 336              	.L26:
+  60:.\game.c      ****         if (array[q] == 0) { q++; }
+ 337              		.loc 2 60 0
+ 338 004c 032B     		cmp	r3, #3
+ 339 004e DBDD     		ble	.L32
+  66:.\game.c      ****     }
+  67:.\game.c      **** }
+ 340              		.loc 2 67 0
+ 341 0050 F0BC     		pop	{r4, r5, r6, r7}
+ 342              		.cfi_restore 7
+ 343              		.cfi_restore 6
+ 344              		.cfi_restore 5
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 9
+
+
+ 345              		.cfi_restore 4
+ 346              		.cfi_def_cfa_offset 0
+ 347              	.LVL38:
+ 348 0052 7047     		bx	lr
+ 349              		.cfi_endproc
+ 350              	.LFE66:
+ 351              		.size	slideArray, .-slideArray
+ 352              		.section	.text.moveLeftInplace,"ax",%progbits
+ 353              		.align	2
+ 354              		.global	moveLeftInplace
+ 355              		.thumb
+ 356              		.thumb_func
+ 357              		.type	moveLeftInplace, %function
+ 358              	moveLeftInplace:
+ 359              	.LFB67:
+  68:.\game.c      **** 
+  69:.\game.c      **** void moveLeftInplace(uint16* board) {
+ 360              		.loc 2 69 0
+ 361              		.cfi_startproc
+ 362              		@ args = 0, pretend = 0, frame = 8
+ 363              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364              	.LVL39:
+ 365 0000 30B5     		push	{r4, r5, lr}
+ 366              		.cfi_def_cfa_offset 12
+ 367              		.cfi_offset 4, -12
+ 368              		.cfi_offset 5, -8
+ 369              		.cfi_offset 14, -4
+ 370 0002 83B0     		sub	sp, sp, #12
+ 371              		.cfi_def_cfa_offset 24
+ 372 0004 0546     		mov	r5, r0
+  70:.\game.c      ****     int isMoved = 0;
+ 373              		.loc 2 70 0
+ 374 0006 0024     		movs	r4, #0
+ 375 0008 0194     		str	r4, [sp, #4]
+ 376              	.LVL40:
+ 377              	.LBB9:
+  71:.\game.c      ****     for (int i = 0; i < BOARD_SIZE; i++) {
+ 378              		.loc 2 71 0
+ 379 000a 05E0     		b	.L35
+ 380              	.LVL41:
+ 381              	.L36:
+  72:.\game.c      ****         slideArray(board + i*BOARD_SIZE, &isMoved);
+ 382              		.loc 2 72 0 discriminator 3
+ 383 000c 05EBC400 		add	r0, r5, r4, lsl #3
+ 384 0010 01A9     		add	r1, sp, #4
+ 385 0012 FFF7FEFF 		bl	slideArray
+ 386              	.LVL42:
+  71:.\game.c      ****     for (int i = 0; i < BOARD_SIZE; i++) {
+ 387              		.loc 2 71 0 discriminator 3
+ 388 0016 0134     		adds	r4, r4, #1
+ 389              	.LVL43:
+ 390              	.L35:
+  71:.\game.c      ****     for (int i = 0; i < BOARD_SIZE; i++) {
+ 391              		.loc 2 71 0 is_stmt 0 discriminator 1
+ 392 0018 032C     		cmp	r4, #3
+ 393 001a F7DD     		ble	.L36
+ 394              	.LBE9:
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 10
+
+
+  73:.\game.c      ****     }
+  74:.\game.c      ****     if (isMoved) { addRandomTile(board); }
+ 395              		.loc 2 74 0 is_stmt 1
+ 396 001c 019B     		ldr	r3, [sp, #4]
+ 397 001e 13B1     		cbz	r3, .L34
+ 398              		.loc 2 74 0 is_stmt 0 discriminator 1
+ 399 0020 2846     		mov	r0, r5
+ 400 0022 FFF7FEFF 		bl	addRandomTile
+ 401              	.LVL44:
+ 402              	.L34:
+  75:.\game.c      **** }
+ 403              		.loc 2 75 0 is_stmt 1
+ 404 0026 03B0     		add	sp, sp, #12
+ 405              		.cfi_def_cfa_offset 12
+ 406              		@ sp needed
+ 407 0028 30BD     		pop	{r4, r5, pc}
+ 408              		.cfi_endproc
+ 409              	.LFE67:
+ 410              		.size	moveLeftInplace, .-moveLeftInplace
+ 411 002a 00BF     		.section	.text.moveLeft,"ax",%progbits
+ 412              		.align	2
+ 413              		.global	moveLeft
+ 414              		.thumb
+ 415              		.thumb_func
+ 416              		.type	moveLeft, %function
+ 417              	moveLeft:
+ 418              	.LFB68:
+  76:.\game.c      **** 
+  77:.\game.c      **** void moveLeft(uint16* board, uint16* newBoard) {
+ 419              		.loc 2 77 0
+ 420              		.cfi_startproc
+ 421              		@ args = 0, pretend = 0, frame = 0
+ 422              		@ frame_needed = 0, uses_anonymous_args = 0
+ 423              	.LVL45:
+ 424 0000 38B5     		push	{r3, r4, r5, lr}
+ 425              		.cfi_def_cfa_offset 16
+ 426              		.cfi_offset 3, -16
+ 427              		.cfi_offset 4, -12
+ 428              		.cfi_offset 5, -8
+ 429              		.cfi_offset 14, -4
+  78:.\game.c      ****     memcpy(newBoard, board, sizeof(uint16) * BOARD_SIZE * BOARD_SIZE);
+ 430              		.loc 2 78 0
+ 431 0002 0568     		ldr	r5, [r0]	@ unaligned
+ 432 0004 4468     		ldr	r4, [r0, #4]	@ unaligned
+ 433 0006 8268     		ldr	r2, [r0, #8]	@ unaligned
+ 434 0008 C368     		ldr	r3, [r0, #12]	@ unaligned
+ 435 000a 0D60     		str	r5, [r1]	@ unaligned
+ 436 000c 4C60     		str	r4, [r1, #4]	@ unaligned
+ 437 000e 8A60     		str	r2, [r1, #8]	@ unaligned
+ 438 0010 CB60     		str	r3, [r1, #12]	@ unaligned
+ 439 0012 0569     		ldr	r5, [r0, #16]	@ unaligned
+ 440 0014 4469     		ldr	r4, [r0, #20]	@ unaligned
+ 441 0016 8269     		ldr	r2, [r0, #24]	@ unaligned
+ 442 0018 C369     		ldr	r3, [r0, #28]	@ unaligned
+ 443 001a 0D61     		str	r5, [r1, #16]	@ unaligned
+ 444 001c 4C61     		str	r4, [r1, #20]	@ unaligned
+ 445 001e 8A61     		str	r2, [r1, #24]	@ unaligned
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 11
+
+
+ 446 0020 CB61     		str	r3, [r1, #28]	@ unaligned
+  79:.\game.c      ****     moveLeftInplace(newBoard);
+ 447              		.loc 2 79 0
+ 448 0022 0846     		mov	r0, r1
+ 449              	.LVL46:
+ 450 0024 FFF7FEFF 		bl	moveLeftInplace
+ 451              	.LVL47:
+ 452 0028 38BD     		pop	{r3, r4, r5, pc}
+ 453              		.cfi_endproc
+ 454              	.LFE68:
+ 455              		.size	moveLeft, .-moveLeft
+ 456 002a 00BF     		.section	.text.moveUp,"ax",%progbits
+ 457              		.align	2
+ 458              		.global	moveUp
+ 459              		.thumb
+ 460              		.thumb_func
+ 461              		.type	moveUp, %function
+ 462              	moveUp:
+ 463              	.LFB69:
+  80:.\game.c      **** }
+  81:.\game.c      **** 
+  82:.\game.c      **** void moveUp(uint16* board, uint16* newBoard) {
+ 464              		.loc 2 82 0
+ 465              		.cfi_startproc
+ 466              		@ args = 0, pretend = 0, frame = 0
+ 467              		@ frame_needed = 0, uses_anonymous_args = 0
+ 468              	.LVL48:
+ 469 0000 38B5     		push	{r3, r4, r5, lr}
+ 470              		.cfi_def_cfa_offset 16
+ 471              		.cfi_offset 3, -16
+ 472              		.cfi_offset 4, -12
+ 473              		.cfi_offset 5, -8
+ 474              		.cfi_offset 14, -4
+ 475 0002 0C46     		mov	r4, r1
+  83:.\game.c      ****     memcpy(newBoard, board, sizeof(uint16) * BOARD_SIZE * BOARD_SIZE);
+ 476              		.loc 2 83 0
+ 477 0004 0568     		ldr	r5, [r0]	@ unaligned
+ 478 0006 4168     		ldr	r1, [r0, #4]	@ unaligned
+ 479              	.LVL49:
+ 480 0008 8268     		ldr	r2, [r0, #8]	@ unaligned
+ 481 000a C368     		ldr	r3, [r0, #12]	@ unaligned
+ 482 000c 2560     		str	r5, [r4]	@ unaligned
+ 483 000e 6160     		str	r1, [r4, #4]	@ unaligned
+ 484 0010 A260     		str	r2, [r4, #8]	@ unaligned
+ 485 0012 E360     		str	r3, [r4, #12]	@ unaligned
+ 486 0014 0569     		ldr	r5, [r0, #16]	@ unaligned
+ 487 0016 4169     		ldr	r1, [r0, #20]	@ unaligned
+ 488 0018 8269     		ldr	r2, [r0, #24]	@ unaligned
+ 489 001a C369     		ldr	r3, [r0, #28]	@ unaligned
+ 490 001c 2561     		str	r5, [r4, #16]	@ unaligned
+ 491 001e 6161     		str	r1, [r4, #20]	@ unaligned
+ 492 0020 A261     		str	r2, [r4, #24]	@ unaligned
+ 493 0022 E361     		str	r3, [r4, #28]	@ unaligned
+  84:.\game.c      ****     rotate(newBoard);
+ 494              		.loc 2 84 0
+ 495 0024 2046     		mov	r0, r4
+ 496              	.LVL50:
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 12
+
+
+ 497 0026 FFF7FEFF 		bl	rotate
+ 498              	.LVL51:
+  85:.\game.c      ****     rotate(newBoard);
+ 499              		.loc 2 85 0
+ 500 002a 2046     		mov	r0, r4
+ 501 002c FFF7FEFF 		bl	rotate
+ 502              	.LVL52:
+  86:.\game.c      ****     rotate(newBoard);
+ 503              		.loc 2 86 0
+ 504 0030 2046     		mov	r0, r4
+ 505 0032 FFF7FEFF 		bl	rotate
+ 506              	.LVL53:
+  87:.\game.c      ****     moveLeftInplace(newBoard);
+ 507              		.loc 2 87 0
+ 508 0036 2046     		mov	r0, r4
+ 509 0038 FFF7FEFF 		bl	moveLeftInplace
+ 510              	.LVL54:
+  88:.\game.c      ****     rotate(newBoard);
+ 511              		.loc 2 88 0
+ 512 003c 2046     		mov	r0, r4
+ 513 003e FFF7FEFF 		bl	rotate
+ 514              	.LVL55:
+ 515 0042 38BD     		pop	{r3, r4, r5, pc}
+ 516              		.cfi_endproc
+ 517              	.LFE69:
+ 518              		.size	moveUp, .-moveUp
+ 519              		.section	.text.moveRight,"ax",%progbits
+ 520              		.align	2
+ 521              		.global	moveRight
+ 522              		.thumb
+ 523              		.thumb_func
+ 524              		.type	moveRight, %function
+ 525              	moveRight:
+ 526              	.LFB70:
+  89:.\game.c      **** }
+  90:.\game.c      **** void moveRight(uint16* board, uint16* newBoard) {
+ 527              		.loc 2 90 0
+ 528              		.cfi_startproc
+ 529              		@ args = 0, pretend = 0, frame = 0
+ 530              		@ frame_needed = 0, uses_anonymous_args = 0
+ 531              	.LVL56:
+ 532 0000 38B5     		push	{r3, r4, r5, lr}
+ 533              		.cfi_def_cfa_offset 16
+ 534              		.cfi_offset 3, -16
+ 535              		.cfi_offset 4, -12
+ 536              		.cfi_offset 5, -8
+ 537              		.cfi_offset 14, -4
+ 538 0002 0C46     		mov	r4, r1
+  91:.\game.c      ****     memcpy(newBoard, board, sizeof(uint16) * BOARD_SIZE * BOARD_SIZE);
+ 539              		.loc 2 91 0
+ 540 0004 0568     		ldr	r5, [r0]	@ unaligned
+ 541 0006 4168     		ldr	r1, [r0, #4]	@ unaligned
+ 542              	.LVL57:
+ 543 0008 8268     		ldr	r2, [r0, #8]	@ unaligned
+ 544 000a C368     		ldr	r3, [r0, #12]	@ unaligned
+ 545 000c 2560     		str	r5, [r4]	@ unaligned
+ 546 000e 6160     		str	r1, [r4, #4]	@ unaligned
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 13
+
+
+ 547 0010 A260     		str	r2, [r4, #8]	@ unaligned
+ 548 0012 E360     		str	r3, [r4, #12]	@ unaligned
+ 549 0014 0569     		ldr	r5, [r0, #16]	@ unaligned
+ 550 0016 4169     		ldr	r1, [r0, #20]	@ unaligned
+ 551 0018 8269     		ldr	r2, [r0, #24]	@ unaligned
+ 552 001a C369     		ldr	r3, [r0, #28]	@ unaligned
+ 553 001c 2561     		str	r5, [r4, #16]	@ unaligned
+ 554 001e 6161     		str	r1, [r4, #20]	@ unaligned
+ 555 0020 A261     		str	r2, [r4, #24]	@ unaligned
+ 556 0022 E361     		str	r3, [r4, #28]	@ unaligned
+  92:.\game.c      ****     rotate(newBoard);
+ 557              		.loc 2 92 0
+ 558 0024 2046     		mov	r0, r4
+ 559              	.LVL58:
+ 560 0026 FFF7FEFF 		bl	rotate
+ 561              	.LVL59:
+  93:.\game.c      ****     rotate(newBoard);
+ 562              		.loc 2 93 0
+ 563 002a 2046     		mov	r0, r4
+ 564 002c FFF7FEFF 		bl	rotate
+ 565              	.LVL60:
+  94:.\game.c      ****     moveLeftInplace(newBoard);
+ 566              		.loc 2 94 0
+ 567 0030 2046     		mov	r0, r4
+ 568 0032 FFF7FEFF 		bl	moveLeftInplace
+ 569              	.LVL61:
+  95:.\game.c      ****     rotate(newBoard);
+ 570              		.loc 2 95 0
+ 571 0036 2046     		mov	r0, r4
+ 572 0038 FFF7FEFF 		bl	rotate
+ 573              	.LVL62:
+  96:.\game.c      ****     rotate(newBoard);
+ 574              		.loc 2 96 0
+ 575 003c 2046     		mov	r0, r4
+ 576 003e FFF7FEFF 		bl	rotate
+ 577              	.LVL63:
+ 578 0042 38BD     		pop	{r3, r4, r5, pc}
+ 579              		.cfi_endproc
+ 580              	.LFE70:
+ 581              		.size	moveRight, .-moveRight
+ 582              		.section	.text.moveDown,"ax",%progbits
+ 583              		.align	2
+ 584              		.global	moveDown
+ 585              		.thumb
+ 586              		.thumb_func
+ 587              		.type	moveDown, %function
+ 588              	moveDown:
+ 589              	.LFB71:
+  97:.\game.c      **** }
+  98:.\game.c      **** 
+  99:.\game.c      **** void moveDown(uint16* board, uint16* newBoard) {
+ 590              		.loc 2 99 0
+ 591              		.cfi_startproc
+ 592              		@ args = 0, pretend = 0, frame = 0
+ 593              		@ frame_needed = 0, uses_anonymous_args = 0
+ 594              	.LVL64:
+ 595 0000 38B5     		push	{r3, r4, r5, lr}
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 14
+
+
+ 596              		.cfi_def_cfa_offset 16
+ 597              		.cfi_offset 3, -16
+ 598              		.cfi_offset 4, -12
+ 599              		.cfi_offset 5, -8
+ 600              		.cfi_offset 14, -4
+ 601 0002 0C46     		mov	r4, r1
+ 100:.\game.c      ****     memcpy(newBoard, board, sizeof(uint16) * BOARD_SIZE * BOARD_SIZE);
+ 602              		.loc 2 100 0
+ 603 0004 0568     		ldr	r5, [r0]	@ unaligned
+ 604 0006 4168     		ldr	r1, [r0, #4]	@ unaligned
+ 605              	.LVL65:
+ 606 0008 8268     		ldr	r2, [r0, #8]	@ unaligned
+ 607 000a C368     		ldr	r3, [r0, #12]	@ unaligned
+ 608 000c 2560     		str	r5, [r4]	@ unaligned
+ 609 000e 6160     		str	r1, [r4, #4]	@ unaligned
+ 610 0010 A260     		str	r2, [r4, #8]	@ unaligned
+ 611 0012 E360     		str	r3, [r4, #12]	@ unaligned
+ 612 0014 0569     		ldr	r5, [r0, #16]	@ unaligned
+ 613 0016 4169     		ldr	r1, [r0, #20]	@ unaligned
+ 614 0018 8269     		ldr	r2, [r0, #24]	@ unaligned
+ 615 001a C369     		ldr	r3, [r0, #28]	@ unaligned
+ 616 001c 2561     		str	r5, [r4, #16]	@ unaligned
+ 617 001e 6161     		str	r1, [r4, #20]	@ unaligned
+ 618 0020 A261     		str	r2, [r4, #24]	@ unaligned
+ 619 0022 E361     		str	r3, [r4, #28]	@ unaligned
+ 101:.\game.c      ****     rotate(newBoard);
+ 620              		.loc 2 101 0
+ 621 0024 2046     		mov	r0, r4
+ 622              	.LVL66:
+ 623 0026 FFF7FEFF 		bl	rotate
+ 624              	.LVL67:
+ 102:.\game.c      ****     moveLeftInplace(newBoard);
+ 625              		.loc 2 102 0
+ 626 002a 2046     		mov	r0, r4
+ 627 002c FFF7FEFF 		bl	moveLeftInplace
+ 628              	.LVL68:
+ 103:.\game.c      ****     rotate(newBoard);
+ 629              		.loc 2 103 0
+ 630 0030 2046     		mov	r0, r4
+ 631 0032 FFF7FEFF 		bl	rotate
+ 632              	.LVL69:
+ 104:.\game.c      ****     rotate(newBoard);
+ 633              		.loc 2 104 0
+ 634 0036 2046     		mov	r0, r4
+ 635 0038 FFF7FEFF 		bl	rotate
+ 636              	.LVL70:
+ 105:.\game.c      ****     rotate(newBoard);
+ 637              		.loc 2 105 0
+ 638 003c 2046     		mov	r0, r4
+ 639 003e FFF7FEFF 		bl	rotate
+ 640              	.LVL71:
+ 641 0042 38BD     		pop	{r3, r4, r5, pc}
+ 642              		.cfi_endproc
+ 643              	.LFE71:
+ 644              		.size	moveDown, .-moveDown
+ 645              		.section	.text.gameWon,"ax",%progbits
+ 646              		.align	2
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 15
+
+
+ 647              		.global	gameWon
+ 648              		.thumb
+ 649              		.thumb_func
+ 650              		.type	gameWon, %function
+ 651              	gameWon:
+ 652              	.LFB72:
+ 106:.\game.c      **** }
+ 107:.\game.c      **** 
+ 108:.\game.c      **** /************************
+ 109:.\game.c      ****  * GAME TERMINATE LOGIC *
+ 110:.\game.c      ****  ************************/
+ 111:.\game.c      **** 
+ 112:.\game.c      **** uint8 gameWon(uint16* board) {
+ 653              		.loc 2 112 0
+ 654              		.cfi_startproc
+ 655              		@ args = 0, pretend = 0, frame = 0
+ 656              		@ frame_needed = 0, uses_anonymous_args = 0
+ 657              		@ link register save eliminated.
+ 658              	.LVL72:
+ 113:.\game.c      ****     uint16 i;
+ 114:.\game.c      ****     for (i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
+ 659              		.loc 2 114 0
+ 660 0000 0023     		movs	r3, #0
+ 661 0002 05E0     		b	.L48
+ 662              	.LVL73:
+ 663              	.L50:
+ 115:.\game.c      ****         if (board[i] >= TARGET_SQUARE) return 1;
+ 664              		.loc 2 115 0
+ 665 0004 30F81320 		ldrh	r2, [r0, r3, lsl #1]
+ 666 0008 0A2A     		cmp	r2, #10
+ 667 000a 05D8     		bhi	.L51
+ 114:.\game.c      ****         if (board[i] >= TARGET_SQUARE) return 1;
+ 668              		.loc 2 114 0 discriminator 2
+ 669 000c 0133     		adds	r3, r3, #1
+ 670              	.LVL74:
+ 671 000e 9BB2     		uxth	r3, r3
+ 672              	.LVL75:
+ 673              	.L48:
+ 114:.\game.c      ****         if (board[i] >= TARGET_SQUARE) return 1;
+ 674              		.loc 2 114 0 is_stmt 0 discriminator 1
+ 675 0010 0F2B     		cmp	r3, #15
+ 676 0012 F7D9     		bls	.L50
+ 116:.\game.c      ****     }
+ 117:.\game.c      ****     return 0;
+ 677              		.loc 2 117 0 is_stmt 1
+ 678 0014 0020     		movs	r0, #0
+ 679              	.LVL76:
+ 680 0016 7047     		bx	lr
+ 681              	.LVL77:
+ 682              	.L51:
+ 115:.\game.c      ****     }
+ 683              		.loc 2 115 0
+ 684 0018 0120     		movs	r0, #1
+ 685              	.LVL78:
+ 118:.\game.c      **** }
+ 686              		.loc 2 118 0
+ 687 001a 7047     		bx	lr
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 16
+
+
+ 688              		.cfi_endproc
+ 689              	.LFE72:
+ 690              		.size	gameWon, .-gameWon
+ 691              		.section	.text.boardUnchanged,"ax",%progbits
+ 692              		.align	2
+ 693              		.global	boardUnchanged
+ 694              		.thumb
+ 695              		.thumb_func
+ 696              		.type	boardUnchanged, %function
+ 697              	boardUnchanged:
+ 698              	.LFB73:
+ 119:.\game.c      **** 
+ 120:.\game.c      **** uint8 boardUnchanged(uint16* board, uint16* oldBoard) {
+ 699              		.loc 2 120 0
+ 700              		.cfi_startproc
+ 701              		@ args = 0, pretend = 0, frame = 0
+ 702              		@ frame_needed = 0, uses_anonymous_args = 0
+ 703              		@ link register save eliminated.
+ 704              	.LVL79:
+ 705 0000 10B4     		push	{r4}
+ 706              		.cfi_def_cfa_offset 4
+ 707              		.cfi_offset 4, -4
+ 708              	.LVL80:
+ 121:.\game.c      ****     uint16 i;
+ 122:.\game.c      ****     for (i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
+ 709              		.loc 2 122 0
+ 710 0002 0023     		movs	r3, #0
+ 711 0004 07E0     		b	.L53
+ 712              	.LVL81:
+ 713              	.L55:
+ 123:.\game.c      ****         if (board[i] != oldBoard[i]) return 0;
+ 714              		.loc 2 123 0
+ 715 0006 30F81340 		ldrh	r4, [r0, r3, lsl #1]
+ 716 000a 31F81320 		ldrh	r2, [r1, r3, lsl #1]
+ 717 000e 9442     		cmp	r4, r2
+ 718 0010 05D1     		bne	.L56
+ 122:.\game.c      ****         if (board[i] != oldBoard[i]) return 0;
+ 719              		.loc 2 122 0 discriminator 2
+ 720 0012 0133     		adds	r3, r3, #1
+ 721              	.LVL82:
+ 722 0014 9BB2     		uxth	r3, r3
+ 723              	.LVL83:
+ 724              	.L53:
+ 122:.\game.c      ****         if (board[i] != oldBoard[i]) return 0;
+ 725              		.loc 2 122 0 is_stmt 0 discriminator 1
+ 726 0016 0F2B     		cmp	r3, #15
+ 727 0018 F5D9     		bls	.L55
+ 124:.\game.c      ****     }
+ 125:.\game.c      ****     return 1;
+ 728              		.loc 2 125 0 is_stmt 1
+ 729 001a 0120     		movs	r0, #1
+ 730              	.LVL84:
+ 731 001c 00E0     		b	.L54
+ 732              	.LVL85:
+ 733              	.L56:
+ 123:.\game.c      ****     }
+ 734              		.loc 2 123 0
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 17
+
+
+ 735 001e 0020     		movs	r0, #0
+ 736              	.LVL86:
+ 737              	.L54:
+ 126:.\game.c      **** }...
+ 738              		.loc 2 126 0
+ 739 0020 5DF8044B 		ldr	r4, [sp], #4
+ 740              		.cfi_restore 4
+ 741              		.cfi_def_cfa_offset 0
+ 742 0024 7047     		bx	lr
+ 743              		.cfi_endproc
+ 744              	.LFE73:
+ 745              		.size	boardUnchanged, .-boardUnchanged
+ 746 0026 00BF     		.text
+ 747              	.Letext0:
+ 748              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 749              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 750              		.file 5 "Generated_Source\\PSoC5/cytypes.h"
+ 751              		.file 6 "Generated_Source\\PSoC5/core_cm3.h"
+ 752              		.file 7 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 753              		.section	.debug_info,"",%progbits
+ 754              	.Ldebug_info0:
+ 755 0000 28050000 		.4byte	0x528
+ 756 0004 0400     		.2byte	0x4
+ 757 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 758 000a 04       		.byte	0x4
+ 759 000b 01       		.uleb128 0x1
+ 760 000c 93010000 		.4byte	.LASF34
+ 761 0010 01       		.byte	0x1
+ 762 0011 86000000 		.4byte	.LASF35
+ 763 0015 1E000000 		.4byte	.LASF36
+ 764 0019 48000000 		.4byte	.Ldebug_ranges0+0x48
+ 765 001d 00000000 		.4byte	0
+ 766 0021 00000000 		.4byte	.Ldebug_line0
+ 767 0025 02       		.uleb128 0x2
+ 768 0026 01       		.byte	0x1
+ 769 0027 06       		.byte	0x6
+ 770 0028 49020000 		.4byte	.LASF0
+ 771 002c 02       		.uleb128 0x2
+ 772 002d 01       		.byte	0x1
+ 773 002e 08       		.byte	0x8
+ 774 002f 78000000 		.4byte	.LASF1
+ 775 0033 02       		.uleb128 0x2
+ 776 0034 02       		.byte	0x2
+ 777 0035 05       		.byte	0x5
+ 778 0036 83010000 		.4byte	.LASF2
+ 779 003a 02       		.uleb128 0x2
+ 780 003b 02       		.byte	0x2
+ 781 003c 07       		.byte	0x7
+ 782 003d A1000000 		.4byte	.LASF3
+ 783 0041 03       		.uleb128 0x3
+ 784 0042 00000000 		.4byte	.LASF9
+ 785 0046 03       		.byte	0x3
+ 786 0047 3F       		.byte	0x3f
+ 787 0048 4C000000 		.4byte	0x4c
+ 788 004c 02       		.uleb128 0x2
+ 789 004d 04       		.byte	0x4
+ 790 004e 05       		.byte	0x5
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 18
+
+
+ 791 004f 2C020000 		.4byte	.LASF4
+ 792 0053 02       		.uleb128 0x2
+ 793 0054 04       		.byte	0x4
+ 794 0055 07       		.byte	0x7
+ 795 0056 8F000000 		.4byte	.LASF5
+ 796 005a 02       		.uleb128 0x2
+ 797 005b 08       		.byte	0x8
+ 798 005c 05       		.byte	0x5
+ 799 005d 5C010000 		.4byte	.LASF6
+ 800 0061 02       		.uleb128 0x2
+ 801 0062 08       		.byte	0x8
+ 802 0063 07       		.byte	0x7
+ 803 0064 32010000 		.4byte	.LASF7
+ 804 0068 04       		.uleb128 0x4
+ 805 0069 04       		.byte	0x4
+ 806 006a 05       		.byte	0x5
+ 807 006b 696E7400 		.ascii	"int\000"
+ 808 006f 02       		.uleb128 0x2
+ 809 0070 04       		.byte	0x4
+ 810 0071 07       		.byte	0x7
+ 811 0072 25010000 		.4byte	.LASF8
+ 812 0076 03       		.uleb128 0x3
+ 813 0077 6A000000 		.4byte	.LASF10
+ 814 007b 04       		.byte	0x4
+ 815 007c 2C       		.byte	0x2c
+ 816 007d 41000000 		.4byte	0x41
+ 817 0081 05       		.uleb128 0x5
+ 818 0082 8D010000 		.4byte	.LASF11
+ 819 0086 05       		.byte	0x5
+ 820 0087 9201     		.2byte	0x192
+ 821 0089 2C000000 		.4byte	0x2c
+ 822 008d 05       		.uleb128 0x5
+ 823 008e FD000000 		.4byte	.LASF12
+ 824 0092 05       		.byte	0x5
+ 825 0093 9301     		.2byte	0x193
+ 826 0095 3A000000 		.4byte	0x3a
+ 827 0099 02       		.uleb128 0x2
+ 828 009a 04       		.byte	0x4
+ 829 009b 04       		.byte	0x4
+ 830 009c 72000000 		.4byte	.LASF13
+ 831 00a0 02       		.uleb128 0x2
+ 832 00a1 08       		.byte	0x8
+ 833 00a2 04       		.byte	0x4
+ 834 00a3 E6000000 		.4byte	.LASF14
+ 835 00a7 02       		.uleb128 0x2
+ 836 00a8 01       		.byte	0x1
+ 837 00a9 08       		.byte	0x8
+ 838 00aa 6A010000 		.4byte	.LASF15
+ 839 00ae 02       		.uleb128 0x2
+ 840 00af 04       		.byte	0x4
+ 841 00b0 07       		.byte	0x7
+ 842 00b1 53010000 		.4byte	.LASF16
+ 843 00b5 06       		.uleb128 0x6
+ 844 00b6 12000000 		.4byte	.LASF37
+ 845 00ba 01       		.byte	0x1
+ 846 00bb 24       		.byte	0x24
+ 847 00bc 99000000 		.4byte	0x99
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 19
+
+
+ 848 00c0 00000000 		.4byte	.LFB63
+ 849 00c4 14000000 		.4byte	.LFE63-.LFB63
+ 850 00c8 01       		.uleb128 0x1
+ 851 00c9 9C       		.byte	0x9c
+ 852 00ca D8000000 		.4byte	0xd8
+ 853 00ce 07       		.uleb128 0x7
+ 854 00cf 06000000 		.4byte	.LVL0
+ 855 00d3 20050000 		.4byte	0x520
+ 856 00d7 00       		.byte	0
+ 857 00d8 08       		.uleb128 0x8
+ 858 00d9 DF000000 		.4byte	.LASF17
+ 859 00dd 02       		.byte	0x2
+ 860 00de 17       		.byte	0x17
+ 861 00df 00000000 		.4byte	.LFB64
+ 862 00e3 5C000000 		.4byte	.LFE64-.LFB64
+ 863 00e7 01       		.uleb128 0x1
+ 864 00e8 9C       		.byte	0x9c
+ 865 00e9 34010000 		.4byte	0x134
+ 866 00ed 09       		.uleb128 0x9
+ 867 00ee 55020000 		.4byte	.LASF19
+ 868 00f2 02       		.byte	0x2
+ 869 00f3 17       		.byte	0x17
+ 870 00f4 34010000 		.4byte	0x134
+ 871 00f8 01       		.uleb128 0x1
+ 872 00f9 50       		.byte	0x50
+ 873 00fa 0A       		.uleb128 0xa
+ 874 00fb 746D7000 		.ascii	"tmp\000"
+ 875 00ff 02       		.byte	0x2
+ 876 0100 18       		.byte	0x18
+ 877 0101 68000000 		.4byte	0x68
+ 878 0105 00000000 		.4byte	.LLST0
+ 879 0109 0B       		.uleb128 0xb
+ 880 010a 02000000 		.4byte	.LBB2
+ 881 010e 56000000 		.4byte	.LBE2-.LBB2
+ 882 0112 0A       		.uleb128 0xa
+ 883 0113 6900     		.ascii	"i\000"
+ 884 0115 02       		.byte	0x2
+ 885 0116 19       		.byte	0x19
+ 886 0117 68000000 		.4byte	0x68
+ 887 011b 19000000 		.4byte	.LLST1
+ 888 011f 0C       		.uleb128 0xc
+ 889 0120 00000000 		.4byte	.Ldebug_ranges0+0
+ 890 0124 0A       		.uleb128 0xa
+ 891 0125 6A00     		.ascii	"j\000"
+ 892 0127 02       		.byte	0x2
+ 893 0128 1A       		.byte	0x1a
+ 894 0129 68000000 		.4byte	0x68
+ 895 012d 38000000 		.4byte	.LLST2
+ 896 0131 00       		.byte	0
+ 897 0132 00       		.byte	0
+ 898 0133 00       		.byte	0
+ 899 0134 0D       		.uleb128 0xd
+ 900 0135 04       		.byte	0x4
+ 901 0136 8D000000 		.4byte	0x8d
+ 902 013a 0E       		.uleb128 0xe
+ 903 013b 6F010000 		.4byte	.LASF18
+ 904 013f 02       		.byte	0x2
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 20
+
+
+ 905 0140 24       		.byte	0x24
+ 906 0141 00000000 		.4byte	.LFB65
+ 907 0145 78000000 		.4byte	.LFE65-.LFB65
+ 908 0149 01       		.uleb128 0x1
+ 909 014a 9C       		.byte	0x9c
+ 910 014b CC010000 		.4byte	0x1cc
+ 911 014f 0F       		.uleb128 0xf
+ 912 0150 55020000 		.4byte	.LASF19
+ 913 0154 02       		.byte	0x2
+ 914 0155 24       		.byte	0x24
+ 915 0156 34010000 		.4byte	0x134
+ 916 015a 56000000 		.4byte	.LLST3
+ 917 015e 10       		.uleb128 0x10
+ 918 015f D6000000 		.4byte	.LASF20
+ 919 0163 02       		.byte	0x2
+ 920 0164 25       		.byte	0x25
+ 921 0165 68000000 		.4byte	0x68
+ 922 0169 82000000 		.4byte	.LLST4
+ 923 016d 0A       		.uleb128 0xa
+ 924 016e 69647800 		.ascii	"idx\000"
+ 925 0172 02       		.byte	0x2
+ 926 0173 27       		.byte	0x27
+ 927 0174 68000000 		.4byte	0x68
+ 928 0178 A1000000 		.4byte	.LLST5
+ 929 017c 10       		.uleb128 0x10
+ 930 017d 7D010000 		.4byte	.LASF21
+ 931 0181 02       		.byte	0x2
+ 932 0182 28       		.byte	0x28
+ 933 0183 68000000 		.4byte	0x68
+ 934 0187 BF000000 		.4byte	.LLST6
+ 935 018b 11       		.uleb128 0x11
+ 936 018c 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 937 0190 A2010000 		.4byte	0x1a2
+ 938 0194 0A       		.uleb128 0xa
+ 939 0195 6900     		.ascii	"i\000"
+ 940 0197 02       		.byte	0x2
+ 941 0198 26       		.byte	0x26
+ 942 0199 68000000 		.4byte	0x68
+ 943 019d E9000000 		.4byte	.LLST7
+ 944 01a1 00       		.byte	0
+ 945 01a2 11       		.uleb128 0x11
+ 946 01a3 30000000 		.4byte	.Ldebug_ranges0+0x30
+ 947 01a7 C2010000 		.4byte	0x1c2
+ 948 01ab 0A       		.uleb128 0xa
+ 949 01ac 6900     		.ascii	"i\000"
+ 950 01ae 02       		.byte	0x2
+ 951 01af 29       		.byte	0x29
+ 952 01b0 68000000 		.4byte	0x68
+ 953 01b4 08010000 		.4byte	.LLST8
+ 954 01b8 07       		.uleb128 0x7
+ 955 01b9 4A000000 		.4byte	.LVL22
+ 956 01bd B5000000 		.4byte	0xb5
+ 957 01c1 00       		.byte	0
+ 958 01c2 07       		.uleb128 0x7
+ 959 01c3 1E000000 		.4byte	.LVL17
+ 960 01c7 B5000000 		.4byte	0xb5
+ 961 01cb 00       		.byte	0
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 21
+
+
+ 962 01cc 08       		.uleb128 0x8
+ 963 01cd 3E020000 		.4byte	.LASF22
+ 964 01d1 02       		.byte	0x2
+ 965 01d2 37       		.byte	0x37
+ 966 01d3 00000000 		.4byte	.LFB66
+ 967 01d7 54000000 		.4byte	.LFE66-.LFB66
+ 968 01db 01       		.uleb128 0x1
+ 969 01dc 9C       		.byte	0x9c
+ 970 01dd 16020000 		.4byte	0x216
+ 971 01e1 09       		.uleb128 0x9
+ 972 01e2 C3000000 		.4byte	.LASF23
+ 973 01e6 02       		.byte	0x2
+ 974 01e7 37       		.byte	0x37
+ 975 01e8 34010000 		.4byte	0x134
+ 976 01ec 01       		.uleb128 0x1
+ 977 01ed 50       		.byte	0x50
+ 978 01ee 09       		.uleb128 0x9
+ 979 01ef 0A000000 		.4byte	.LASF24
+ 980 01f3 02       		.byte	0x2
+ 981 01f4 37       		.byte	0x37
+ 982 01f5 16020000 		.4byte	0x216
+ 983 01f9 01       		.uleb128 0x1
+ 984 01fa 51       		.byte	0x51
+ 985 01fb 0A       		.uleb128 0xa
+ 986 01fc 7000     		.ascii	"p\000"
+ 987 01fe 02       		.byte	0x2
+ 988 01ff 39       		.byte	0x39
+ 989 0200 68000000 		.4byte	0x68
+ 990 0204 32010000 		.4byte	.LLST9
+ 991 0208 0A       		.uleb128 0xa
+ 992 0209 7100     		.ascii	"q\000"
+ 993 020b 02       		.byte	0x2
+ 994 020c 39       		.byte	0x39
+ 995 020d 68000000 		.4byte	0x68
+ 996 0211 51010000 		.4byte	.LLST10
+ 997 0215 00       		.byte	0
+ 998 0216 0D       		.uleb128 0xd
+ 999 0217 04       		.byte	0x4
+ 1000 0218 68000000 		.4byte	0x68
+ 1001 021c 08       		.uleb128 0x8
+ 1002 021d 04010000 		.4byte	.LASF25
+ 1003 0221 02       		.byte	0x2
+ 1004 0222 45       		.byte	0x45
+ 1005 0223 00000000 		.4byte	.LFB67
+ 1006 0227 2A000000 		.4byte	.LFE67-.LFB67
+ 1007 022b 01       		.uleb128 0x1
+ 1008 022c 9C       		.byte	0x9c
+ 1009 022d 95020000 		.4byte	0x295
+ 1010 0231 0F       		.uleb128 0xf
+ 1011 0232 55020000 		.4byte	.LASF19
+ 1012 0236 02       		.byte	0x2
+ 1013 0237 45       		.byte	0x45
+ 1014 0238 34010000 		.4byte	0x134
+ 1015 023c 70010000 		.4byte	.LLST11
+ 1016 0240 12       		.uleb128 0x12
+ 1017 0241 0A000000 		.4byte	.LASF24
+ 1018 0245 02       		.byte	0x2
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 22
+
+
+ 1019 0246 46       		.byte	0x46
+ 1020 0247 68000000 		.4byte	0x68
+ 1021 024b 02       		.uleb128 0x2
+ 1022 024c 91       		.byte	0x91
+ 1023 024d 6C       		.sleb128 -20
+ 1024 024e 13       		.uleb128 0x13
+ 1025 024f 0A000000 		.4byte	.LBB9
+ 1026 0253 12000000 		.4byte	.LBE9-.LBB9
+ 1027 0257 84020000 		.4byte	0x284
+ 1028 025b 0A       		.uleb128 0xa
+ 1029 025c 6900     		.ascii	"i\000"
+ 1030 025e 02       		.byte	0x2
+ 1031 025f 47       		.byte	0x47
+ 1032 0260 68000000 		.4byte	0x68
+ 1033 0264 8E010000 		.4byte	.LLST12
+ 1034 0268 14       		.uleb128 0x14
+ 1035 0269 16000000 		.4byte	.LVL42
+ 1036 026d CC010000 		.4byte	0x1cc
+ 1037 0271 15       		.uleb128 0x15
+ 1038 0272 01       		.uleb128 0x1
+ 1039 0273 51       		.byte	0x51
+ 1040 0274 02       		.uleb128 0x2
+ 1041 0275 91       		.byte	0x91
+ 1042 0276 6C       		.sleb128 -20
+ 1043 0277 15       		.uleb128 0x15
+ 1044 0278 01       		.uleb128 0x1
+ 1045 0279 50       		.byte	0x50
+ 1046 027a 07       		.uleb128 0x7
+ 1047 027b 74       		.byte	0x74
+ 1048 027c 00       		.sleb128 0
+ 1049 027d 33       		.byte	0x33
+ 1050 027e 24       		.byte	0x24
+ 1051 027f 75       		.byte	0x75
+ 1052 0280 00       		.sleb128 0
+ 1053 0281 22       		.byte	0x22
+ 1054 0282 00       		.byte	0
+ 1055 0283 00       		.byte	0
+ 1056 0284 14       		.uleb128 0x14
+ 1057 0285 26000000 		.4byte	.LVL44
+ 1058 0289 3A010000 		.4byte	0x13a
+ 1059 028d 15       		.uleb128 0x15
+ 1060 028e 01       		.uleb128 0x1
+ 1061 028f 50       		.byte	0x50
+ 1062 0290 02       		.uleb128 0x2
+ 1063 0291 75       		.byte	0x75
+ 1064 0292 00       		.sleb128 0
+ 1065 0293 00       		.byte	0
+ 1066 0294 00       		.byte	0
+ 1067 0295 08       		.uleb128 0x8
+ 1068 0296 1C010000 		.4byte	.LASF26
+ 1069 029a 02       		.byte	0x2
+ 1070 029b 4D       		.byte	0x4d
+ 1071 029c 00000000 		.4byte	.LFB68
+ 1072 02a0 2A000000 		.4byte	.LFE68-.LFB68
+ 1073 02a4 01       		.uleb128 0x1
+ 1074 02a5 9C       		.byte	0x9c
+ 1075 02a6 DA020000 		.4byte	0x2da
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 23
+
+
+ 1076 02aa 0F       		.uleb128 0xf
+ 1077 02ab 55020000 		.4byte	.LASF19
+ 1078 02af 02       		.byte	0x2
+ 1079 02b0 4D       		.byte	0x4d
+ 1080 02b1 34010000 		.4byte	0x134
+ 1081 02b5 AD010000 		.4byte	.LLST13
+ 1082 02b9 0F       		.uleb128 0xf
+ 1083 02ba F4000000 		.4byte	.LASF27
+ 1084 02be 02       		.byte	0x2
+ 1085 02bf 4D       		.byte	0x4d
+ 1086 02c0 34010000 		.4byte	0x134
+ 1087 02c4 CE010000 		.4byte	.LLST14
+ 1088 02c8 14       		.uleb128 0x14
+ 1089 02c9 28000000 		.4byte	.LVL47
+ 1090 02cd 1C020000 		.4byte	0x21c
+ 1091 02d1 15       		.uleb128 0x15
+ 1092 02d2 01       		.uleb128 0x1
+ 1093 02d3 50       		.byte	0x50
+ 1094 02d4 03       		.uleb128 0x3
+ 1095 02d5 F3       		.byte	0xf3
+ 1096 02d6 01       		.uleb128 0x1
+ 1097 02d7 51       		.byte	0x51
+ 1098 02d8 00       		.byte	0
+ 1099 02d9 00       		.byte	0
+ 1100 02da 08       		.uleb128 0x8
+ 1101 02db ED000000 		.4byte	.LASF28
+ 1102 02df 02       		.byte	0x2
+ 1103 02e0 52       		.byte	0x52
+ 1104 02e1 00000000 		.4byte	.LFB69
+ 1105 02e5 44000000 		.4byte	.LFE69-.LFB69
+ 1106 02e9 01       		.uleb128 0x1
+ 1107 02ea 9C       		.byte	0x9c
+ 1108 02eb 6E030000 		.4byte	0x36e
+ 1109 02ef 0F       		.uleb128 0xf
+ 1110 02f0 55020000 		.4byte	.LASF19
+ 1111 02f4 02       		.byte	0x2
+ 1112 02f5 52       		.byte	0x52
+ 1113 02f6 34010000 		.4byte	0x134
+ 1114 02fa EF010000 		.4byte	.LLST15
+ 1115 02fe 0F       		.uleb128 0xf
+ 1116 02ff F4000000 		.4byte	.LASF27
+ 1117 0303 02       		.byte	0x2
+ 1118 0304 52       		.byte	0x52
+ 1119 0305 34010000 		.4byte	0x134
+ 1120 0309 10020000 		.4byte	.LLST16
+ 1121 030d 16       		.uleb128 0x16
+ 1122 030e 2A000000 		.4byte	.LVL51
+ 1123 0312 D8000000 		.4byte	0xd8
+ 1124 0316 21030000 		.4byte	0x321
+ 1125 031a 15       		.uleb128 0x15
+ 1126 031b 01       		.uleb128 0x1
+ 1127 031c 50       		.byte	0x50
+ 1128 031d 02       		.uleb128 0x2
+ 1129 031e 74       		.byte	0x74
+ 1130 031f 00       		.sleb128 0
+ 1131 0320 00       		.byte	0
+ 1132 0321 16       		.uleb128 0x16
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 24
+
+
+ 1133 0322 30000000 		.4byte	.LVL52
+ 1134 0326 D8000000 		.4byte	0xd8
+ 1135 032a 35030000 		.4byte	0x335
+ 1136 032e 15       		.uleb128 0x15
+ 1137 032f 01       		.uleb128 0x1
+ 1138 0330 50       		.byte	0x50
+ 1139 0331 02       		.uleb128 0x2
+ 1140 0332 74       		.byte	0x74
+ 1141 0333 00       		.sleb128 0
+ 1142 0334 00       		.byte	0
+ 1143 0335 16       		.uleb128 0x16
+ 1144 0336 36000000 		.4byte	.LVL53
+ 1145 033a D8000000 		.4byte	0xd8
+ 1146 033e 49030000 		.4byte	0x349
+ 1147 0342 15       		.uleb128 0x15
+ 1148 0343 01       		.uleb128 0x1
+ 1149 0344 50       		.byte	0x50
+ 1150 0345 02       		.uleb128 0x2
+ 1151 0346 74       		.byte	0x74
+ 1152 0347 00       		.sleb128 0
+ 1153 0348 00       		.byte	0
+ 1154 0349 16       		.uleb128 0x16
+ 1155 034a 3C000000 		.4byte	.LVL54
+ 1156 034e 1C020000 		.4byte	0x21c
+ 1157 0352 5D030000 		.4byte	0x35d
+ 1158 0356 15       		.uleb128 0x15
+ 1159 0357 01       		.uleb128 0x1
+ 1160 0358 50       		.byte	0x50
+ 1161 0359 02       		.uleb128 0x2
+ 1162 035a 74       		.byte	0x74
+ 1163 035b 00       		.sleb128 0
+ 1164 035c 00       		.byte	0
+ 1165 035d 14       		.uleb128 0x14
+ 1166 035e 42000000 		.4byte	.LVL55
+ 1167 0362 D8000000 		.4byte	0xd8
+ 1168 0366 15       		.uleb128 0x15
+ 1169 0367 01       		.uleb128 0x1
+ 1170 0368 50       		.byte	0x50
+ 1171 0369 02       		.uleb128 0x2
+ 1172 036a 74       		.byte	0x74
+ 1173 036b 00       		.sleb128 0
+ 1174 036c 00       		.byte	0
+ 1175 036d 00       		.byte	0
+ 1176 036e 08       		.uleb128 0x8
+ 1177 036f 49010000 		.4byte	.LASF29
+ 1178 0373 02       		.byte	0x2
+ 1179 0374 5A       		.byte	0x5a
+ 1180 0375 00000000 		.4byte	.LFB70
+ 1181 0379 44000000 		.4byte	.LFE70-.LFB70
+ 1182 037d 01       		.uleb128 0x1
+ 1183 037e 9C       		.byte	0x9c
+ 1184 037f 02040000 		.4byte	0x402
+ 1185 0383 0F       		.uleb128 0xf
+ 1186 0384 55020000 		.4byte	.LASF19
+ 1187 0388 02       		.byte	0x2
+ 1188 0389 5A       		.byte	0x5a
+ 1189 038a 34010000 		.4byte	0x134
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 25
+
+
+ 1190 038e 2E020000 		.4byte	.LLST17
+ 1191 0392 0F       		.uleb128 0xf
+ 1192 0393 F4000000 		.4byte	.LASF27
+ 1193 0397 02       		.byte	0x2
+ 1194 0398 5A       		.byte	0x5a
+ 1195 0399 34010000 		.4byte	0x134
+ 1196 039d 4F020000 		.4byte	.LLST18
+ 1197 03a1 16       		.uleb128 0x16
+ 1198 03a2 2A000000 		.4byte	.LVL59
+ 1199 03a6 D8000000 		.4byte	0xd8
+ 1200 03aa B5030000 		.4byte	0x3b5
+ 1201 03ae 15       		.uleb128 0x15
+ 1202 03af 01       		.uleb128 0x1
+ 1203 03b0 50       		.byte	0x50
+ 1204 03b1 02       		.uleb128 0x2
+ 1205 03b2 74       		.byte	0x74
+ 1206 03b3 00       		.sleb128 0
+ 1207 03b4 00       		.byte	0
+ 1208 03b5 16       		.uleb128 0x16
+ 1209 03b6 30000000 		.4byte	.LVL60
+ 1210 03ba D8000000 		.4byte	0xd8
+ 1211 03be C9030000 		.4byte	0x3c9
+ 1212 03c2 15       		.uleb128 0x15
+ 1213 03c3 01       		.uleb128 0x1
+ 1214 03c4 50       		.byte	0x50
+ 1215 03c5 02       		.uleb128 0x2
+ 1216 03c6 74       		.byte	0x74
+ 1217 03c7 00       		.sleb128 0
+ 1218 03c8 00       		.byte	0
+ 1219 03c9 16       		.uleb128 0x16
+ 1220 03ca 36000000 		.4byte	.LVL61
+ 1221 03ce 1C020000 		.4byte	0x21c
+ 1222 03d2 DD030000 		.4byte	0x3dd
+ 1223 03d6 15       		.uleb128 0x15
+ 1224 03d7 01       		.uleb128 0x1
+ 1225 03d8 50       		.byte	0x50
+ 1226 03d9 02       		.uleb128 0x2
+ 1227 03da 74       		.byte	0x74
+ 1228 03db 00       		.sleb128 0
+ 1229 03dc 00       		.byte	0
+ 1230 03dd 16       		.uleb128 0x16
+ 1231 03de 3C000000 		.4byte	.LVL62
+ 1232 03e2 D8000000 		.4byte	0xd8
+ 1233 03e6 F1030000 		.4byte	0x3f1
+ 1234 03ea 15       		.uleb128 0x15
+ 1235 03eb 01       		.uleb128 0x1
+ 1236 03ec 50       		.byte	0x50
+ 1237 03ed 02       		.uleb128 0x2
+ 1238 03ee 74       		.byte	0x74
+ 1239 03ef 00       		.sleb128 0
+ 1240 03f0 00       		.byte	0
+ 1241 03f1 14       		.uleb128 0x14
+ 1242 03f2 42000000 		.4byte	.LVL63
+ 1243 03f6 D8000000 		.4byte	0xd8
+ 1244 03fa 15       		.uleb128 0x15
+ 1245 03fb 01       		.uleb128 0x1
+ 1246 03fc 50       		.byte	0x50
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 26
+
+
+ 1247 03fd 02       		.uleb128 0x2
+ 1248 03fe 74       		.byte	0x74
+ 1249 03ff 00       		.sleb128 0
+ 1250 0400 00       		.byte	0
+ 1251 0401 00       		.byte	0
+ 1252 0402 08       		.uleb128 0x8
+ 1253 0403 61000000 		.4byte	.LASF30
+ 1254 0407 02       		.byte	0x2
+ 1255 0408 63       		.byte	0x63
+ 1256 0409 00000000 		.4byte	.LFB71
+ 1257 040d 44000000 		.4byte	.LFE71-.LFB71
+ 1258 0411 01       		.uleb128 0x1
+ 1259 0412 9C       		.byte	0x9c
+ 1260 0413 96040000 		.4byte	0x496
+ 1261 0417 0F       		.uleb128 0xf
+ 1262 0418 55020000 		.4byte	.LASF19
+ 1263 041c 02       		.byte	0x2
+ 1264 041d 63       		.byte	0x63
+ 1265 041e 34010000 		.4byte	0x134
+ 1266 0422 6D020000 		.4byte	.LLST19
+ 1267 0426 0F       		.uleb128 0xf
+ 1268 0427 F4000000 		.4byte	.LASF27
+ 1269 042b 02       		.byte	0x2
+ 1270 042c 63       		.byte	0x63
+ 1271 042d 34010000 		.4byte	0x134
+ 1272 0431 8E020000 		.4byte	.LLST20
+ 1273 0435 16       		.uleb128 0x16
+ 1274 0436 2A000000 		.4byte	.LVL67
+ 1275 043a D8000000 		.4byte	0xd8
+ 1276 043e 49040000 		.4byte	0x449
+ 1277 0442 15       		.uleb128 0x15
+ 1278 0443 01       		.uleb128 0x1
+ 1279 0444 50       		.byte	0x50
+ 1280 0445 02       		.uleb128 0x2
+ 1281 0446 74       		.byte	0x74
+ 1282 0447 00       		.sleb128 0
+ 1283 0448 00       		.byte	0
+ 1284 0449 16       		.uleb128 0x16
+ 1285 044a 30000000 		.4byte	.LVL68
+ 1286 044e 1C020000 		.4byte	0x21c
+ 1287 0452 5D040000 		.4byte	0x45d
+ 1288 0456 15       		.uleb128 0x15
+ 1289 0457 01       		.uleb128 0x1
+ 1290 0458 50       		.byte	0x50
+ 1291 0459 02       		.uleb128 0x2
+ 1292 045a 74       		.byte	0x74
+ 1293 045b 00       		.sleb128 0
+ 1294 045c 00       		.byte	0
+ 1295 045d 16       		.uleb128 0x16
+ 1296 045e 36000000 		.4byte	.LVL69
+ 1297 0462 D8000000 		.4byte	0xd8
+ 1298 0466 71040000 		.4byte	0x471
+ 1299 046a 15       		.uleb128 0x15
+ 1300 046b 01       		.uleb128 0x1
+ 1301 046c 50       		.byte	0x50
+ 1302 046d 02       		.uleb128 0x2
+ 1303 046e 74       		.byte	0x74
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 27
+
+
+ 1304 046f 00       		.sleb128 0
+ 1305 0470 00       		.byte	0
+ 1306 0471 16       		.uleb128 0x16
+ 1307 0472 3C000000 		.4byte	.LVL70
+ 1308 0476 D8000000 		.4byte	0xd8
+ 1309 047a 85040000 		.4byte	0x485
+ 1310 047e 15       		.uleb128 0x15
+ 1311 047f 01       		.uleb128 0x1
+ 1312 0480 50       		.byte	0x50
+ 1313 0481 02       		.uleb128 0x2
+ 1314 0482 74       		.byte	0x74
+ 1315 0483 00       		.sleb128 0
+ 1316 0484 00       		.byte	0
+ 1317 0485 14       		.uleb128 0x14
+ 1318 0486 42000000 		.4byte	.LVL71
+ 1319 048a D8000000 		.4byte	0xd8
+ 1320 048e 15       		.uleb128 0x15
+ 1321 048f 01       		.uleb128 0x1
+ 1322 0490 50       		.byte	0x50
+ 1323 0491 02       		.uleb128 0x2
+ 1324 0492 74       		.byte	0x74
+ 1325 0493 00       		.sleb128 0
+ 1326 0494 00       		.byte	0
+ 1327 0495 00       		.byte	0
+ 1328 0496 17       		.uleb128 0x17
+ 1329 0497 14010000 		.4byte	.LASF31
+ 1330 049b 02       		.byte	0x2
+ 1331 049c 70       		.byte	0x70
+ 1332 049d 81000000 		.4byte	0x81
+ 1333 04a1 00000000 		.4byte	.LFB72
+ 1334 04a5 1C000000 		.4byte	.LFE72-.LFB72
+ 1335 04a9 01       		.uleb128 0x1
+ 1336 04aa 9C       		.byte	0x9c
+ 1337 04ab CC040000 		.4byte	0x4cc
+ 1338 04af 0F       		.uleb128 0xf
+ 1339 04b0 55020000 		.4byte	.LASF19
+ 1340 04b4 02       		.byte	0x2
+ 1341 04b5 70       		.byte	0x70
+ 1342 04b6 34010000 		.4byte	0x134
+ 1343 04ba AC020000 		.4byte	.LLST21
+ 1344 04be 0A       		.uleb128 0xa
+ 1345 04bf 6900     		.ascii	"i\000"
+ 1346 04c1 02       		.byte	0x2
+ 1347 04c2 71       		.byte	0x71
+ 1348 04c3 8D000000 		.4byte	0x8d
+ 1349 04c7 E6020000 		.4byte	.LLST22
+ 1350 04cb 00       		.byte	0
+ 1351 04cc 17       		.uleb128 0x17
+ 1352 04cd B4000000 		.4byte	.LASF32
+ 1353 04d1 02       		.byte	0x2
+ 1354 04d2 78       		.byte	0x78
+ 1355 04d3 81000000 		.4byte	0x81
+ 1356 04d7 00000000 		.4byte	.LFB73
+ 1357 04db 26000000 		.4byte	.LFE73-.LFB73
+ 1358 04df 01       		.uleb128 0x1
+ 1359 04e0 9C       		.byte	0x9c
+ 1360 04e1 0F050000 		.4byte	0x50f
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 28
+
+
+ 1361 04e5 0F       		.uleb128 0xf
+ 1362 04e6 55020000 		.4byte	.LASF19
+ 1363 04ea 02       		.byte	0x2
+ 1364 04eb 78       		.byte	0x78
+ 1365 04ec 34010000 		.4byte	0x134
+ 1366 04f0 10030000 		.4byte	.LLST23
+ 1367 04f4 09       		.uleb128 0x9
+ 1368 04f5 35020000 		.4byte	.LASF33
+ 1369 04f9 02       		.byte	0x2
+ 1370 04fa 78       		.byte	0x78
+ 1371 04fb 34010000 		.4byte	0x134
+ 1372 04ff 01       		.uleb128 0x1
+ 1373 0500 51       		.byte	0x51
+ 1374 0501 0A       		.uleb128 0xa
+ 1375 0502 6900     		.ascii	"i\000"
+ 1376 0504 02       		.byte	0x2
+ 1377 0505 79       		.byte	0x79
+ 1378 0506 8D000000 		.4byte	0x8d
+ 1379 050a 4A030000 		.4byte	.LLST24
+ 1380 050e 00       		.byte	0
+ 1381 050f 18       		.uleb128 0x18
+ 1382 0510 C9000000 		.4byte	.LASF38
+ 1383 0514 06       		.byte	0x6
+ 1384 0515 9606     		.2byte	0x696
+ 1385 0517 1B050000 		.4byte	0x51b
+ 1386 051b 19       		.uleb128 0x19
+ 1387 051c 76000000 		.4byte	0x76
+ 1388 0520 1A       		.uleb128 0x1a
+ 1389 0521 5B020000 		.4byte	.LASF39
+ 1390 0525 07       		.byte	0x7
+ 1391 0526 7D       		.byte	0x7d
+ 1392 0527 68000000 		.4byte	0x68
+ 1393 052b 00       		.byte	0
+ 1394              		.section	.debug_abbrev,"",%progbits
+ 1395              	.Ldebug_abbrev0:
+ 1396 0000 01       		.uleb128 0x1
+ 1397 0001 11       		.uleb128 0x11
+ 1398 0002 01       		.byte	0x1
+ 1399 0003 25       		.uleb128 0x25
+ 1400 0004 0E       		.uleb128 0xe
+ 1401 0005 13       		.uleb128 0x13
+ 1402 0006 0B       		.uleb128 0xb
+ 1403 0007 03       		.uleb128 0x3
+ 1404 0008 0E       		.uleb128 0xe
+ 1405 0009 1B       		.uleb128 0x1b
+ 1406 000a 0E       		.uleb128 0xe
+ 1407 000b 55       		.uleb128 0x55
+ 1408 000c 17       		.uleb128 0x17
+ 1409 000d 11       		.uleb128 0x11
+ 1410 000e 01       		.uleb128 0x1
+ 1411 000f 10       		.uleb128 0x10
+ 1412 0010 17       		.uleb128 0x17
+ 1413 0011 00       		.byte	0
+ 1414 0012 00       		.byte	0
+ 1415 0013 02       		.uleb128 0x2
+ 1416 0014 24       		.uleb128 0x24
+ 1417 0015 00       		.byte	0
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 29
+
+
+ 1418 0016 0B       		.uleb128 0xb
+ 1419 0017 0B       		.uleb128 0xb
+ 1420 0018 3E       		.uleb128 0x3e
+ 1421 0019 0B       		.uleb128 0xb
+ 1422 001a 03       		.uleb128 0x3
+ 1423 001b 0E       		.uleb128 0xe
+ 1424 001c 00       		.byte	0
+ 1425 001d 00       		.byte	0
+ 1426 001e 03       		.uleb128 0x3
+ 1427 001f 16       		.uleb128 0x16
+ 1428 0020 00       		.byte	0
+ 1429 0021 03       		.uleb128 0x3
+ 1430 0022 0E       		.uleb128 0xe
+ 1431 0023 3A       		.uleb128 0x3a
+ 1432 0024 0B       		.uleb128 0xb
+ 1433 0025 3B       		.uleb128 0x3b
+ 1434 0026 0B       		.uleb128 0xb
+ 1435 0027 49       		.uleb128 0x49
+ 1436 0028 13       		.uleb128 0x13
+ 1437 0029 00       		.byte	0
+ 1438 002a 00       		.byte	0
+ 1439 002b 04       		.uleb128 0x4
+ 1440 002c 24       		.uleb128 0x24
+ 1441 002d 00       		.byte	0
+ 1442 002e 0B       		.uleb128 0xb
+ 1443 002f 0B       		.uleb128 0xb
+ 1444 0030 3E       		.uleb128 0x3e
+ 1445 0031 0B       		.uleb128 0xb
+ 1446 0032 03       		.uleb128 0x3
+ 1447 0033 08       		.uleb128 0x8
+ 1448 0034 00       		.byte	0
+ 1449 0035 00       		.byte	0
+ 1450 0036 05       		.uleb128 0x5
+ 1451 0037 16       		.uleb128 0x16
+ 1452 0038 00       		.byte	0
+ 1453 0039 03       		.uleb128 0x3
+ 1454 003a 0E       		.uleb128 0xe
+ 1455 003b 3A       		.uleb128 0x3a
+ 1456 003c 0B       		.uleb128 0xb
+ 1457 003d 3B       		.uleb128 0x3b
+ 1458 003e 05       		.uleb128 0x5
+ 1459 003f 49       		.uleb128 0x49
+ 1460 0040 13       		.uleb128 0x13
+ 1461 0041 00       		.byte	0
+ 1462 0042 00       		.byte	0
+ 1463 0043 06       		.uleb128 0x6
+ 1464 0044 2E       		.uleb128 0x2e
+ 1465 0045 01       		.byte	0x1
+ 1466 0046 03       		.uleb128 0x3
+ 1467 0047 0E       		.uleb128 0xe
+ 1468 0048 3A       		.uleb128 0x3a
+ 1469 0049 0B       		.uleb128 0xb
+ 1470 004a 3B       		.uleb128 0x3b
+ 1471 004b 0B       		.uleb128 0xb
+ 1472 004c 49       		.uleb128 0x49
+ 1473 004d 13       		.uleb128 0x13
+ 1474 004e 11       		.uleb128 0x11
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 30
+
+
+ 1475 004f 01       		.uleb128 0x1
+ 1476 0050 12       		.uleb128 0x12
+ 1477 0051 06       		.uleb128 0x6
+ 1478 0052 40       		.uleb128 0x40
+ 1479 0053 18       		.uleb128 0x18
+ 1480 0054 9642     		.uleb128 0x2116
+ 1481 0056 19       		.uleb128 0x19
+ 1482 0057 01       		.uleb128 0x1
+ 1483 0058 13       		.uleb128 0x13
+ 1484 0059 00       		.byte	0
+ 1485 005a 00       		.byte	0
+ 1486 005b 07       		.uleb128 0x7
+ 1487 005c 898201   		.uleb128 0x4109
+ 1488 005f 00       		.byte	0
+ 1489 0060 11       		.uleb128 0x11
+ 1490 0061 01       		.uleb128 0x1
+ 1491 0062 31       		.uleb128 0x31
+ 1492 0063 13       		.uleb128 0x13
+ 1493 0064 00       		.byte	0
+ 1494 0065 00       		.byte	0
+ 1495 0066 08       		.uleb128 0x8
+ 1496 0067 2E       		.uleb128 0x2e
+ 1497 0068 01       		.byte	0x1
+ 1498 0069 3F       		.uleb128 0x3f
+ 1499 006a 19       		.uleb128 0x19
+ 1500 006b 03       		.uleb128 0x3
+ 1501 006c 0E       		.uleb128 0xe
+ 1502 006d 3A       		.uleb128 0x3a
+ 1503 006e 0B       		.uleb128 0xb
+ 1504 006f 3B       		.uleb128 0x3b
+ 1505 0070 0B       		.uleb128 0xb
+ 1506 0071 27       		.uleb128 0x27
+ 1507 0072 19       		.uleb128 0x19
+ 1508 0073 11       		.uleb128 0x11
+ 1509 0074 01       		.uleb128 0x1
+ 1510 0075 12       		.uleb128 0x12
+ 1511 0076 06       		.uleb128 0x6
+ 1512 0077 40       		.uleb128 0x40
+ 1513 0078 18       		.uleb128 0x18
+ 1514 0079 9742     		.uleb128 0x2117
+ 1515 007b 19       		.uleb128 0x19
+ 1516 007c 01       		.uleb128 0x1
+ 1517 007d 13       		.uleb128 0x13
+ 1518 007e 00       		.byte	0
+ 1519 007f 00       		.byte	0
+ 1520 0080 09       		.uleb128 0x9
+ 1521 0081 05       		.uleb128 0x5
+ 1522 0082 00       		.byte	0
+ 1523 0083 03       		.uleb128 0x3
+ 1524 0084 0E       		.uleb128 0xe
+ 1525 0085 3A       		.uleb128 0x3a
+ 1526 0086 0B       		.uleb128 0xb
+ 1527 0087 3B       		.uleb128 0x3b
+ 1528 0088 0B       		.uleb128 0xb
+ 1529 0089 49       		.uleb128 0x49
+ 1530 008a 13       		.uleb128 0x13
+ 1531 008b 02       		.uleb128 0x2
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 31
+
+
+ 1532 008c 18       		.uleb128 0x18
+ 1533 008d 00       		.byte	0
+ 1534 008e 00       		.byte	0
+ 1535 008f 0A       		.uleb128 0xa
+ 1536 0090 34       		.uleb128 0x34
+ 1537 0091 00       		.byte	0
+ 1538 0092 03       		.uleb128 0x3
+ 1539 0093 08       		.uleb128 0x8
+ 1540 0094 3A       		.uleb128 0x3a
+ 1541 0095 0B       		.uleb128 0xb
+ 1542 0096 3B       		.uleb128 0x3b
+ 1543 0097 0B       		.uleb128 0xb
+ 1544 0098 49       		.uleb128 0x49
+ 1545 0099 13       		.uleb128 0x13
+ 1546 009a 02       		.uleb128 0x2
+ 1547 009b 17       		.uleb128 0x17
+ 1548 009c 00       		.byte	0
+ 1549 009d 00       		.byte	0
+ 1550 009e 0B       		.uleb128 0xb
+ 1551 009f 0B       		.uleb128 0xb
+ 1552 00a0 01       		.byte	0x1
+ 1553 00a1 11       		.uleb128 0x11
+ 1554 00a2 01       		.uleb128 0x1
+ 1555 00a3 12       		.uleb128 0x12
+ 1556 00a4 06       		.uleb128 0x6
+ 1557 00a5 00       		.byte	0
+ 1558 00a6 00       		.byte	0
+ 1559 00a7 0C       		.uleb128 0xc
+ 1560 00a8 0B       		.uleb128 0xb
+ 1561 00a9 01       		.byte	0x1
+ 1562 00aa 55       		.uleb128 0x55
+ 1563 00ab 17       		.uleb128 0x17
+ 1564 00ac 00       		.byte	0
+ 1565 00ad 00       		.byte	0
+ 1566 00ae 0D       		.uleb128 0xd
+ 1567 00af 0F       		.uleb128 0xf
+ 1568 00b0 00       		.byte	0
+ 1569 00b1 0B       		.uleb128 0xb
+ 1570 00b2 0B       		.uleb128 0xb
+ 1571 00b3 49       		.uleb128 0x49
+ 1572 00b4 13       		.uleb128 0x13
+ 1573 00b5 00       		.byte	0
+ 1574 00b6 00       		.byte	0
+ 1575 00b7 0E       		.uleb128 0xe
+ 1576 00b8 2E       		.uleb128 0x2e
+ 1577 00b9 01       		.byte	0x1
+ 1578 00ba 3F       		.uleb128 0x3f
+ 1579 00bb 19       		.uleb128 0x19
+ 1580 00bc 03       		.uleb128 0x3
+ 1581 00bd 0E       		.uleb128 0xe
+ 1582 00be 3A       		.uleb128 0x3a
+ 1583 00bf 0B       		.uleb128 0xb
+ 1584 00c0 3B       		.uleb128 0x3b
+ 1585 00c1 0B       		.uleb128 0xb
+ 1586 00c2 27       		.uleb128 0x27
+ 1587 00c3 19       		.uleb128 0x19
+ 1588 00c4 11       		.uleb128 0x11
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 32
+
+
+ 1589 00c5 01       		.uleb128 0x1
+ 1590 00c6 12       		.uleb128 0x12
+ 1591 00c7 06       		.uleb128 0x6
+ 1592 00c8 40       		.uleb128 0x40
+ 1593 00c9 18       		.uleb128 0x18
+ 1594 00ca 9642     		.uleb128 0x2116
+ 1595 00cc 19       		.uleb128 0x19
+ 1596 00cd 01       		.uleb128 0x1
+ 1597 00ce 13       		.uleb128 0x13
+ 1598 00cf 00       		.byte	0
+ 1599 00d0 00       		.byte	0
+ 1600 00d1 0F       		.uleb128 0xf
+ 1601 00d2 05       		.uleb128 0x5
+ 1602 00d3 00       		.byte	0
+ 1603 00d4 03       		.uleb128 0x3
+ 1604 00d5 0E       		.uleb128 0xe
+ 1605 00d6 3A       		.uleb128 0x3a
+ 1606 00d7 0B       		.uleb128 0xb
+ 1607 00d8 3B       		.uleb128 0x3b
+ 1608 00d9 0B       		.uleb128 0xb
+ 1609 00da 49       		.uleb128 0x49
+ 1610 00db 13       		.uleb128 0x13
+ 1611 00dc 02       		.uleb128 0x2
+ 1612 00dd 17       		.uleb128 0x17
+ 1613 00de 00       		.byte	0
+ 1614 00df 00       		.byte	0
+ 1615 00e0 10       		.uleb128 0x10
+ 1616 00e1 34       		.uleb128 0x34
+ 1617 00e2 00       		.byte	0
+ 1618 00e3 03       		.uleb128 0x3
+ 1619 00e4 0E       		.uleb128 0xe
+ 1620 00e5 3A       		.uleb128 0x3a
+ 1621 00e6 0B       		.uleb128 0xb
+ 1622 00e7 3B       		.uleb128 0x3b
+ 1623 00e8 0B       		.uleb128 0xb
+ 1624 00e9 49       		.uleb128 0x49
+ 1625 00ea 13       		.uleb128 0x13
+ 1626 00eb 02       		.uleb128 0x2
+ 1627 00ec 17       		.uleb128 0x17
+ 1628 00ed 00       		.byte	0
+ 1629 00ee 00       		.byte	0
+ 1630 00ef 11       		.uleb128 0x11
+ 1631 00f0 0B       		.uleb128 0xb
+ 1632 00f1 01       		.byte	0x1
+ 1633 00f2 55       		.uleb128 0x55
+ 1634 00f3 17       		.uleb128 0x17
+ 1635 00f4 01       		.uleb128 0x1
+ 1636 00f5 13       		.uleb128 0x13
+ 1637 00f6 00       		.byte	0
+ 1638 00f7 00       		.byte	0
+ 1639 00f8 12       		.uleb128 0x12
+ 1640 00f9 34       		.uleb128 0x34
+ 1641 00fa 00       		.byte	0
+ 1642 00fb 03       		.uleb128 0x3
+ 1643 00fc 0E       		.uleb128 0xe
+ 1644 00fd 3A       		.uleb128 0x3a
+ 1645 00fe 0B       		.uleb128 0xb
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 33
+
+
+ 1646 00ff 3B       		.uleb128 0x3b
+ 1647 0100 0B       		.uleb128 0xb
+ 1648 0101 49       		.uleb128 0x49
+ 1649 0102 13       		.uleb128 0x13
+ 1650 0103 02       		.uleb128 0x2
+ 1651 0104 18       		.uleb128 0x18
+ 1652 0105 00       		.byte	0
+ 1653 0106 00       		.byte	0
+ 1654 0107 13       		.uleb128 0x13
+ 1655 0108 0B       		.uleb128 0xb
+ 1656 0109 01       		.byte	0x1
+ 1657 010a 11       		.uleb128 0x11
+ 1658 010b 01       		.uleb128 0x1
+ 1659 010c 12       		.uleb128 0x12
+ 1660 010d 06       		.uleb128 0x6
+ 1661 010e 01       		.uleb128 0x1
+ 1662 010f 13       		.uleb128 0x13
+ 1663 0110 00       		.byte	0
+ 1664 0111 00       		.byte	0
+ 1665 0112 14       		.uleb128 0x14
+ 1666 0113 898201   		.uleb128 0x4109
+ 1667 0116 01       		.byte	0x1
+ 1668 0117 11       		.uleb128 0x11
+ 1669 0118 01       		.uleb128 0x1
+ 1670 0119 31       		.uleb128 0x31
+ 1671 011a 13       		.uleb128 0x13
+ 1672 011b 00       		.byte	0
+ 1673 011c 00       		.byte	0
+ 1674 011d 15       		.uleb128 0x15
+ 1675 011e 8A8201   		.uleb128 0x410a
+ 1676 0121 00       		.byte	0
+ 1677 0122 02       		.uleb128 0x2
+ 1678 0123 18       		.uleb128 0x18
+ 1679 0124 9142     		.uleb128 0x2111
+ 1680 0126 18       		.uleb128 0x18
+ 1681 0127 00       		.byte	0
+ 1682 0128 00       		.byte	0
+ 1683 0129 16       		.uleb128 0x16
+ 1684 012a 898201   		.uleb128 0x4109
+ 1685 012d 01       		.byte	0x1
+ 1686 012e 11       		.uleb128 0x11
+ 1687 012f 01       		.uleb128 0x1
+ 1688 0130 31       		.uleb128 0x31
+ 1689 0131 13       		.uleb128 0x13
+ 1690 0132 01       		.uleb128 0x1
+ 1691 0133 13       		.uleb128 0x13
+ 1692 0134 00       		.byte	0
+ 1693 0135 00       		.byte	0
+ 1694 0136 17       		.uleb128 0x17
+ 1695 0137 2E       		.uleb128 0x2e
+ 1696 0138 01       		.byte	0x1
+ 1697 0139 3F       		.uleb128 0x3f
+ 1698 013a 19       		.uleb128 0x19
+ 1699 013b 03       		.uleb128 0x3
+ 1700 013c 0E       		.uleb128 0xe
+ 1701 013d 3A       		.uleb128 0x3a
+ 1702 013e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 34
+
+
+ 1703 013f 3B       		.uleb128 0x3b
+ 1704 0140 0B       		.uleb128 0xb
+ 1705 0141 27       		.uleb128 0x27
+ 1706 0142 19       		.uleb128 0x19
+ 1707 0143 49       		.uleb128 0x49
+ 1708 0144 13       		.uleb128 0x13
+ 1709 0145 11       		.uleb128 0x11
+ 1710 0146 01       		.uleb128 0x1
+ 1711 0147 12       		.uleb128 0x12
+ 1712 0148 06       		.uleb128 0x6
+ 1713 0149 40       		.uleb128 0x40
+ 1714 014a 18       		.uleb128 0x18
+ 1715 014b 9742     		.uleb128 0x2117
+ 1716 014d 19       		.uleb128 0x19
+ 1717 014e 01       		.uleb128 0x1
+ 1718 014f 13       		.uleb128 0x13
+ 1719 0150 00       		.byte	0
+ 1720 0151 00       		.byte	0
+ 1721 0152 18       		.uleb128 0x18
+ 1722 0153 34       		.uleb128 0x34
+ 1723 0154 00       		.byte	0
+ 1724 0155 03       		.uleb128 0x3
+ 1725 0156 0E       		.uleb128 0xe
+ 1726 0157 3A       		.uleb128 0x3a
+ 1727 0158 0B       		.uleb128 0xb
+ 1728 0159 3B       		.uleb128 0x3b
+ 1729 015a 05       		.uleb128 0x5
+ 1730 015b 49       		.uleb128 0x49
+ 1731 015c 13       		.uleb128 0x13
+ 1732 015d 3F       		.uleb128 0x3f
+ 1733 015e 19       		.uleb128 0x19
+ 1734 015f 3C       		.uleb128 0x3c
+ 1735 0160 19       		.uleb128 0x19
+ 1736 0161 00       		.byte	0
+ 1737 0162 00       		.byte	0
+ 1738 0163 19       		.uleb128 0x19
+ 1739 0164 35       		.uleb128 0x35
+ 1740 0165 00       		.byte	0
+ 1741 0166 49       		.uleb128 0x49
+ 1742 0167 13       		.uleb128 0x13
+ 1743 0168 00       		.byte	0
+ 1744 0169 00       		.byte	0
+ 1745 016a 1A       		.uleb128 0x1a
+ 1746 016b 2E       		.uleb128 0x2e
+ 1747 016c 00       		.byte	0
+ 1748 016d 3F       		.uleb128 0x3f
+ 1749 016e 19       		.uleb128 0x19
+ 1750 016f 03       		.uleb128 0x3
+ 1751 0170 0E       		.uleb128 0xe
+ 1752 0171 3A       		.uleb128 0x3a
+ 1753 0172 0B       		.uleb128 0xb
+ 1754 0173 3B       		.uleb128 0x3b
+ 1755 0174 0B       		.uleb128 0xb
+ 1756 0175 27       		.uleb128 0x27
+ 1757 0176 19       		.uleb128 0x19
+ 1758 0177 49       		.uleb128 0x49
+ 1759 0178 13       		.uleb128 0x13
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 35
+
+
+ 1760 0179 3C       		.uleb128 0x3c
+ 1761 017a 19       		.uleb128 0x19
+ 1762 017b 00       		.byte	0
+ 1763 017c 00       		.byte	0
+ 1764 017d 00       		.byte	0
+ 1765              		.section	.debug_loc,"",%progbits
+ 1766              	.Ldebug_loc0:
+ 1767              	.LLST0:
+ 1768 0000 0E000000 		.4byte	.LVL6
+ 1769 0004 4C000000 		.4byte	.LVL8
+ 1770 0008 0700     		.2byte	0x7
+ 1771 000a 76       		.byte	0x76
+ 1772 000b 00       		.sleb128 0
+ 1773 000c 0A       		.byte	0xa
+ 1774 000d FFFF     		.2byte	0xffff
+ 1775 000f 1A       		.byte	0x1a
+ 1776 0010 9F       		.byte	0x9f
+ 1777 0011 00000000 		.4byte	0
+ 1778 0015 00000000 		.4byte	0
+ 1779              	.LLST1:
+ 1780 0019 02000000 		.4byte	.LVL4
+ 1781 001d 06000000 		.4byte	.LVL5
+ 1782 0021 0200     		.2byte	0x2
+ 1783 0023 30       		.byte	0x30
+ 1784 0024 9F       		.byte	0x9f
+ 1785 0025 06000000 		.4byte	.LVL5
+ 1786 0029 5A000000 		.4byte	.LVL11
+ 1787 002d 0100     		.2byte	0x1
+ 1788 002f 55       		.byte	0x55
+ 1789 0030 00000000 		.4byte	0
+ 1790 0034 00000000 		.4byte	0
+ 1791              	.LLST2:
+ 1792 0038 06000000 		.4byte	.LVL5
+ 1793 003c 4C000000 		.4byte	.LVL8
+ 1794 0040 0100     		.2byte	0x1
+ 1795 0042 53       		.byte	0x53
+ 1796 0043 4E000000 		.4byte	.LVL9
+ 1797 0047 54000000 		.4byte	.LVL10
+ 1798 004b 0100     		.2byte	0x1
+ 1799 004d 53       		.byte	0x53
+ 1800 004e 00000000 		.4byte	0
+ 1801 0052 00000000 		.4byte	0
+ 1802              	.LLST3:
+ 1803 0056 00000000 		.4byte	.LVL12
+ 1804 005a 1D000000 		.4byte	.LVL17-1
+ 1805 005e 0100     		.2byte	0x1
+ 1806 0060 50       		.byte	0x50
+ 1807 0061 1D000000 		.4byte	.LVL17-1
+ 1808 0065 6E000000 		.4byte	.LVL28
+ 1809 0069 0100     		.2byte	0x1
+ 1810 006b 54       		.byte	0x54
+ 1811 006c 6E000000 		.4byte	.LVL28
+ 1812 0070 78000000 		.4byte	.LFE65
+ 1813 0074 0400     		.2byte	0x4
+ 1814 0076 F3       		.byte	0xf3
+ 1815 0077 01       		.uleb128 0x1
+ 1816 0078 50       		.byte	0x50
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 36
+
+
+ 1817 0079 9F       		.byte	0x9f
+ 1818 007a 00000000 		.4byte	0
+ 1819 007e 00000000 		.4byte	0
+ 1820              	.LLST4:
+ 1821 0082 04000000 		.4byte	.LVL13
+ 1822 0086 0A000000 		.4byte	.LVL14
+ 1823 008a 0200     		.2byte	0x2
+ 1824 008c 30       		.byte	0x30
+ 1825 008d 9F       		.byte	0x9f
+ 1826 008e 0A000000 		.4byte	.LVL14
+ 1827 0092 38000000 		.4byte	.LVL21
+ 1828 0096 0100     		.2byte	0x1
+ 1829 0098 55       		.byte	0x55
+ 1830 0099 00000000 		.4byte	0
+ 1831 009d 00000000 		.4byte	0
+ 1832              	.LLST5:
+ 1833 00a1 32000000 		.4byte	.LVL20
+ 1834 00a5 49000000 		.4byte	.LVL22-1
+ 1835 00a9 0100     		.2byte	0x1
+ 1836 00ab 50       		.byte	0x50
+ 1837 00ac 64000000 		.4byte	.LVL25
+ 1838 00b0 78000000 		.4byte	.LFE65
+ 1839 00b4 0100     		.2byte	0x1
+ 1840 00b6 50       		.byte	0x50
+ 1841 00b7 00000000 		.4byte	0
+ 1842 00bb 00000000 		.4byte	0
+ 1843              	.LLST6:
+ 1844 00bf 32000000 		.4byte	.LVL20
+ 1845 00c3 38000000 		.4byte	.LVL21
+ 1846 00c7 0200     		.2byte	0x2
+ 1847 00c9 30       		.byte	0x30
+ 1848 00ca 9F       		.byte	0x9f
+ 1849 00cb 38000000 		.4byte	.LVL21
+ 1850 00cf 49000000 		.4byte	.LVL22-1
+ 1851 00d3 0100     		.2byte	0x1
+ 1852 00d5 51       		.byte	0x51
+ 1853 00d6 64000000 		.4byte	.LVL25
+ 1854 00da 78000000 		.4byte	.LFE65
+ 1855 00de 0100     		.2byte	0x1
+ 1856 00e0 51       		.byte	0x51
+ 1857 00e1 00000000 		.4byte	0
+ 1858 00e5 00000000 		.4byte	0
+ 1859              	.LLST7:
+ 1860 00e9 04000000 		.4byte	.LVL13
+ 1861 00ed 0A000000 		.4byte	.LVL14
+ 1862 00f1 0200     		.2byte	0x2
+ 1863 00f3 30       		.byte	0x30
+ 1864 00f4 9F       		.byte	0x9f
+ 1865 00f5 0A000000 		.4byte	.LVL14
+ 1866 00f9 1D000000 		.4byte	.LVL17-1
+ 1867 00fd 0100     		.2byte	0x1
+ 1868 00ff 53       		.byte	0x53
+ 1869 0100 00000000 		.4byte	0
+ 1870 0104 00000000 		.4byte	0
+ 1871              	.LLST8:
+ 1872 0108 32000000 		.4byte	.LVL20
+ 1873 010c 38000000 		.4byte	.LVL21
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 37
+
+
+ 1874 0110 0200     		.2byte	0x2
+ 1875 0112 30       		.byte	0x30
+ 1876 0113 9F       		.byte	0x9f
+ 1877 0114 38000000 		.4byte	.LVL21
+ 1878 0118 49000000 		.4byte	.LVL22-1
+ 1879 011c 0100     		.2byte	0x1
+ 1880 011e 53       		.byte	0x53
+ 1881 011f 64000000 		.4byte	.LVL25
+ 1882 0123 78000000 		.4byte	.LFE65
+ 1883 0127 0100     		.2byte	0x1
+ 1884 0129 53       		.byte	0x53
+ 1885 012a 00000000 		.4byte	0
+ 1886 012e 00000000 		.4byte	0
+ 1887              	.LLST9:
+ 1888 0132 02000000 		.4byte	.LVL30
+ 1889 0136 08000000 		.4byte	.LVL31
+ 1890 013a 0200     		.2byte	0x2
+ 1891 013c 30       		.byte	0x30
+ 1892 013d 9F       		.byte	0x9f
+ 1893 013e 08000000 		.4byte	.LVL31
+ 1894 0142 52000000 		.4byte	.LVL38
+ 1895 0146 0100     		.2byte	0x1
+ 1896 0148 54       		.byte	0x54
+ 1897 0149 00000000 		.4byte	0
+ 1898 014d 00000000 		.4byte	0
+ 1899              	.LLST10:
+ 1900 0151 02000000 		.4byte	.LVL30
+ 1901 0155 08000000 		.4byte	.LVL31
+ 1902 0159 0200     		.2byte	0x2
+ 1903 015b 30       		.byte	0x30
+ 1904 015c 9F       		.byte	0x9f
+ 1905 015d 08000000 		.4byte	.LVL31
+ 1906 0161 54000000 		.4byte	.LFE66
+ 1907 0165 0100     		.2byte	0x1
+ 1908 0167 53       		.byte	0x53
+ 1909 0168 00000000 		.4byte	0
+ 1910 016c 00000000 		.4byte	0
+ 1911              	.LLST11:
+ 1912 0170 00000000 		.4byte	.LVL39
+ 1913 0174 0C000000 		.4byte	.LVL41
+ 1914 0178 0100     		.2byte	0x1
+ 1915 017a 50       		.byte	0x50
+ 1916 017b 0C000000 		.4byte	.LVL41
+ 1917 017f 2A000000 		.4byte	.LFE67
+ 1918 0183 0100     		.2byte	0x1
+ 1919 0185 55       		.byte	0x55
+ 1920 0186 00000000 		.4byte	0
+ 1921 018a 00000000 		.4byte	0
+ 1922              	.LLST12:
+ 1923 018e 0A000000 		.4byte	.LVL40
+ 1924 0192 0C000000 		.4byte	.LVL41
+ 1925 0196 0200     		.2byte	0x2
+ 1926 0198 30       		.byte	0x30
+ 1927 0199 9F       		.byte	0x9f
+ 1928 019a 0C000000 		.4byte	.LVL41
+ 1929 019e 2A000000 		.4byte	.LFE67
+ 1930 01a2 0100     		.2byte	0x1
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 38
+
+
+ 1931 01a4 54       		.byte	0x54
+ 1932 01a5 00000000 		.4byte	0
+ 1933 01a9 00000000 		.4byte	0
+ 1934              	.LLST13:
+ 1935 01ad 00000000 		.4byte	.LVL45
+ 1936 01b1 24000000 		.4byte	.LVL46
+ 1937 01b5 0100     		.2byte	0x1
+ 1938 01b7 50       		.byte	0x50
+ 1939 01b8 24000000 		.4byte	.LVL46
+ 1940 01bc 2A000000 		.4byte	.LFE68
+ 1941 01c0 0400     		.2byte	0x4
+ 1942 01c2 F3       		.byte	0xf3
+ 1943 01c3 01       		.uleb128 0x1
+ 1944 01c4 50       		.byte	0x50
+ 1945 01c5 9F       		.byte	0x9f
+ 1946 01c6 00000000 		.4byte	0
+ 1947 01ca 00000000 		.4byte	0
+ 1948              	.LLST14:
+ 1949 01ce 00000000 		.4byte	.LVL45
+ 1950 01d2 27000000 		.4byte	.LVL47-1
+ 1951 01d6 0100     		.2byte	0x1
+ 1952 01d8 51       		.byte	0x51
+ 1953 01d9 27000000 		.4byte	.LVL47-1
+ 1954 01dd 2A000000 		.4byte	.LFE68
+ 1955 01e1 0400     		.2byte	0x4
+ 1956 01e3 F3       		.byte	0xf3
+ 1957 01e4 01       		.uleb128 0x1
+ 1958 01e5 51       		.byte	0x51
+ 1959 01e6 9F       		.byte	0x9f
+ 1960 01e7 00000000 		.4byte	0
+ 1961 01eb 00000000 		.4byte	0
+ 1962              	.LLST15:
+ 1963 01ef 00000000 		.4byte	.LVL48
+ 1964 01f3 26000000 		.4byte	.LVL50
+ 1965 01f7 0100     		.2byte	0x1
+ 1966 01f9 50       		.byte	0x50
+ 1967 01fa 26000000 		.4byte	.LVL50
+ 1968 01fe 44000000 		.4byte	.LFE69
+ 1969 0202 0400     		.2byte	0x4
+ 1970 0204 F3       		.byte	0xf3
+ 1971 0205 01       		.uleb128 0x1
+ 1972 0206 50       		.byte	0x50
+ 1973 0207 9F       		.byte	0x9f
+ 1974 0208 00000000 		.4byte	0
+ 1975 020c 00000000 		.4byte	0
+ 1976              	.LLST16:
+ 1977 0210 00000000 		.4byte	.LVL48
+ 1978 0214 08000000 		.4byte	.LVL49
+ 1979 0218 0100     		.2byte	0x1
+ 1980 021a 51       		.byte	0x51
+ 1981 021b 08000000 		.4byte	.LVL49
+ 1982 021f 44000000 		.4byte	.LFE69
+ 1983 0223 0100     		.2byte	0x1
+ 1984 0225 54       		.byte	0x54
+ 1985 0226 00000000 		.4byte	0
+ 1986 022a 00000000 		.4byte	0
+ 1987              	.LLST17:
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 39
+
+
+ 1988 022e 00000000 		.4byte	.LVL56
+ 1989 0232 26000000 		.4byte	.LVL58
+ 1990 0236 0100     		.2byte	0x1
+ 1991 0238 50       		.byte	0x50
+ 1992 0239 26000000 		.4byte	.LVL58
+ 1993 023d 44000000 		.4byte	.LFE70
+ 1994 0241 0400     		.2byte	0x4
+ 1995 0243 F3       		.byte	0xf3
+ 1996 0244 01       		.uleb128 0x1
+ 1997 0245 50       		.byte	0x50
+ 1998 0246 9F       		.byte	0x9f
+ 1999 0247 00000000 		.4byte	0
+ 2000 024b 00000000 		.4byte	0
+ 2001              	.LLST18:
+ 2002 024f 00000000 		.4byte	.LVL56
+ 2003 0253 08000000 		.4byte	.LVL57
+ 2004 0257 0100     		.2byte	0x1
+ 2005 0259 51       		.byte	0x51
+ 2006 025a 08000000 		.4byte	.LVL57
+ 2007 025e 44000000 		.4byte	.LFE70
+ 2008 0262 0100     		.2byte	0x1
+ 2009 0264 54       		.byte	0x54
+ 2010 0265 00000000 		.4byte	0
+ 2011 0269 00000000 		.4byte	0
+ 2012              	.LLST19:
+ 2013 026d 00000000 		.4byte	.LVL64
+ 2014 0271 26000000 		.4byte	.LVL66
+ 2015 0275 0100     		.2byte	0x1
+ 2016 0277 50       		.byte	0x50
+ 2017 0278 26000000 		.4byte	.LVL66
+ 2018 027c 44000000 		.4byte	.LFE71
+ 2019 0280 0400     		.2byte	0x4
+ 2020 0282 F3       		.byte	0xf3
+ 2021 0283 01       		.uleb128 0x1
+ 2022 0284 50       		.byte	0x50
+ 2023 0285 9F       		.byte	0x9f
+ 2024 0286 00000000 		.4byte	0
+ 2025 028a 00000000 		.4byte	0
+ 2026              	.LLST20:
+ 2027 028e 00000000 		.4byte	.LVL64
+ 2028 0292 08000000 		.4byte	.LVL65
+ 2029 0296 0100     		.2byte	0x1
+ 2030 0298 51       		.byte	0x51
+ 2031 0299 08000000 		.4byte	.LVL65
+ 2032 029d 44000000 		.4byte	.LFE71
+ 2033 02a1 0100     		.2byte	0x1
+ 2034 02a3 54       		.byte	0x54
+ 2035 02a4 00000000 		.4byte	0
+ 2036 02a8 00000000 		.4byte	0
+ 2037              	.LLST21:
+ 2038 02ac 00000000 		.4byte	.LVL72
+ 2039 02b0 16000000 		.4byte	.LVL76
+ 2040 02b4 0100     		.2byte	0x1
+ 2041 02b6 50       		.byte	0x50
+ 2042 02b7 16000000 		.4byte	.LVL76
+ 2043 02bb 18000000 		.4byte	.LVL77
+ 2044 02bf 0400     		.2byte	0x4
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 40
+
+
+ 2045 02c1 F3       		.byte	0xf3
+ 2046 02c2 01       		.uleb128 0x1
+ 2047 02c3 50       		.byte	0x50
+ 2048 02c4 9F       		.byte	0x9f
+ 2049 02c5 18000000 		.4byte	.LVL77
+ 2050 02c9 1A000000 		.4byte	.LVL78
+ 2051 02cd 0100     		.2byte	0x1
+ 2052 02cf 50       		.byte	0x50
+ 2053 02d0 1A000000 		.4byte	.LVL78
+ 2054 02d4 1C000000 		.4byte	.LFE72
+ 2055 02d8 0400     		.2byte	0x4
+ 2056 02da F3       		.byte	0xf3
+ 2057 02db 01       		.uleb128 0x1
+ 2058 02dc 50       		.byte	0x50
+ 2059 02dd 9F       		.byte	0x9f
+ 2060 02de 00000000 		.4byte	0
+ 2061 02e2 00000000 		.4byte	0
+ 2062              	.LLST22:
+ 2063 02e6 00000000 		.4byte	.LVL72
+ 2064 02ea 04000000 		.4byte	.LVL73
+ 2065 02ee 0200     		.2byte	0x2
+ 2066 02f0 30       		.byte	0x30
+ 2067 02f1 9F       		.byte	0x9f
+ 2068 02f2 04000000 		.4byte	.LVL73
+ 2069 02f6 0E000000 		.4byte	.LVL74
+ 2070 02fa 0100     		.2byte	0x1
+ 2071 02fc 53       		.byte	0x53
+ 2072 02fd 10000000 		.4byte	.LVL75
+ 2073 0301 1C000000 		.4byte	.LFE72
+ 2074 0305 0100     		.2byte	0x1
+ 2075 0307 53       		.byte	0x53
+ 2076 0308 00000000 		.4byte	0
+ 2077 030c 00000000 		.4byte	0
+ 2078              	.LLST23:
+ 2079 0310 00000000 		.4byte	.LVL79
+ 2080 0314 1C000000 		.4byte	.LVL84
+ 2081 0318 0100     		.2byte	0x1
+ 2082 031a 50       		.byte	0x50
+ 2083 031b 1C000000 		.4byte	.LVL84
+ 2084 031f 1E000000 		.4byte	.LVL85
+ 2085 0323 0400     		.2byte	0x4
+ 2086 0325 F3       		.byte	0xf3
+ 2087 0326 01       		.uleb128 0x1
+ 2088 0327 50       		.byte	0x50
+ 2089 0328 9F       		.byte	0x9f
+ 2090 0329 1E000000 		.4byte	.LVL85
+ 2091 032d 20000000 		.4byte	.LVL86
+ 2092 0331 0100     		.2byte	0x1
+ 2093 0333 50       		.byte	0x50
+ 2094 0334 20000000 		.4byte	.LVL86
+ 2095 0338 26000000 		.4byte	.LFE73
+ 2096 033c 0400     		.2byte	0x4
+ 2097 033e F3       		.byte	0xf3
+ 2098 033f 01       		.uleb128 0x1
+ 2099 0340 50       		.byte	0x50
+ 2100 0341 9F       		.byte	0x9f
+ 2101 0342 00000000 		.4byte	0
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 41
+
+
+ 2102 0346 00000000 		.4byte	0
+ 2103              	.LLST24:
+ 2104 034a 02000000 		.4byte	.LVL80
+ 2105 034e 06000000 		.4byte	.LVL81
+ 2106 0352 0200     		.2byte	0x2
+ 2107 0354 30       		.byte	0x30
+ 2108 0355 9F       		.byte	0x9f
+ 2109 0356 06000000 		.4byte	.LVL81
+ 2110 035a 14000000 		.4byte	.LVL82
+ 2111 035e 0100     		.2byte	0x1
+ 2112 0360 53       		.byte	0x53
+ 2113 0361 16000000 		.4byte	.LVL83
+ 2114 0365 26000000 		.4byte	.LFE73
+ 2115 0369 0100     		.2byte	0x1
+ 2116 036b 53       		.byte	0x53
+ 2117 036c 00000000 		.4byte	0
+ 2118 0370 00000000 		.4byte	0
+ 2119              		.section	.debug_aranges,"",%progbits
+ 2120 0000 6C000000 		.4byte	0x6c
+ 2121 0004 0200     		.2byte	0x2
+ 2122 0006 00000000 		.4byte	.Ldebug_info0
+ 2123 000a 04       		.byte	0x4
+ 2124 000b 00       		.byte	0
+ 2125 000c 0000     		.2byte	0
+ 2126 000e 0000     		.2byte	0
+ 2127 0010 00000000 		.4byte	.LFB63
+ 2128 0014 14000000 		.4byte	.LFE63-.LFB63
+ 2129 0018 00000000 		.4byte	.LFB64
+ 2130 001c 5C000000 		.4byte	.LFE64-.LFB64
+ 2131 0020 00000000 		.4byte	.LFB65
+ 2132 0024 78000000 		.4byte	.LFE65-.LFB65
+ 2133 0028 00000000 		.4byte	.LFB66
+ 2134 002c 54000000 		.4byte	.LFE66-.LFB66
+ 2135 0030 00000000 		.4byte	.LFB67
+ 2136 0034 2A000000 		.4byte	.LFE67-.LFB67
+ 2137 0038 00000000 		.4byte	.LFB68
+ 2138 003c 2A000000 		.4byte	.LFE68-.LFB68
+ 2139 0040 00000000 		.4byte	.LFB69
+ 2140 0044 44000000 		.4byte	.LFE69-.LFB69
+ 2141 0048 00000000 		.4byte	.LFB70
+ 2142 004c 44000000 		.4byte	.LFE70-.LFB70
+ 2143 0050 00000000 		.4byte	.LFB71
+ 2144 0054 44000000 		.4byte	.LFE71-.LFB71
+ 2145 0058 00000000 		.4byte	.LFB72
+ 2146 005c 1C000000 		.4byte	.LFE72-.LFB72
+ 2147 0060 00000000 		.4byte	.LFB73
+ 2148 0064 26000000 		.4byte	.LFE73-.LFB73
+ 2149 0068 00000000 		.4byte	0
+ 2150 006c 00000000 		.4byte	0
+ 2151              		.section	.debug_ranges,"",%progbits
+ 2152              	.Ldebug_ranges0:
+ 2153 0000 06000000 		.4byte	.LBB3
+ 2154 0004 4C000000 		.4byte	.LBE3
+ 2155 0008 4E000000 		.4byte	.LBB4
+ 2156 000c 52000000 		.4byte	.LBE4
+ 2157 0010 00000000 		.4byte	0
+ 2158 0014 00000000 		.4byte	0
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 42
+
+
+ 2159 0018 04000000 		.4byte	.LBB5
+ 2160 001c 06000000 		.4byte	.LBE5
+ 2161 0020 08000000 		.4byte	.LBB6
+ 2162 0024 1A000000 		.4byte	.LBE6
+ 2163 0028 00000000 		.4byte	0
+ 2164 002c 00000000 		.4byte	0
+ 2165 0030 32000000 		.4byte	.LBB7
+ 2166 0034 34000000 		.4byte	.LBE7
+ 2167 0038 36000000 		.4byte	.LBB8
+ 2168 003c 78000000 		.4byte	.LBE8
+ 2169 0040 00000000 		.4byte	0
+ 2170 0044 00000000 		.4byte	0
+ 2171 0048 00000000 		.4byte	.LFB63
+ 2172 004c 14000000 		.4byte	.LFE63
+ 2173 0050 00000000 		.4byte	.LFB64
+ 2174 0054 5C000000 		.4byte	.LFE64
+ 2175 0058 00000000 		.4byte	.LFB65
+ 2176 005c 78000000 		.4byte	.LFE65
+ 2177 0060 00000000 		.4byte	.LFB66
+ 2178 0064 54000000 		.4byte	.LFE66
+ 2179 0068 00000000 		.4byte	.LFB67
+ 2180 006c 2A000000 		.4byte	.LFE67
+ 2181 0070 00000000 		.4byte	.LFB68
+ 2182 0074 2A000000 		.4byte	.LFE68
+ 2183 0078 00000000 		.4byte	.LFB69
+ 2184 007c 44000000 		.4byte	.LFE69
+ 2185 0080 00000000 		.4byte	.LFB70
+ 2186 0084 44000000 		.4byte	.LFE70
+ 2187 0088 00000000 		.4byte	.LFB71
+ 2188 008c 44000000 		.4byte	.LFE71
+ 2189 0090 00000000 		.4byte	.LFB72
+ 2190 0094 1C000000 		.4byte	.LFE72
+ 2191 0098 00000000 		.4byte	.LFB73
+ 2192 009c 26000000 		.4byte	.LFE73
+ 2193 00a0 00000000 		.4byte	0
+ 2194 00a4 00000000 		.4byte	0
+ 2195              		.section	.debug_line,"",%progbits
+ 2196              	.Ldebug_line0:
+ 2197 0000 09030000 		.section	.debug_str,"MS",%progbits,1
+ 2197      02006601 
+ 2197      00000201 
+ 2197      FB0E0D00 
+ 2197      01010101 
+ 2198              	.LASF9:
+ 2199 0000 5F5F696E 		.ascii	"__int32_t\000"
+ 2199      7433325F 
+ 2199      7400
+ 2200              	.LASF24:
+ 2201 000a 69734D6F 		.ascii	"isMoved\000"
+ 2201      76656400 
+ 2202              	.LASF37:
+ 2203 0012 72616E64 		.ascii	"randomFloat\000"
+ 2203      6F6D466C 
+ 2203      6F617400 
+ 2204              	.LASF36:
+ 2205 001e 433A5C55 		.ascii	"C:\\Users\\student\\Documents\\PSoC Creator\\Worksp"
+ 2205      73657273 
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 43
+
+
+ 2205      5C737475 
+ 2205      64656E74 
+ 2205      5C446F63 
+ 2206 004c 61636530 		.ascii	"ace02\\Design01.cydsn\000"
+ 2206      325C4465 
+ 2206      7369676E 
+ 2206      30312E63 
+ 2206      7964736E 
+ 2207              	.LASF30:
+ 2208 0061 6D6F7665 		.ascii	"moveDown\000"
+ 2208      446F776E 
+ 2208      00
+ 2209              	.LASF10:
+ 2210 006a 696E7433 		.ascii	"int32_t\000"
+ 2210      325F7400 
+ 2211              	.LASF13:
+ 2212 0072 666C6F61 		.ascii	"float\000"
+ 2212      7400
+ 2213              	.LASF1:
+ 2214 0078 756E7369 		.ascii	"unsigned char\000"
+ 2214      676E6564 
+ 2214      20636861 
+ 2214      7200
+ 2215              	.LASF35:
+ 2216 0086 2E5C6761 		.ascii	".\\game.c\000"
+ 2216      6D652E63 
+ 2216      00
+ 2217              	.LASF5:
+ 2218 008f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2218      20756E73 
+ 2218      69676E65 
+ 2218      6420696E 
+ 2218      7400
+ 2219              	.LASF3:
+ 2220 00a1 73686F72 		.ascii	"short unsigned int\000"
+ 2220      7420756E 
+ 2220      7369676E 
+ 2220      65642069 
+ 2220      6E7400
+ 2221              	.LASF32:
+ 2222 00b4 626F6172 		.ascii	"boardUnchanged\000"
+ 2222      64556E63 
+ 2222      68616E67 
+ 2222      656400
+ 2223              	.LASF23:
+ 2224 00c3 61727261 		.ascii	"array\000"
+ 2224      7900
+ 2225              	.LASF38:
+ 2226 00c9 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2226      52784275 
+ 2226      66666572 
+ 2226      00
+ 2227              	.LASF20:
+ 2228 00d6 6E756D45 		.ascii	"numEmpty\000"
+ 2228      6D707479 
+ 2228      00
+ 2229              	.LASF17:
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 44
+
+
+ 2230 00df 726F7461 		.ascii	"rotate\000"
+ 2230      746500
+ 2231              	.LASF14:
+ 2232 00e6 646F7562 		.ascii	"double\000"
+ 2232      6C6500
+ 2233              	.LASF28:
+ 2234 00ed 6D6F7665 		.ascii	"moveUp\000"
+ 2234      557000
+ 2235              	.LASF27:
+ 2236 00f4 6E657742 		.ascii	"newBoard\000"
+ 2236      6F617264 
+ 2236      00
+ 2237              	.LASF12:
+ 2238 00fd 75696E74 		.ascii	"uint16\000"
+ 2238      313600
+ 2239              	.LASF25:
+ 2240 0104 6D6F7665 		.ascii	"moveLeftInplace\000"
+ 2240      4C656674 
+ 2240      496E706C 
+ 2240      61636500 
+ 2241              	.LASF31:
+ 2242 0114 67616D65 		.ascii	"gameWon\000"
+ 2242      576F6E00 
+ 2243              	.LASF26:
+ 2244 011c 6D6F7665 		.ascii	"moveLeft\000"
+ 2244      4C656674 
+ 2244      00
+ 2245              	.LASF8:
+ 2246 0125 756E7369 		.ascii	"unsigned int\000"
+ 2246      676E6564 
+ 2246      20696E74 
+ 2246      00
+ 2247              	.LASF7:
+ 2248 0132 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2248      206C6F6E 
+ 2248      6720756E 
+ 2248      7369676E 
+ 2248      65642069 
+ 2249              	.LASF29:
+ 2250 0149 6D6F7665 		.ascii	"moveRight\000"
+ 2250      52696768 
+ 2250      7400
+ 2251              	.LASF16:
+ 2252 0153 73697A65 		.ascii	"sizetype\000"
+ 2252      74797065 
+ 2252      00
+ 2253              	.LASF6:
+ 2254 015c 6C6F6E67 		.ascii	"long long int\000"
+ 2254      206C6F6E 
+ 2254      6720696E 
+ 2254      7400
+ 2255              	.LASF15:
+ 2256 016a 63686172 		.ascii	"char\000"
+ 2256      00
+ 2257              	.LASF18:
+ 2258 016f 61646452 		.ascii	"addRandomTile\000"
+ 2258      616E646F 
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccJdTGrb.s 			page 45
+
+
+ 2258      6D54696C 
+ 2258      6500
+ 2259              	.LASF21:
+ 2260 017d 636F756E 		.ascii	"count\000"
+ 2260      7400
+ 2261              	.LASF2:
+ 2262 0183 73686F72 		.ascii	"short int\000"
+ 2262      7420696E 
+ 2262      7400
+ 2263              	.LASF11:
+ 2264 018d 75696E74 		.ascii	"uint8\000"
+ 2264      3800
+ 2265              	.LASF34:
+ 2266 0193 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2266      4320342E 
+ 2266      392E3320 
+ 2266      32303135 
+ 2266      30333033 
+ 2267 01c6 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 2267      20726576 
+ 2267      6973696F 
+ 2267      6E203232 
+ 2267      31323230 
+ 2268 01f9 67202D73 		.ascii	"g -std=gnu99 -ffunction-sections -ffat-lto-objects\000"
+ 2268      74643D67 
+ 2268      6E753939 
+ 2268      202D6666 
+ 2268      756E6374 
+ 2269              	.LASF4:
+ 2270 022c 6C6F6E67 		.ascii	"long int\000"
+ 2270      20696E74 
+ 2270      00
+ 2271              	.LASF33:
+ 2272 0235 6F6C6442 		.ascii	"oldBoard\000"
+ 2272      6F617264 
+ 2272      00
+ 2273              	.LASF22:
+ 2274 023e 736C6964 		.ascii	"slideArray\000"
+ 2274      65417272 
+ 2274      617900
+ 2275              	.LASF0:
+ 2276 0249 7369676E 		.ascii	"signed char\000"
+ 2276      65642063 
+ 2276      68617200 
+ 2277              	.LASF19:
+ 2278 0255 626F6172 		.ascii	"board\000"
+ 2278      6400
+ 2279              	.LASF39:
+ 2280 025b 72616E64 		.ascii	"rand\000"
+ 2280      00
+ 2281              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

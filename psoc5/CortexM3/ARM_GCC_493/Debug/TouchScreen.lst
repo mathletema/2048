@@ -1,0 +1,1725 @@
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"TouchScreen.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.TouchScreen_Init,"ax",%progbits
+  19              		.align	2
+  20              		.global	TouchScreen_Init
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	TouchScreen_Init, %function
+  24              	TouchScreen_Init:
+  25              	.LFB0:
+  26              		.file 1 ".\\Generated_Source\\PSoC5\\TouchScreen.c"
+   1:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC5/TouchScreen.c **** * File Name: TouchScreen.c
+   3:.\Generated_Source\PSoC5/TouchScreen.c **** * Version 2.0
+   4:.\Generated_Source\PSoC5/TouchScreen.c **** *
+   5:.\Generated_Source\PSoC5/TouchScreen.c **** * Description:
+   6:.\Generated_Source\PSoC5/TouchScreen.c **** *  This file provides the API source code for the Resistive Touch component.
+   7:.\Generated_Source\PSoC5/TouchScreen.c **** *
+   8:.\Generated_Source\PSoC5/TouchScreen.c **** * Note:
+   9:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  10:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+  11:.\Generated_Source\PSoC5/TouchScreen.c **** * Copyright 2012-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  12:.\Generated_Source\PSoC5/TouchScreen.c **** * You may use this file only in accordance with the license, terms, conditions,
+  13:.\Generated_Source\PSoC5/TouchScreen.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  14:.\Generated_Source\PSoC5/TouchScreen.c **** * the software package with which this file was provided.
+  15:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+  16:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  17:.\Generated_Source\PSoC5/TouchScreen.c **** #include "CyLib.h"
+  18:.\Generated_Source\PSoC5/TouchScreen.c **** #include "TouchScreen.h"
+  19:.\Generated_Source\PSoC5/TouchScreen.c **** #include "TouchScreen_xm.h"
+  20:.\Generated_Source\PSoC5/TouchScreen.c **** #include "TouchScreen_xp.h"
+  21:.\Generated_Source\PSoC5/TouchScreen.c **** #include "TouchScreen_ym.h"
+  22:.\Generated_Source\PSoC5/TouchScreen.c **** #include "TouchScreen_yp.h"
+  23:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  24:.\Generated_Source\PSoC5/TouchScreen.c **** uint8 TouchScreen_initVar = 0u;
+  25:.\Generated_Source\PSoC5/TouchScreen.c **** static uint8 TouchScreen_measurementFlag = 0u;
+  26:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  27:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  28:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+  29:.\Generated_Source\PSoC5/TouchScreen.c **** * Function Name: TouchScreen_Init
+  30:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+  31:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 2
+
+
+  32:.\Generated_Source\PSoC5/TouchScreen.c **** * Summary:
+  33:.\Generated_Source\PSoC5/TouchScreen.c **** *  Calls the Init() function of the ADC and AMux components.
+  34:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  35:.\Generated_Source\PSoC5/TouchScreen.c **** * Parameters:
+  36:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+  37:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  38:.\Generated_Source\PSoC5/TouchScreen.c **** * Return:
+  39:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+  40:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  41:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+  42:.\Generated_Source\PSoC5/TouchScreen.c **** void TouchScreen_Init(void) 
+  43:.\Generated_Source\PSoC5/TouchScreen.c **** {
+  27              		.loc 1 43 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 3, -8
+  34              		.cfi_offset 14, -4
+  44:.\Generated_Source\PSoC5/TouchScreen.c ****     TouchScreen_AMux_Init();
+  35              		.loc 1 44 0
+  36 0002 FFF7FEFF 		bl	TouchScreen_AMux_Init
+  37              	.LVL0:
+  45:.\Generated_Source\PSoC5/TouchScreen.c ****     TouchScreen_ADC_Init();
+  38              		.loc 1 45 0
+  39 0006 FFF7FEFF 		bl	TouchScreen_ADC_Init
+  40              	.LVL1:
+  41 000a 08BD     		pop	{r3, pc}
+  42              		.cfi_endproc
+  43              	.LFE0:
+  44              		.size	TouchScreen_Init, .-TouchScreen_Init
+  45              		.section	.text.TouchScreen_Stop,"ax",%progbits
+  46              		.align	2
+  47              		.global	TouchScreen_Stop
+  48              		.thumb
+  49              		.thumb_func
+  50              		.type	TouchScreen_Stop, %function
+  51              	TouchScreen_Stop:
+  52              	.LFB2:
+  46:.\Generated_Source\PSoC5/TouchScreen.c **** }
+  47:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  48:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  49:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+  50:.\Generated_Source\PSoC5/TouchScreen.c **** * Function Name: TouchScreen_Start
+  51:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+  52:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  53:.\Generated_Source\PSoC5/TouchScreen.c **** * Summary:
+  54:.\Generated_Source\PSoC5/TouchScreen.c **** *  Calls Init() if the component has not been initialized before. Calls Enable()
+  55:.\Generated_Source\PSoC5/TouchScreen.c **** *  to begin the component operation.
+  56:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  57:.\Generated_Source\PSoC5/TouchScreen.c **** * Parameters:
+  58:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+  59:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  60:.\Generated_Source\PSoC5/TouchScreen.c **** * Return:
+  61:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+  62:.\Generated_Source\PSoC5/TouchScreen.c **** * 
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 3
+
+
+  63:.\Generated_Source\PSoC5/TouchScreen.c **** * Global variables:
+  64:.\Generated_Source\PSoC5/TouchScreen.c **** *  TouchScreen_initVar - Indicates whether the component has been
+  65:.\Generated_Source\PSoC5/TouchScreen.c **** *                             initialized.
+  66:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  67:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+  68:.\Generated_Source\PSoC5/TouchScreen.c **** void TouchScreen_Start(void)  
+  69:.\Generated_Source\PSoC5/TouchScreen.c **** {
+  70:.\Generated_Source\PSoC5/TouchScreen.c ****     if(TouchScreen_initVar == 0u)
+  71:.\Generated_Source\PSoC5/TouchScreen.c ****     {    
+  72:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_Init();
+  73:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_initVar = 1u;
+  74:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+  75:.\Generated_Source\PSoC5/TouchScreen.c ****     TouchScreen_Enable();
+  76:.\Generated_Source\PSoC5/TouchScreen.c **** }
+  77:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  78:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  79:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+  80:.\Generated_Source\PSoC5/TouchScreen.c **** * Function Name: TouchScreen_Stop
+  81:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+  82:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  83:.\Generated_Source\PSoC5/TouchScreen.c **** * Summary:
+  84:.\Generated_Source\PSoC5/TouchScreen.c **** *  Stops the ADC and AMux components.
+  85:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  86:.\Generated_Source\PSoC5/TouchScreen.c **** * Parameters:
+  87:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+  88:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  89:.\Generated_Source\PSoC5/TouchScreen.c **** * Return:
+  90:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+  91:.\Generated_Source\PSoC5/TouchScreen.c **** *
+  92:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+  93:.\Generated_Source\PSoC5/TouchScreen.c **** void TouchScreen_Stop(void)  
+  94:.\Generated_Source\PSoC5/TouchScreen.c **** {
+  53              		.loc 1 94 0
+  54              		.cfi_startproc
+  55              		@ args = 0, pretend = 0, frame = 0
+  56              		@ frame_needed = 0, uses_anonymous_args = 0
+  57 0000 08B5     		push	{r3, lr}
+  58              		.cfi_def_cfa_offset 8
+  59              		.cfi_offset 3, -8
+  60              		.cfi_offset 14, -4
+  95:.\Generated_Source\PSoC5/TouchScreen.c ****     TouchScreen_ADC_Stop();
+  61              		.loc 1 95 0
+  62 0002 FFF7FEFF 		bl	TouchScreen_ADC_Stop
+  63              	.LVL2:
+  96:.\Generated_Source\PSoC5/TouchScreen.c ****     TouchScreen_AMux_Stop();
+  64              		.loc 1 96 0
+  65 0006 FFF7FEFF 		bl	TouchScreen_AMux_Stop
+  66              	.LVL3:
+  67 000a 08BD     		pop	{r3, pc}
+  68              		.cfi_endproc
+  69              	.LFE2:
+  70              		.size	TouchScreen_Stop, .-TouchScreen_Stop
+  71              		.section	.text.TouchScreen_Enable,"ax",%progbits
+  72              		.align	2
+  73              		.global	TouchScreen_Enable
+  74              		.thumb
+  75              		.thumb_func
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 4
+
+
+  76              		.type	TouchScreen_Enable, %function
+  77              	TouchScreen_Enable:
+  78              	.LFB3:
+  97:.\Generated_Source\PSoC5/TouchScreen.c **** }
+  98:.\Generated_Source\PSoC5/TouchScreen.c **** 
+  99:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 100:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+ 101:.\Generated_Source\PSoC5/TouchScreen.c **** * Function Name: TouchScreen_Enable
+ 102:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+ 103:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 104:.\Generated_Source\PSoC5/TouchScreen.c **** * Summary:
+ 105:.\Generated_Source\PSoC5/TouchScreen.c **** *  Enables the ADC component.
+ 106:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 107:.\Generated_Source\PSoC5/TouchScreen.c **** * Parameters:
+ 108:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+ 109:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 110:.\Generated_Source\PSoC5/TouchScreen.c **** * Return:
+ 111:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+ 112:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 113:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+ 114:.\Generated_Source\PSoC5/TouchScreen.c **** void TouchScreen_Enable(void)  
+ 115:.\Generated_Source\PSoC5/TouchScreen.c **** {
+  79              		.loc 1 115 0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83 0000 08B5     		push	{r3, lr}
+  84              		.cfi_def_cfa_offset 8
+  85              		.cfi_offset 3, -8
+  86              		.cfi_offset 14, -4
+ 116:.\Generated_Source\PSoC5/TouchScreen.c ****     TouchScreen_ADC_Enable();
+  87              		.loc 1 116 0
+  88 0002 FFF7FEFF 		bl	TouchScreen_ADC_Enable
+  89              	.LVL4:
+  90 0006 08BD     		pop	{r3, pc}
+  91              		.cfi_endproc
+  92              	.LFE3:
+  93              		.size	TouchScreen_Enable, .-TouchScreen_Enable
+  94              		.section	.text.TouchScreen_Start,"ax",%progbits
+  95              		.align	2
+  96              		.global	TouchScreen_Start
+  97              		.thumb
+  98              		.thumb_func
+  99              		.type	TouchScreen_Start, %function
+ 100              	TouchScreen_Start:
+ 101              	.LFB1:
+  69:.\Generated_Source\PSoC5/TouchScreen.c ****     if(TouchScreen_initVar == 0u)
+ 102              		.loc 1 69 0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106 0000 08B5     		push	{r3, lr}
+ 107              		.cfi_def_cfa_offset 8
+ 108              		.cfi_offset 3, -8
+ 109              		.cfi_offset 14, -4
+  70:.\Generated_Source\PSoC5/TouchScreen.c ****     {    
+ 110              		.loc 1 70 0
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 5
+
+
+ 111 0002 054B     		ldr	r3, .L10
+ 112 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 113 0006 23B9     		cbnz	r3, .L8
+  72:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_initVar = 1u;
+ 114              		.loc 1 72 0
+ 115 0008 FFF7FEFF 		bl	TouchScreen_Init
+ 116              	.LVL5:
+  73:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 117              		.loc 1 73 0
+ 118 000c 0122     		movs	r2, #1
+ 119 000e 024B     		ldr	r3, .L10
+ 120 0010 1A70     		strb	r2, [r3]
+ 121              	.L8:
+  75:.\Generated_Source\PSoC5/TouchScreen.c **** }
+ 122              		.loc 1 75 0
+ 123 0012 FFF7FEFF 		bl	TouchScreen_Enable
+ 124              	.LVL6:
+ 125 0016 08BD     		pop	{r3, pc}
+ 126              	.L11:
+ 127              		.align	2
+ 128              	.L10:
+ 129 0018 00000000 		.word	.LANCHOR0
+ 130              		.cfi_endproc
+ 131              	.LFE1:
+ 132              		.size	TouchScreen_Start, .-TouchScreen_Start
+ 133              		.section	.text.TouchScreen_ActivateX,"ax",%progbits
+ 134              		.align	2
+ 135              		.global	TouchScreen_ActivateX
+ 136              		.thumb
+ 137              		.thumb_func
+ 138              		.type	TouchScreen_ActivateX, %function
+ 139              	TouchScreen_ActivateX:
+ 140              	.LFB4:
+ 117:.\Generated_Source\PSoC5/TouchScreen.c **** }
+ 118:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 119:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 120:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+ 121:.\Generated_Source\PSoC5/TouchScreen.c **** * Function Name: TouchScreen_ActivateX
+ 122:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+ 123:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 124:.\Generated_Source\PSoC5/TouchScreen.c **** * Summary: 
+ 125:.\Generated_Source\PSoC5/TouchScreen.c **** *  Configures the pins to measure the Y-axis.
+ 126:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 127:.\Generated_Source\PSoC5/TouchScreen.c **** * Parameters:
+ 128:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+ 129:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 130:.\Generated_Source\PSoC5/TouchScreen.c **** * Return:
+ 131:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+ 132:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 133:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+ 134:.\Generated_Source\PSoC5/TouchScreen.c **** void TouchScreen_ActivateX(void) 
+ 135:.\Generated_Source\PSoC5/TouchScreen.c **** {
+ 141              		.loc 1 135 0
+ 142              		.cfi_startproc
+ 143              		@ args = 0, pretend = 0, frame = 0
+ 144              		@ frame_needed = 0, uses_anonymous_args = 0
+ 145 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 6
+
+
+ 146              		.cfi_def_cfa_offset 8
+ 147              		.cfi_offset 3, -8
+ 148              		.cfi_offset 14, -4
+ 136:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Pins configuration to measure Y. */
+ 137:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_ym_0, PIN_DM_STRONG);
+ 149              		.loc 1 137 0
+ 150 0002 0F4A     		ldr	r2, .L15
+ 151 0004 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 152 0006 03F0F103 		and	r3, r3, #241
+ 153 000a 43F00C03 		orr	r3, r3, #12
+ 154 000e 1370     		strb	r3, [r2]
+ 138:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_yp_0, PIN_DM_STRONG);
+ 155              		.loc 1 138 0
+ 156 0010 043A     		subs	r2, r2, #4
+ 157 0012 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 158 0014 03F0F103 		and	r3, r3, #241
+ 159 0018 43F00C03 		orr	r3, r3, #12
+ 160 001c 1370     		strb	r3, [r2]
+ 139:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_xp_0, PIN_DM_ALG_HIZ);
+ 161              		.loc 1 139 0
+ 162 001e 0232     		adds	r2, r2, #2
+ 163 0020 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 164 0022 03F0F103 		and	r3, r3, #241
+ 165 0026 1370     		strb	r3, [r2]
+ 140:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_xm_0, PIN_DM_ALG_HIZ);
+ 166              		.loc 1 140 0
+ 167 0028 0432     		adds	r2, r2, #4
+ 168 002a 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 169 002c 03F0F103 		and	r3, r3, #241
+ 170 0030 1370     		strb	r3, [r2]
+ 141:.\Generated_Source\PSoC5/TouchScreen.c ****     
+ 142:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Switch AMux if channel 0 is not selected. */
+ 143:.\Generated_Source\PSoC5/TouchScreen.c ****     if(TouchScreen_AMux_GetChannel() != TouchScreen_AMUX_XP_CHAN)
+ 171              		.loc 1 143 0
+ 172 0032 FFF7FEFF 		bl	TouchScreen_AMux_GetChannel
+ 173              	.LVL7:
+ 174 0036 08B1     		cbz	r0, .L12
+ 144:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 145:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_AMux_Next();
+ 175              		.loc 1 145 0
+ 176 0038 FFF7FEFF 		bl	TouchScreen_AMux_Next
+ 177              	.LVL8:
+ 178              	.L12:
+ 179 003c 08BD     		pop	{r3, pc}
+ 180              	.L16:
+ 181 003e 00BF     		.align	2
+ 182              	.L15:
+ 183 0040 14500040 		.word	1073762324
+ 184              		.cfi_endproc
+ 185              	.LFE4:
+ 186              		.size	TouchScreen_ActivateX, .-TouchScreen_ActivateX
+ 187              		.section	.text.TouchScreen_ActivateY,"ax",%progbits
+ 188              		.align	2
+ 189              		.global	TouchScreen_ActivateY
+ 190              		.thumb
+ 191              		.thumb_func
+ 192              		.type	TouchScreen_ActivateY, %function
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 7
+
+
+ 193              	TouchScreen_ActivateY:
+ 194              	.LFB5:
+ 146:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 147:.\Generated_Source\PSoC5/TouchScreen.c **** }
+ 148:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 149:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 150:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+ 151:.\Generated_Source\PSoC5/TouchScreen.c **** * Function Name: TouchScreen_ActivateY
+ 152:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+ 153:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 154:.\Generated_Source\PSoC5/TouchScreen.c **** * Summary: 
+ 155:.\Generated_Source\PSoC5/TouchScreen.c **** *  Configures the pins to measure X-axis.
+ 156:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 157:.\Generated_Source\PSoC5/TouchScreen.c **** * Parameters:
+ 158:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+ 159:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 160:.\Generated_Source\PSoC5/TouchScreen.c **** * Return:
+ 161:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+ 162:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 163:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+ 164:.\Generated_Source\PSoC5/TouchScreen.c **** void TouchScreen_ActivateY(void) 
+ 165:.\Generated_Source\PSoC5/TouchScreen.c **** {
+ 195              		.loc 1 165 0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199 0000 08B5     		push	{r3, lr}
+ 200              		.cfi_def_cfa_offset 8
+ 201              		.cfi_offset 3, -8
+ 202              		.cfi_offset 14, -4
+ 166:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Pins configuration to measure X. */
+ 167:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_xm_0, PIN_DM_STRONG);
+ 203              		.loc 1 167 0
+ 204 0002 144A     		ldr	r2, .L21
+ 205 0004 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 206 0006 03F0F103 		and	r3, r3, #241
+ 207 000a 43F00C03 		orr	r3, r3, #12
+ 208 000e 1370     		strb	r3, [r2]
+ 168:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_xp_0, PIN_DM_STRONG);
+ 209              		.loc 1 168 0
+ 210 0010 043A     		subs	r2, r2, #4
+ 211 0012 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 212 0014 03F0F103 		and	r3, r3, #241
+ 213 0018 43F00C03 		orr	r3, r3, #12
+ 214 001c 1370     		strb	r3, [r2]
+ 169:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_yp_0, PIN_DM_ALG_HIZ);
+ 215              		.loc 1 169 0
+ 216 001e 023A     		subs	r2, r2, #2
+ 217 0020 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 218 0022 03F0F103 		and	r3, r3, #241
+ 219 0026 1370     		strb	r3, [r2]
+ 170:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_ym_0, PIN_DM_ALG_HIZ);
+ 220              		.loc 1 170 0
+ 221 0028 0432     		adds	r2, r2, #4
+ 222 002a 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 223 002c 03F0F103 		and	r3, r3, #241
+ 224 0030 1370     		strb	r3, [r2]
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 8
+
+
+ 171:.\Generated_Source\PSoC5/TouchScreen.c ****     
+ 172:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Switch AMux if channel 1 is not selected. */
+ 173:.\Generated_Source\PSoC5/TouchScreen.c ****     if(TouchScreen_AMux_GetChannel() == TouchScreen_AMUX_XP_CHAN)
+ 225              		.loc 1 173 0
+ 226 0032 FFF7FEFF 		bl	TouchScreen_AMux_GetChannel
+ 227              	.LVL9:
+ 228 0036 10B9     		cbnz	r0, .L18
+ 174:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 175:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_AMux_Next();
+ 229              		.loc 1 175 0
+ 230 0038 FFF7FEFF 		bl	TouchScreen_AMux_Next
+ 231              	.LVL10:
+ 232 003c 08BD     		pop	{r3, pc}
+ 233              	.L18:
+ 176:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 177:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Switch AMux to channel 1 if AMux is disconnected. */
+ 178:.\Generated_Source\PSoC5/TouchScreen.c ****     else if(TouchScreen_AMux_GetChannel() == TouchScreen_AMUX_NO_CHAN)
+ 234              		.loc 1 178 0
+ 235 003e FFF7FEFF 		bl	TouchScreen_AMux_GetChannel
+ 236              	.LVL11:
+ 237 0042 B0F1FF3F 		cmp	r0, #-1
+ 238 0046 03D1     		bne	.L17
+ 179:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 180:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_AMux_Next();
+ 239              		.loc 1 180 0
+ 240 0048 FFF7FEFF 		bl	TouchScreen_AMux_Next
+ 241              	.LVL12:
+ 181:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_AMux_Next();
+ 242              		.loc 1 181 0
+ 243 004c FFF7FEFF 		bl	TouchScreen_AMux_Next
+ 244              	.LVL13:
+ 245              	.L17:
+ 246 0050 08BD     		pop	{r3, pc}
+ 247              	.L22:
+ 248 0052 00BF     		.align	2
+ 249              	.L21:
+ 250 0054 16500040 		.word	1073762326
+ 251              		.cfi_endproc
+ 252              	.LFE5:
+ 253              		.size	TouchScreen_ActivateY, .-TouchScreen_ActivateY
+ 254              		.section	.text.TouchScreen_Measure,"ax",%progbits
+ 255              		.align	2
+ 256              		.global	TouchScreen_Measure
+ 257              		.thumb
+ 258              		.thumb_func
+ 259              		.type	TouchScreen_Measure, %function
+ 260              	TouchScreen_Measure:
+ 261              	.LFB7:
+ 182:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 183:.\Generated_Source\PSoC5/TouchScreen.c ****     else
+ 184:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 185:.\Generated_Source\PSoC5/TouchScreen.c ****         /* Channel 1 is already selected. */
+ 186:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 187:.\Generated_Source\PSoC5/TouchScreen.c **** }
+ 188:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 189:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 190:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 9
+
+
+ 191:.\Generated_Source\PSoC5/TouchScreen.c **** * Function Name: TouchScreen_TouchDetect
+ 192:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+ 193:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 194:.\Generated_Source\PSoC5/TouchScreen.c **** * Summary:
+ 195:.\Generated_Source\PSoC5/TouchScreen.c **** *  Determines if the screen is touched.
+ 196:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 197:.\Generated_Source\PSoC5/TouchScreen.c **** * Parameters:
+ 198:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+ 199:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 200:.\Generated_Source\PSoC5/TouchScreen.c **** * Return:
+ 201:.\Generated_Source\PSoC5/TouchScreen.c **** *  uint8: The touch state.
+ 202:.\Generated_Source\PSoC5/TouchScreen.c **** *  0 - untouched
+ 203:.\Generated_Source\PSoC5/TouchScreen.c **** *  1 - touched
+ 204:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 205:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+ 206:.\Generated_Source\PSoC5/TouchScreen.c **** uint8 TouchScreen_TouchDetect(void) 
+ 207:.\Generated_Source\PSoC5/TouchScreen.c **** {
+ 208:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Configure x+ pin to detect touch. */
+ 209:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_xp_0, PIN_DM_STRONG);
+ 210:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 211:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Add delay for signal to stabilize. */
+ 212:.\Generated_Source\PSoC5/TouchScreen.c ****     CyDelayUs(5u);
+ 213:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 214:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_xp_0, PIN_DM_RES_UP);
+ 215:.\Generated_Source\PSoC5/TouchScreen.c ****     
+ 216:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Switch AMux if channel 0 is not selected. */
+ 217:.\Generated_Source\PSoC5/TouchScreen.c ****     if(TouchScreen_AMux_GetChannel() != TouchScreen_AMUX_XP_CHAN)
+ 218:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 219:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_AMux_Next();
+ 220:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 221:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 222:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Configure x-, y+ and y- to detect touch. */
+ 223:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_xm_0, PIN_DM_ALG_HIZ);
+ 224:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_yp_0, PIN_DM_ALG_HIZ);
+ 225:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_ym_0, PIN_DM_STRONG);
+ 226:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 227:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Add delay for signal to stabilize. The delay is dependant on whether
+ 228:.\Generated_Source\PSoC5/TouchScreen.c ****     * the measurement has been done before touch detect or not.
+ 229:.\Generated_Source\PSoC5/TouchScreen.c ****     */
+ 230:.\Generated_Source\PSoC5/TouchScreen.c ****     if (TouchScreen_measurementFlag == 0u)
+ 231:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 232:.\Generated_Source\PSoC5/TouchScreen.c ****         CyDelayUs(20u);
+ 233:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 234:.\Generated_Source\PSoC5/TouchScreen.c ****     else
+ 235:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 236:.\Generated_Source\PSoC5/TouchScreen.c ****         TouchScreen_measurementFlag = 0u;
+ 237:.\Generated_Source\PSoC5/TouchScreen.c ****         CyDelayUs(8u);        
+ 238:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 239:.\Generated_Source\PSoC5/TouchScreen.c ****     /* The screen is touched if the measured value is lower than the specified
+ 240:.\Generated_Source\PSoC5/TouchScreen.c ****     * threshold.
+ 241:.\Generated_Source\PSoC5/TouchScreen.c ****     */
+ 242:.\Generated_Source\PSoC5/TouchScreen.c ****     return ((TouchScreen_Measure() < TouchScreen_TOUCH_THRESHOLD) ? 1u : 0u);
+ 243:.\Generated_Source\PSoC5/TouchScreen.c **** }
+ 244:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 245:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 246:.\Generated_Source\PSoC5/TouchScreen.c **** /*******************************************************************************
+ 247:.\Generated_Source\PSoC5/TouchScreen.c **** * Function Name: TouchScreen_Measure
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 10
+
+
+ 248:.\Generated_Source\PSoC5/TouchScreen.c **** ********************************************************************************
+ 249:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 250:.\Generated_Source\PSoC5/TouchScreen.c **** * Summary:
+ 251:.\Generated_Source\PSoC5/TouchScreen.c **** *  Returns the result of the ADC conversion. Does not return until ADC
+ 252:.\Generated_Source\PSoC5/TouchScreen.c **** *  conversion is complete.
+ 253:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 254:.\Generated_Source\PSoC5/TouchScreen.c **** * Parameters:
+ 255:.\Generated_Source\PSoC5/TouchScreen.c **** *  None
+ 256:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 257:.\Generated_Source\PSoC5/TouchScreen.c **** * Return:
+ 258:.\Generated_Source\PSoC5/TouchScreen.c **** *  int16: the result of the ADC conversion.
+ 259:.\Generated_Source\PSoC5/TouchScreen.c **** *
+ 260:.\Generated_Source\PSoC5/TouchScreen.c **** *******************************************************************************/
+ 261:.\Generated_Source\PSoC5/TouchScreen.c **** int16 TouchScreen_Measure(void) 
+ 262:.\Generated_Source\PSoC5/TouchScreen.c **** {       
+ 262              		.loc 1 262 0
+ 263              		.cfi_startproc
+ 264              		@ args = 0, pretend = 0, frame = 0
+ 265              		@ frame_needed = 0, uses_anonymous_args = 0
+ 266 0000 08B5     		push	{r3, lr}
+ 267              		.cfi_def_cfa_offset 8
+ 268              		.cfi_offset 3, -8
+ 269              		.cfi_offset 14, -4
+ 263:.\Generated_Source\PSoC5/TouchScreen.c ****     int16 result;
+ 264:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 265:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Trigger the ADC conversion and wait for results (blocking). */
+ 266:.\Generated_Source\PSoC5/TouchScreen.c ****     TouchScreen_ADC_StartConvert();
+ 270              		.loc 1 266 0
+ 271 0002 FFF7FEFF 		bl	TouchScreen_ADC_StartConvert
+ 272              	.LVL14:
+ 267:.\Generated_Source\PSoC5/TouchScreen.c ****     (void)TouchScreen_ADC_IsEndConversion(TouchScreen_ADC_WAIT_FOR_RESULT);
+ 273              		.loc 1 267 0
+ 274 0006 0020     		movs	r0, #0
+ 275 0008 FFF7FEFF 		bl	TouchScreen_ADC_IsEndConversion
+ 276              	.LVL15:
+ 268:.\Generated_Source\PSoC5/TouchScreen.c ****     result = TouchScreen_ADC_GetResult16();
+ 277              		.loc 1 268 0
+ 278 000c FFF7FEFF 		bl	TouchScreen_ADC_GetResult16
+ 279              	.LVL16:
+ 269:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 270:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Assert a flag indicating that the measurement has been done. */
+ 271:.\Generated_Source\PSoC5/TouchScreen.c ****     TouchScreen_measurementFlag = 1u;
+ 280              		.loc 1 271 0
+ 281 0010 0122     		movs	r2, #1
+ 282 0012 014B     		ldr	r3, .L25
+ 283 0014 5A70     		strb	r2, [r3, #1]
+ 272:.\Generated_Source\PSoC5/TouchScreen.c ****     return (result);
+ 273:.\Generated_Source\PSoC5/TouchScreen.c **** }
+ 284              		.loc 1 273 0
+ 285 0016 08BD     		pop	{r3, pc}
+ 286              	.L26:
+ 287              		.align	2
+ 288              	.L25:
+ 289 0018 00000000 		.word	.LANCHOR0
+ 290              		.cfi_endproc
+ 291              	.LFE7:
+ 292              		.size	TouchScreen_Measure, .-TouchScreen_Measure
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 11
+
+
+ 293              		.section	.text.TouchScreen_TouchDetect,"ax",%progbits
+ 294              		.align	2
+ 295              		.global	TouchScreen_TouchDetect
+ 296              		.thumb
+ 297              		.thumb_func
+ 298              		.type	TouchScreen_TouchDetect, %function
+ 299              	TouchScreen_TouchDetect:
+ 300              	.LFB6:
+ 207:.\Generated_Source\PSoC5/TouchScreen.c ****     /* Configure x+ pin to detect touch. */
+ 301              		.loc 1 207 0
+ 302              		.cfi_startproc
+ 303              		@ args = 0, pretend = 0, frame = 0
+ 304              		@ frame_needed = 0, uses_anonymous_args = 0
+ 305 0000 10B5     		push	{r4, lr}
+ 306              		.cfi_def_cfa_offset 8
+ 307              		.cfi_offset 4, -8
+ 308              		.cfi_offset 14, -4
+ 209:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 309              		.loc 1 209 0
+ 310 0002 1E4C     		ldr	r4, .L34
+ 311 0004 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 312 0006 03F0F103 		and	r3, r3, #241
+ 313 000a 43F00C03 		orr	r3, r3, #12
+ 314 000e 2370     		strb	r3, [r4]
+ 212:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 315              		.loc 1 212 0
+ 316 0010 0520     		movs	r0, #5
+ 317 0012 FFF7FEFF 		bl	CyDelayUs
+ 318              	.LVL17:
+ 214:.\Generated_Source\PSoC5/TouchScreen.c ****     
+ 319              		.loc 1 214 0
+ 320 0016 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 321 0018 03F0F103 		and	r3, r3, #241
+ 322 001c 43F00403 		orr	r3, r3, #4
+ 323 0020 2370     		strb	r3, [r4]
+ 217:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 324              		.loc 1 217 0
+ 325 0022 FFF7FEFF 		bl	TouchScreen_AMux_GetChannel
+ 326              	.LVL18:
+ 327 0026 08B1     		cbz	r0, .L28
+ 219:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 328              		.loc 1 219 0
+ 329 0028 FFF7FEFF 		bl	TouchScreen_AMux_Next
+ 330              	.LVL19:
+ 331              	.L28:
+ 223:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_yp_0, PIN_DM_ALG_HIZ);
+ 332              		.loc 1 223 0
+ 333 002c 144A     		ldr	r2, .L34+4
+ 334 002e 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 335 0030 03F0F103 		and	r3, r3, #241
+ 336 0034 1370     		strb	r3, [r2]
+ 224:.\Generated_Source\PSoC5/TouchScreen.c ****     CyPins_SetPinDriveMode(TouchScreen_ym_0, PIN_DM_STRONG);
+ 337              		.loc 1 224 0
+ 338 0036 063A     		subs	r2, r2, #6
+ 339 0038 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 340 003a 03F0F103 		and	r3, r3, #241
+ 341 003e 1370     		strb	r3, [r2]
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 12
+
+
+ 225:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 342              		.loc 1 225 0
+ 343 0040 0432     		adds	r2, r2, #4
+ 344 0042 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 345 0044 03F0F103 		and	r3, r3, #241
+ 346 0048 43F00C03 		orr	r3, r3, #12
+ 347 004c 1370     		strb	r3, [r2]
+ 230:.\Generated_Source\PSoC5/TouchScreen.c ****     {
+ 348              		.loc 1 230 0
+ 349 004e 0D4B     		ldr	r3, .L34+8
+ 350 0050 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 351 0052 1BB9     		cbnz	r3, .L29
+ 232:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 352              		.loc 1 232 0
+ 353 0054 1420     		movs	r0, #20
+ 354 0056 FFF7FEFF 		bl	CyDelayUs
+ 355              	.LVL20:
+ 356 005a 05E0     		b	.L30
+ 357              	.L29:
+ 236:.\Generated_Source\PSoC5/TouchScreen.c ****         CyDelayUs(8u);        
+ 358              		.loc 1 236 0
+ 359 005c 0022     		movs	r2, #0
+ 360 005e 094B     		ldr	r3, .L34+8
+ 361 0060 5A70     		strb	r2, [r3, #1]
+ 237:.\Generated_Source\PSoC5/TouchScreen.c ****     }
+ 362              		.loc 1 237 0
+ 363 0062 0820     		movs	r0, #8
+ 364 0064 FFF7FEFF 		bl	CyDelayUs
+ 365              	.LVL21:
+ 366              	.L30:
+ 242:.\Generated_Source\PSoC5/TouchScreen.c **** }
+ 367              		.loc 1 242 0
+ 368 0068 FFF7FEFF 		bl	TouchScreen_Measure
+ 369              	.LVL22:
+ 370 006c B0F5EF6F 		cmp	r0, #1912
+ 371 0070 01DA     		bge	.L32
+ 372 0072 0120     		movs	r0, #1
+ 373 0074 10BD     		pop	{r4, pc}
+ 374              	.L32:
+ 375 0076 0020     		movs	r0, #0
+ 243:.\Generated_Source\PSoC5/TouchScreen.c **** 
+ 376              		.loc 1 243 0
+ 377 0078 10BD     		pop	{r4, pc}
+ 378              	.L35:
+ 379 007a 00BF     		.align	2
+ 380              	.L34:
+ 381 007c 12500040 		.word	1073762322
+ 382 0080 16500040 		.word	1073762326
+ 383 0084 00000000 		.word	.LANCHOR0
+ 384              		.cfi_endproc
+ 385              	.LFE6:
+ 386              		.size	TouchScreen_TouchDetect, .-TouchScreen_TouchDetect
+ 387              		.global	TouchScreen_initVar
+ 388              		.bss
+ 389              		.set	.LANCHOR0,. + 0
+ 390              		.type	TouchScreen_initVar, %object
+ 391              		.size	TouchScreen_initVar, 1
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 13
+
+
+ 392              	TouchScreen_initVar:
+ 393 0000 00       		.space	1
+ 394              		.type	TouchScreen_measurementFlag, %object
+ 395              		.size	TouchScreen_measurementFlag, 1
+ 396              	TouchScreen_measurementFlag:
+ 397 0001 00       		.space	1
+ 398              		.text
+ 399              	.Letext0:
+ 400              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 401              		.file 3 ".\\Generated_Source\\PSoC5\\TouchScreen_AMux.h"
+ 402              		.file 4 ".\\Generated_Source\\PSoC5\\TouchScreen_ADC.h"
+ 403              		.file 5 ".\\Generated_Source\\PSoC5\\cyfitter_cfg.h"
+ 404              		.file 6 ".\\Generated_Source\\PSoC5\\CyLib.h"
+ 405              		.section	.debug_info,"",%progbits
+ 406              	.Ldebug_info0:
+ 407 0000 0E030000 		.4byte	0x30e
+ 408 0004 0400     		.2byte	0x4
+ 409 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 410 000a 04       		.byte	0x4
+ 411 000b 01       		.uleb128 0x1
+ 412 000c D5020000 		.4byte	.LASF37
+ 413 0010 01       		.byte	0x1
+ 414 0011 8E020000 		.4byte	.LASF38
+ 415 0015 6D000000 		.4byte	.LASF39
+ 416 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 417 001d 00000000 		.4byte	0
+ 418 0021 00000000 		.4byte	.Ldebug_line0
+ 419 0025 02       		.uleb128 0x2
+ 420 0026 04       		.byte	0x4
+ 421 0027 05       		.byte	0x5
+ 422 0028 696E7400 		.ascii	"int\000"
+ 423 002c 03       		.uleb128 0x3
+ 424 002d 04       		.byte	0x4
+ 425 002e 07       		.byte	0x7
+ 426 002f D1010000 		.4byte	.LASF0
+ 427 0033 03       		.uleb128 0x3
+ 428 0034 01       		.byte	0x1
+ 429 0035 06       		.byte	0x6
+ 430 0036 77030000 		.4byte	.LASF1
+ 431 003a 03       		.uleb128 0x3
+ 432 003b 01       		.byte	0x1
+ 433 003c 08       		.byte	0x8
+ 434 003d 14010000 		.4byte	.LASF2
+ 435 0041 03       		.uleb128 0x3
+ 436 0042 02       		.byte	0x2
+ 437 0043 05       		.byte	0x5
+ 438 0044 B5020000 		.4byte	.LASF3
+ 439 0048 03       		.uleb128 0x3
+ 440 0049 02       		.byte	0x2
+ 441 004a 07       		.byte	0x7
+ 442 004b 3A000000 		.4byte	.LASF4
+ 443 004f 03       		.uleb128 0x3
+ 444 0050 04       		.byte	0x4
+ 445 0051 05       		.byte	0x5
+ 446 0052 6E030000 		.4byte	.LASF5
+ 447 0056 03       		.uleb128 0x3
+ 448 0057 04       		.byte	0x4
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 14
+
+
+ 449 0058 07       		.byte	0x7
+ 450 0059 43010000 		.4byte	.LASF6
+ 451 005d 03       		.uleb128 0x3
+ 452 005e 08       		.byte	0x8
+ 453 005f 05       		.byte	0x5
+ 454 0060 71020000 		.4byte	.LASF7
+ 455 0064 03       		.uleb128 0x3
+ 456 0065 08       		.byte	0x8
+ 457 0066 07       		.byte	0x7
+ 458 0067 DE010000 		.4byte	.LASF8
+ 459 006b 03       		.uleb128 0x3
+ 460 006c 04       		.byte	0x4
+ 461 006d 07       		.byte	0x7
+ 462 006e 68020000 		.4byte	.LASF9
+ 463 0072 03       		.uleb128 0x3
+ 464 0073 01       		.byte	0x1
+ 465 0074 08       		.byte	0x8
+ 466 0075 89020000 		.4byte	.LASF10
+ 467 0079 04       		.uleb128 0x4
+ 468 007a 55010000 		.4byte	.LASF11
+ 469 007e 02       		.byte	0x2
+ 470 007f 9201     		.2byte	0x192
+ 471 0081 3A000000 		.4byte	0x3a
+ 472 0085 04       		.uleb128 0x4
+ 473 0086 9F010000 		.4byte	.LASF12
+ 474 008a 02       		.byte	0x2
+ 475 008b 9301     		.2byte	0x193
+ 476 008d 48000000 		.4byte	0x48
+ 477 0091 04       		.uleb128 0x4
+ 478 0092 A6010000 		.4byte	.LASF13
+ 479 0096 02       		.byte	0x2
+ 480 0097 9501     		.2byte	0x195
+ 481 0099 33000000 		.4byte	0x33
+ 482 009d 04       		.uleb128 0x4
+ 483 009e 3D010000 		.4byte	.LASF14
+ 484 00a2 02       		.byte	0x2
+ 485 00a3 9601     		.2byte	0x196
+ 486 00a5 41000000 		.4byte	0x41
+ 487 00a9 03       		.uleb128 0x3
+ 488 00aa 04       		.byte	0x4
+ 489 00ab 04       		.byte	0x4
+ 490 00ac 0E010000 		.4byte	.LASF15
+ 491 00b0 03       		.uleb128 0x3
+ 492 00b1 08       		.byte	0x8
+ 493 00b2 04       		.byte	0x4
+ 494 00b3 87010000 		.4byte	.LASF16
+ 495 00b7 04       		.uleb128 0x4
+ 496 00b8 22010000 		.4byte	.LASF17
+ 497 00bc 02       		.byte	0x2
+ 498 00bd 3C02     		.2byte	0x23c
+ 499 00bf C3000000 		.4byte	0xc3
+ 500 00c3 05       		.uleb128 0x5
+ 501 00c4 79000000 		.4byte	0x79
+ 502 00c8 06       		.uleb128 0x6
+ 503 00c9 8E010000 		.4byte	.LASF18
+ 504 00cd 01       		.byte	0x1
+ 505 00ce 2A       		.byte	0x2a
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 15
+
+
+ 506 00cf 00000000 		.4byte	.LFB0
+ 507 00d3 0C000000 		.4byte	.LFE0-.LFB0
+ 508 00d7 01       		.uleb128 0x1
+ 509 00d8 9C       		.byte	0x9c
+ 510 00d9 F0000000 		.4byte	0xf0
+ 511 00dd 07       		.uleb128 0x7
+ 512 00de 06000000 		.4byte	.LVL0
+ 513 00e2 A8020000 		.4byte	0x2a8
+ 514 00e6 07       		.uleb128 0x7
+ 515 00e7 0A000000 		.4byte	.LVL1
+ 516 00eb AF020000 		.4byte	0x2af
+ 517 00ef 00       		.byte	0
+ 518 00f0 06       		.uleb128 0x6
+ 519 00f1 AB010000 		.4byte	.LASF19
+ 520 00f5 01       		.byte	0x1
+ 521 00f6 5D       		.byte	0x5d
+ 522 00f7 00000000 		.4byte	.LFB2
+ 523 00fb 0C000000 		.4byte	.LFE2-.LFB2
+ 524 00ff 01       		.uleb128 0x1
+ 525 0100 9C       		.byte	0x9c
+ 526 0101 18010000 		.4byte	0x118
+ 527 0105 07       		.uleb128 0x7
+ 528 0106 06000000 		.4byte	.LVL2
+ 529 010a B6020000 		.4byte	0x2b6
+ 530 010e 07       		.uleb128 0x7
+ 531 010f 0A000000 		.4byte	.LVL3
+ 532 0113 BD020000 		.4byte	0x2bd
+ 533 0117 00       		.byte	0
+ 534 0118 06       		.uleb128 0x6
+ 535 0119 2D020000 		.4byte	.LASF20
+ 536 011d 01       		.byte	0x1
+ 537 011e 72       		.byte	0x72
+ 538 011f 00000000 		.4byte	.LFB3
+ 539 0123 08000000 		.4byte	.LFE3-.LFB3
+ 540 0127 01       		.uleb128 0x1
+ 541 0128 9C       		.byte	0x9c
+ 542 0129 37010000 		.4byte	0x137
+ 543 012d 07       		.uleb128 0x7
+ 544 012e 06000000 		.4byte	.LVL4
+ 545 0132 C4020000 		.4byte	0x2c4
+ 546 0136 00       		.byte	0
+ 547 0137 06       		.uleb128 0x6
+ 548 0138 56020000 		.4byte	.LASF21
+ 549 013c 01       		.byte	0x1
+ 550 013d 44       		.byte	0x44
+ 551 013e 00000000 		.4byte	.LFB1
+ 552 0142 1C000000 		.4byte	.LFE1-.LFB1
+ 553 0146 01       		.uleb128 0x1
+ 554 0147 9C       		.byte	0x9c
+ 555 0148 5F010000 		.4byte	0x15f
+ 556 014c 07       		.uleb128 0x7
+ 557 014d 0C000000 		.4byte	.LVL5
+ 558 0151 C8000000 		.4byte	0xc8
+ 559 0155 07       		.uleb128 0x7
+ 560 0156 16000000 		.4byte	.LVL6
+ 561 015a 18010000 		.4byte	0x118
+ 562 015e 00       		.byte	0
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 16
+
+
+ 563 015f 06       		.uleb128 0x6
+ 564 0160 C6000000 		.4byte	.LASF22
+ 565 0164 01       		.byte	0x1
+ 566 0165 86       		.byte	0x86
+ 567 0166 00000000 		.4byte	.LFB4
+ 568 016a 44000000 		.4byte	.LFE4-.LFB4
+ 569 016e 01       		.uleb128 0x1
+ 570 016f 9C       		.byte	0x9c
+ 571 0170 87010000 		.4byte	0x187
+ 572 0174 07       		.uleb128 0x7
+ 573 0175 36000000 		.4byte	.LVL7
+ 574 0179 CB020000 		.4byte	0x2cb
+ 575 017d 07       		.uleb128 0x7
+ 576 017e 3C000000 		.4byte	.LVL8
+ 577 0182 D6020000 		.4byte	0x2d6
+ 578 0186 00       		.byte	0
+ 579 0187 06       		.uleb128 0x6
+ 580 0188 27010000 		.4byte	.LASF23
+ 581 018c 01       		.byte	0x1
+ 582 018d A4       		.byte	0xa4
+ 583 018e 00000000 		.4byte	.LFB5
+ 584 0192 58000000 		.4byte	.LFE5-.LFB5
+ 585 0196 01       		.uleb128 0x1
+ 586 0197 9C       		.byte	0x9c
+ 587 0198 CA010000 		.4byte	0x1ca
+ 588 019c 07       		.uleb128 0x7
+ 589 019d 36000000 		.4byte	.LVL9
+ 590 01a1 CB020000 		.4byte	0x2cb
+ 591 01a5 07       		.uleb128 0x7
+ 592 01a6 3C000000 		.4byte	.LVL10
+ 593 01aa D6020000 		.4byte	0x2d6
+ 594 01ae 07       		.uleb128 0x7
+ 595 01af 42000000 		.4byte	.LVL11
+ 596 01b3 CB020000 		.4byte	0x2cb
+ 597 01b7 07       		.uleb128 0x7
+ 598 01b8 4C000000 		.4byte	.LVL12
+ 599 01bc D6020000 		.4byte	0x2d6
+ 600 01c0 07       		.uleb128 0x7
+ 601 01c1 50000000 		.4byte	.LVL13
+ 602 01c5 D6020000 		.4byte	0x2d6
+ 603 01c9 00       		.byte	0
+ 604 01ca 08       		.uleb128 0x8
+ 605 01cb 83030000 		.4byte	.LASF24
+ 606 01cf 01       		.byte	0x1
+ 607 01d0 0501     		.2byte	0x105
+ 608 01d2 9D000000 		.4byte	0x9d
+ 609 01d6 00000000 		.4byte	.LFB7
+ 610 01da 1C000000 		.4byte	.LFE7-.LFB7
+ 611 01de 01       		.uleb128 0x1
+ 612 01df 9C       		.byte	0x9c
+ 613 01e0 18020000 		.4byte	0x218
+ 614 01e4 09       		.uleb128 0x9
+ 615 01e5 17000000 		.4byte	.LASF26
+ 616 01e9 01       		.byte	0x1
+ 617 01ea 0701     		.2byte	0x107
+ 618 01ec 9D000000 		.4byte	0x9d
+ 619 01f0 01       		.uleb128 0x1
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 17
+
+
+ 620 01f1 50       		.byte	0x50
+ 621 01f2 07       		.uleb128 0x7
+ 622 01f3 06000000 		.4byte	.LVL14
+ 623 01f7 DD020000 		.4byte	0x2dd
+ 624 01fb 0A       		.uleb128 0xa
+ 625 01fc 0C000000 		.4byte	.LVL15
+ 626 0200 E4020000 		.4byte	0x2e4
+ 627 0204 0E020000 		.4byte	0x20e
+ 628 0208 0B       		.uleb128 0xb
+ 629 0209 01       		.uleb128 0x1
+ 630 020a 50       		.byte	0x50
+ 631 020b 01       		.uleb128 0x1
+ 632 020c 30       		.byte	0x30
+ 633 020d 00       		.byte	0
+ 634 020e 07       		.uleb128 0x7
+ 635 020f 10000000 		.4byte	.LVL16
+ 636 0213 F9020000 		.4byte	0x2f9
+ 637 0217 00       		.byte	0
+ 638 0218 0C       		.uleb128 0xc
+ 639 0219 5B010000 		.4byte	.LASF25
+ 640 021d 01       		.byte	0x1
+ 641 021e CE       		.byte	0xce
+ 642 021f 79000000 		.4byte	0x79
+ 643 0223 00000000 		.4byte	.LFB6
+ 644 0227 88000000 		.4byte	.LFE6-.LFB6
+ 645 022b 01       		.uleb128 0x1
+ 646 022c 9C       		.byte	0x9c
+ 647 022d 86020000 		.4byte	0x286
+ 648 0231 0A       		.uleb128 0xa
+ 649 0232 16000000 		.4byte	.LVL17
+ 650 0236 04030000 		.4byte	0x304
+ 651 023a 44020000 		.4byte	0x244
+ 652 023e 0B       		.uleb128 0xb
+ 653 023f 01       		.uleb128 0x1
+ 654 0240 50       		.byte	0x50
+ 655 0241 01       		.uleb128 0x1
+ 656 0242 35       		.byte	0x35
+ 657 0243 00       		.byte	0
+ 658 0244 07       		.uleb128 0x7
+ 659 0245 26000000 		.4byte	.LVL18
+ 660 0249 CB020000 		.4byte	0x2cb
+ 661 024d 07       		.uleb128 0x7
+ 662 024e 2C000000 		.4byte	.LVL19
+ 663 0252 D6020000 		.4byte	0x2d6
+ 664 0256 0A       		.uleb128 0xa
+ 665 0257 5A000000 		.4byte	.LVL20
+ 666 025b 04030000 		.4byte	0x304
+ 667 025f 69020000 		.4byte	0x269
+ 668 0263 0B       		.uleb128 0xb
+ 669 0264 01       		.uleb128 0x1
+ 670 0265 50       		.byte	0x50
+ 671 0266 01       		.uleb128 0x1
+ 672 0267 44       		.byte	0x44
+ 673 0268 00       		.byte	0
+ 674 0269 0A       		.uleb128 0xa
+ 675 026a 68000000 		.4byte	.LVL21
+ 676 026e 04030000 		.4byte	0x304
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 18
+
+
+ 677 0272 7C020000 		.4byte	0x27c
+ 678 0276 0B       		.uleb128 0xb
+ 679 0277 01       		.uleb128 0x1
+ 680 0278 50       		.byte	0x50
+ 681 0279 01       		.uleb128 0x1
+ 682 027a 38       		.byte	0x38
+ 683 027b 00       		.byte	0
+ 684 027c 07       		.uleb128 0x7
+ 685 027d 6C000000 		.4byte	.LVL22
+ 686 0281 CA010000 		.4byte	0x1ca
+ 687 0285 00       		.byte	0
+ 688 0286 0D       		.uleb128 0xd
+ 689 0287 11020000 		.4byte	.LASF27
+ 690 028b 01       		.byte	0x1
+ 691 028c 19       		.byte	0x19
+ 692 028d 79000000 		.4byte	0x79
+ 693 0291 05       		.uleb128 0x5
+ 694 0292 03       		.byte	0x3
+ 695 0293 01000000 		.4byte	TouchScreen_measurementFlag
+ 696 0297 0E       		.uleb128 0xe
+ 697 0298 73010000 		.4byte	.LASF40
+ 698 029c 01       		.byte	0x1
+ 699 029d 18       		.byte	0x18
+ 700 029e 79000000 		.4byte	0x79
+ 701 02a2 05       		.uleb128 0x5
+ 702 02a3 03       		.byte	0x3
+ 703 02a4 00000000 		.4byte	TouchScreen_initVar
+ 704 02a8 0F       		.uleb128 0xf
+ 705 02a9 BF020000 		.4byte	.LASF28
+ 706 02ad 03       		.byte	0x3
+ 707 02ae 27       		.byte	0x27
+ 708 02af 0F       		.uleb128 0xf
+ 709 02b0 DC000000 		.4byte	.LASF29
+ 710 02b4 04       		.byte	0x4
+ 711 02b5 4C       		.byte	0x4c
+ 712 02b6 0F       		.uleb128 0xf
+ 713 02b7 BC010000 		.4byte	.LASF30
+ 714 02bb 04       		.byte	0x4
+ 715 02bc 3B       		.byte	0x3b
+ 716 02bd 0F       		.uleb128 0xf
+ 717 02be B0000000 		.4byte	.LASF31
+ 718 02c2 03       		.byte	0x3
+ 719 02c3 28       		.byte	0x28
+ 720 02c4 0F       		.uleb128 0xf
+ 721 02c5 00000000 		.4byte	.LASF32
+ 722 02c9 04       		.byte	0x4
+ 723 02ca 4D       		.byte	0x4d
+ 724 02cb 10       		.uleb128 0x10
+ 725 02cc F5010000 		.4byte	.LASF35
+ 726 02d0 03       		.byte	0x3
+ 727 02d1 31       		.byte	0x31
+ 728 02d2 91000000 		.4byte	0x91
+ 729 02d6 0F       		.uleb128 0xf
+ 730 02d7 40020000 		.4byte	.LASF33
+ 731 02db 05       		.byte	0x5
+ 732 02dc 25       		.byte	0x25
+ 733 02dd 0F       		.uleb128 0xf
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 19
+
+
+ 734 02de F1000000 		.4byte	.LASF34
+ 735 02e2 04       		.byte	0x4
+ 736 02e3 3D       		.byte	0x3d
+ 737 02e4 11       		.uleb128 0x11
+ 738 02e5 4D000000 		.4byte	.LASF41
+ 739 02e9 04       		.byte	0x4
+ 740 02ea 3F       		.byte	0x3f
+ 741 02eb 79000000 		.4byte	0x79
+ 742 02ef F9020000 		.4byte	0x2f9
+ 743 02f3 12       		.uleb128 0x12
+ 744 02f4 79000000 		.4byte	0x79
+ 745 02f8 00       		.byte	0
+ 746 02f9 10       		.uleb128 0x10
+ 747 02fa 1E000000 		.4byte	.LASF36
+ 748 02fe 04       		.byte	0x4
+ 749 02ff 41       		.byte	0x41
+ 750 0300 9D000000 		.4byte	0x9d
+ 751 0304 13       		.uleb128 0x13
+ 752 0305 7F020000 		.4byte	.LASF42
+ 753 0309 06       		.byte	0x6
+ 754 030a 77       		.byte	0x77
+ 755 030b 12       		.uleb128 0x12
+ 756 030c 85000000 		.4byte	0x85
+ 757 0310 00       		.byte	0
+ 758 0311 00       		.byte	0
+ 759              		.section	.debug_abbrev,"",%progbits
+ 760              	.Ldebug_abbrev0:
+ 761 0000 01       		.uleb128 0x1
+ 762 0001 11       		.uleb128 0x11
+ 763 0002 01       		.byte	0x1
+ 764 0003 25       		.uleb128 0x25
+ 765 0004 0E       		.uleb128 0xe
+ 766 0005 13       		.uleb128 0x13
+ 767 0006 0B       		.uleb128 0xb
+ 768 0007 03       		.uleb128 0x3
+ 769 0008 0E       		.uleb128 0xe
+ 770 0009 1B       		.uleb128 0x1b
+ 771 000a 0E       		.uleb128 0xe
+ 772 000b 55       		.uleb128 0x55
+ 773 000c 17       		.uleb128 0x17
+ 774 000d 11       		.uleb128 0x11
+ 775 000e 01       		.uleb128 0x1
+ 776 000f 10       		.uleb128 0x10
+ 777 0010 17       		.uleb128 0x17
+ 778 0011 00       		.byte	0
+ 779 0012 00       		.byte	0
+ 780 0013 02       		.uleb128 0x2
+ 781 0014 24       		.uleb128 0x24
+ 782 0015 00       		.byte	0
+ 783 0016 0B       		.uleb128 0xb
+ 784 0017 0B       		.uleb128 0xb
+ 785 0018 3E       		.uleb128 0x3e
+ 786 0019 0B       		.uleb128 0xb
+ 787 001a 03       		.uleb128 0x3
+ 788 001b 08       		.uleb128 0x8
+ 789 001c 00       		.byte	0
+ 790 001d 00       		.byte	0
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 20
+
+
+ 791 001e 03       		.uleb128 0x3
+ 792 001f 24       		.uleb128 0x24
+ 793 0020 00       		.byte	0
+ 794 0021 0B       		.uleb128 0xb
+ 795 0022 0B       		.uleb128 0xb
+ 796 0023 3E       		.uleb128 0x3e
+ 797 0024 0B       		.uleb128 0xb
+ 798 0025 03       		.uleb128 0x3
+ 799 0026 0E       		.uleb128 0xe
+ 800 0027 00       		.byte	0
+ 801 0028 00       		.byte	0
+ 802 0029 04       		.uleb128 0x4
+ 803 002a 16       		.uleb128 0x16
+ 804 002b 00       		.byte	0
+ 805 002c 03       		.uleb128 0x3
+ 806 002d 0E       		.uleb128 0xe
+ 807 002e 3A       		.uleb128 0x3a
+ 808 002f 0B       		.uleb128 0xb
+ 809 0030 3B       		.uleb128 0x3b
+ 810 0031 05       		.uleb128 0x5
+ 811 0032 49       		.uleb128 0x49
+ 812 0033 13       		.uleb128 0x13
+ 813 0034 00       		.byte	0
+ 814 0035 00       		.byte	0
+ 815 0036 05       		.uleb128 0x5
+ 816 0037 35       		.uleb128 0x35
+ 817 0038 00       		.byte	0
+ 818 0039 49       		.uleb128 0x49
+ 819 003a 13       		.uleb128 0x13
+ 820 003b 00       		.byte	0
+ 821 003c 00       		.byte	0
+ 822 003d 06       		.uleb128 0x6
+ 823 003e 2E       		.uleb128 0x2e
+ 824 003f 01       		.byte	0x1
+ 825 0040 3F       		.uleb128 0x3f
+ 826 0041 19       		.uleb128 0x19
+ 827 0042 03       		.uleb128 0x3
+ 828 0043 0E       		.uleb128 0xe
+ 829 0044 3A       		.uleb128 0x3a
+ 830 0045 0B       		.uleb128 0xb
+ 831 0046 3B       		.uleb128 0x3b
+ 832 0047 0B       		.uleb128 0xb
+ 833 0048 27       		.uleb128 0x27
+ 834 0049 19       		.uleb128 0x19
+ 835 004a 11       		.uleb128 0x11
+ 836 004b 01       		.uleb128 0x1
+ 837 004c 12       		.uleb128 0x12
+ 838 004d 06       		.uleb128 0x6
+ 839 004e 40       		.uleb128 0x40
+ 840 004f 18       		.uleb128 0x18
+ 841 0050 9742     		.uleb128 0x2117
+ 842 0052 19       		.uleb128 0x19
+ 843 0053 01       		.uleb128 0x1
+ 844 0054 13       		.uleb128 0x13
+ 845 0055 00       		.byte	0
+ 846 0056 00       		.byte	0
+ 847 0057 07       		.uleb128 0x7
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 21
+
+
+ 848 0058 898201   		.uleb128 0x4109
+ 849 005b 00       		.byte	0
+ 850 005c 11       		.uleb128 0x11
+ 851 005d 01       		.uleb128 0x1
+ 852 005e 31       		.uleb128 0x31
+ 853 005f 13       		.uleb128 0x13
+ 854 0060 00       		.byte	0
+ 855 0061 00       		.byte	0
+ 856 0062 08       		.uleb128 0x8
+ 857 0063 2E       		.uleb128 0x2e
+ 858 0064 01       		.byte	0x1
+ 859 0065 3F       		.uleb128 0x3f
+ 860 0066 19       		.uleb128 0x19
+ 861 0067 03       		.uleb128 0x3
+ 862 0068 0E       		.uleb128 0xe
+ 863 0069 3A       		.uleb128 0x3a
+ 864 006a 0B       		.uleb128 0xb
+ 865 006b 3B       		.uleb128 0x3b
+ 866 006c 05       		.uleb128 0x5
+ 867 006d 27       		.uleb128 0x27
+ 868 006e 19       		.uleb128 0x19
+ 869 006f 49       		.uleb128 0x49
+ 870 0070 13       		.uleb128 0x13
+ 871 0071 11       		.uleb128 0x11
+ 872 0072 01       		.uleb128 0x1
+ 873 0073 12       		.uleb128 0x12
+ 874 0074 06       		.uleb128 0x6
+ 875 0075 40       		.uleb128 0x40
+ 876 0076 18       		.uleb128 0x18
+ 877 0077 9742     		.uleb128 0x2117
+ 878 0079 19       		.uleb128 0x19
+ 879 007a 01       		.uleb128 0x1
+ 880 007b 13       		.uleb128 0x13
+ 881 007c 00       		.byte	0
+ 882 007d 00       		.byte	0
+ 883 007e 09       		.uleb128 0x9
+ 884 007f 34       		.uleb128 0x34
+ 885 0080 00       		.byte	0
+ 886 0081 03       		.uleb128 0x3
+ 887 0082 0E       		.uleb128 0xe
+ 888 0083 3A       		.uleb128 0x3a
+ 889 0084 0B       		.uleb128 0xb
+ 890 0085 3B       		.uleb128 0x3b
+ 891 0086 05       		.uleb128 0x5
+ 892 0087 49       		.uleb128 0x49
+ 893 0088 13       		.uleb128 0x13
+ 894 0089 02       		.uleb128 0x2
+ 895 008a 18       		.uleb128 0x18
+ 896 008b 00       		.byte	0
+ 897 008c 00       		.byte	0
+ 898 008d 0A       		.uleb128 0xa
+ 899 008e 898201   		.uleb128 0x4109
+ 900 0091 01       		.byte	0x1
+ 901 0092 11       		.uleb128 0x11
+ 902 0093 01       		.uleb128 0x1
+ 903 0094 31       		.uleb128 0x31
+ 904 0095 13       		.uleb128 0x13
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 22
+
+
+ 905 0096 01       		.uleb128 0x1
+ 906 0097 13       		.uleb128 0x13
+ 907 0098 00       		.byte	0
+ 908 0099 00       		.byte	0
+ 909 009a 0B       		.uleb128 0xb
+ 910 009b 8A8201   		.uleb128 0x410a
+ 911 009e 00       		.byte	0
+ 912 009f 02       		.uleb128 0x2
+ 913 00a0 18       		.uleb128 0x18
+ 914 00a1 9142     		.uleb128 0x2111
+ 915 00a3 18       		.uleb128 0x18
+ 916 00a4 00       		.byte	0
+ 917 00a5 00       		.byte	0
+ 918 00a6 0C       		.uleb128 0xc
+ 919 00a7 2E       		.uleb128 0x2e
+ 920 00a8 01       		.byte	0x1
+ 921 00a9 3F       		.uleb128 0x3f
+ 922 00aa 19       		.uleb128 0x19
+ 923 00ab 03       		.uleb128 0x3
+ 924 00ac 0E       		.uleb128 0xe
+ 925 00ad 3A       		.uleb128 0x3a
+ 926 00ae 0B       		.uleb128 0xb
+ 927 00af 3B       		.uleb128 0x3b
+ 928 00b0 0B       		.uleb128 0xb
+ 929 00b1 27       		.uleb128 0x27
+ 930 00b2 19       		.uleb128 0x19
+ 931 00b3 49       		.uleb128 0x49
+ 932 00b4 13       		.uleb128 0x13
+ 933 00b5 11       		.uleb128 0x11
+ 934 00b6 01       		.uleb128 0x1
+ 935 00b7 12       		.uleb128 0x12
+ 936 00b8 06       		.uleb128 0x6
+ 937 00b9 40       		.uleb128 0x40
+ 938 00ba 18       		.uleb128 0x18
+ 939 00bb 9742     		.uleb128 0x2117
+ 940 00bd 19       		.uleb128 0x19
+ 941 00be 01       		.uleb128 0x1
+ 942 00bf 13       		.uleb128 0x13
+ 943 00c0 00       		.byte	0
+ 944 00c1 00       		.byte	0
+ 945 00c2 0D       		.uleb128 0xd
+ 946 00c3 34       		.uleb128 0x34
+ 947 00c4 00       		.byte	0
+ 948 00c5 03       		.uleb128 0x3
+ 949 00c6 0E       		.uleb128 0xe
+ 950 00c7 3A       		.uleb128 0x3a
+ 951 00c8 0B       		.uleb128 0xb
+ 952 00c9 3B       		.uleb128 0x3b
+ 953 00ca 0B       		.uleb128 0xb
+ 954 00cb 49       		.uleb128 0x49
+ 955 00cc 13       		.uleb128 0x13
+ 956 00cd 02       		.uleb128 0x2
+ 957 00ce 18       		.uleb128 0x18
+ 958 00cf 00       		.byte	0
+ 959 00d0 00       		.byte	0
+ 960 00d1 0E       		.uleb128 0xe
+ 961 00d2 34       		.uleb128 0x34
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 23
+
+
+ 962 00d3 00       		.byte	0
+ 963 00d4 03       		.uleb128 0x3
+ 964 00d5 0E       		.uleb128 0xe
+ 965 00d6 3A       		.uleb128 0x3a
+ 966 00d7 0B       		.uleb128 0xb
+ 967 00d8 3B       		.uleb128 0x3b
+ 968 00d9 0B       		.uleb128 0xb
+ 969 00da 49       		.uleb128 0x49
+ 970 00db 13       		.uleb128 0x13
+ 971 00dc 3F       		.uleb128 0x3f
+ 972 00dd 19       		.uleb128 0x19
+ 973 00de 02       		.uleb128 0x2
+ 974 00df 18       		.uleb128 0x18
+ 975 00e0 00       		.byte	0
+ 976 00e1 00       		.byte	0
+ 977 00e2 0F       		.uleb128 0xf
+ 978 00e3 2E       		.uleb128 0x2e
+ 979 00e4 00       		.byte	0
+ 980 00e5 3F       		.uleb128 0x3f
+ 981 00e6 19       		.uleb128 0x19
+ 982 00e7 03       		.uleb128 0x3
+ 983 00e8 0E       		.uleb128 0xe
+ 984 00e9 3A       		.uleb128 0x3a
+ 985 00ea 0B       		.uleb128 0xb
+ 986 00eb 3B       		.uleb128 0x3b
+ 987 00ec 0B       		.uleb128 0xb
+ 988 00ed 27       		.uleb128 0x27
+ 989 00ee 19       		.uleb128 0x19
+ 990 00ef 3C       		.uleb128 0x3c
+ 991 00f0 19       		.uleb128 0x19
+ 992 00f1 00       		.byte	0
+ 993 00f2 00       		.byte	0
+ 994 00f3 10       		.uleb128 0x10
+ 995 00f4 2E       		.uleb128 0x2e
+ 996 00f5 00       		.byte	0
+ 997 00f6 3F       		.uleb128 0x3f
+ 998 00f7 19       		.uleb128 0x19
+ 999 00f8 03       		.uleb128 0x3
+ 1000 00f9 0E       		.uleb128 0xe
+ 1001 00fa 3A       		.uleb128 0x3a
+ 1002 00fb 0B       		.uleb128 0xb
+ 1003 00fc 3B       		.uleb128 0x3b
+ 1004 00fd 0B       		.uleb128 0xb
+ 1005 00fe 27       		.uleb128 0x27
+ 1006 00ff 19       		.uleb128 0x19
+ 1007 0100 49       		.uleb128 0x49
+ 1008 0101 13       		.uleb128 0x13
+ 1009 0102 3C       		.uleb128 0x3c
+ 1010 0103 19       		.uleb128 0x19
+ 1011 0104 00       		.byte	0
+ 1012 0105 00       		.byte	0
+ 1013 0106 11       		.uleb128 0x11
+ 1014 0107 2E       		.uleb128 0x2e
+ 1015 0108 01       		.byte	0x1
+ 1016 0109 3F       		.uleb128 0x3f
+ 1017 010a 19       		.uleb128 0x19
+ 1018 010b 03       		.uleb128 0x3
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 24
+
+
+ 1019 010c 0E       		.uleb128 0xe
+ 1020 010d 3A       		.uleb128 0x3a
+ 1021 010e 0B       		.uleb128 0xb
+ 1022 010f 3B       		.uleb128 0x3b
+ 1023 0110 0B       		.uleb128 0xb
+ 1024 0111 27       		.uleb128 0x27
+ 1025 0112 19       		.uleb128 0x19
+ 1026 0113 49       		.uleb128 0x49
+ 1027 0114 13       		.uleb128 0x13
+ 1028 0115 3C       		.uleb128 0x3c
+ 1029 0116 19       		.uleb128 0x19
+ 1030 0117 01       		.uleb128 0x1
+ 1031 0118 13       		.uleb128 0x13
+ 1032 0119 00       		.byte	0
+ 1033 011a 00       		.byte	0
+ 1034 011b 12       		.uleb128 0x12
+ 1035 011c 05       		.uleb128 0x5
+ 1036 011d 00       		.byte	0
+ 1037 011e 49       		.uleb128 0x49
+ 1038 011f 13       		.uleb128 0x13
+ 1039 0120 00       		.byte	0
+ 1040 0121 00       		.byte	0
+ 1041 0122 13       		.uleb128 0x13
+ 1042 0123 2E       		.uleb128 0x2e
+ 1043 0124 01       		.byte	0x1
+ 1044 0125 3F       		.uleb128 0x3f
+ 1045 0126 19       		.uleb128 0x19
+ 1046 0127 03       		.uleb128 0x3
+ 1047 0128 0E       		.uleb128 0xe
+ 1048 0129 3A       		.uleb128 0x3a
+ 1049 012a 0B       		.uleb128 0xb
+ 1050 012b 3B       		.uleb128 0x3b
+ 1051 012c 0B       		.uleb128 0xb
+ 1052 012d 27       		.uleb128 0x27
+ 1053 012e 19       		.uleb128 0x19
+ 1054 012f 3C       		.uleb128 0x3c
+ 1055 0130 19       		.uleb128 0x19
+ 1056 0131 00       		.byte	0
+ 1057 0132 00       		.byte	0
+ 1058 0133 00       		.byte	0
+ 1059              		.section	.debug_aranges,"",%progbits
+ 1060 0000 54000000 		.4byte	0x54
+ 1061 0004 0200     		.2byte	0x2
+ 1062 0006 00000000 		.4byte	.Ldebug_info0
+ 1063 000a 04       		.byte	0x4
+ 1064 000b 00       		.byte	0
+ 1065 000c 0000     		.2byte	0
+ 1066 000e 0000     		.2byte	0
+ 1067 0010 00000000 		.4byte	.LFB0
+ 1068 0014 0C000000 		.4byte	.LFE0-.LFB0
+ 1069 0018 00000000 		.4byte	.LFB2
+ 1070 001c 0C000000 		.4byte	.LFE2-.LFB2
+ 1071 0020 00000000 		.4byte	.LFB3
+ 1072 0024 08000000 		.4byte	.LFE3-.LFB3
+ 1073 0028 00000000 		.4byte	.LFB1
+ 1074 002c 1C000000 		.4byte	.LFE1-.LFB1
+ 1075 0030 00000000 		.4byte	.LFB4
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 25
+
+
+ 1076 0034 44000000 		.4byte	.LFE4-.LFB4
+ 1077 0038 00000000 		.4byte	.LFB5
+ 1078 003c 58000000 		.4byte	.LFE5-.LFB5
+ 1079 0040 00000000 		.4byte	.LFB7
+ 1080 0044 1C000000 		.4byte	.LFE7-.LFB7
+ 1081 0048 00000000 		.4byte	.LFB6
+ 1082 004c 88000000 		.4byte	.LFE6-.LFB6
+ 1083 0050 00000000 		.4byte	0
+ 1084 0054 00000000 		.4byte	0
+ 1085              		.section	.debug_ranges,"",%progbits
+ 1086              	.Ldebug_ranges0:
+ 1087 0000 00000000 		.4byte	.LFB0
+ 1088 0004 0C000000 		.4byte	.LFE0
+ 1089 0008 00000000 		.4byte	.LFB2
+ 1090 000c 0C000000 		.4byte	.LFE2
+ 1091 0010 00000000 		.4byte	.LFB3
+ 1092 0014 08000000 		.4byte	.LFE3
+ 1093 0018 00000000 		.4byte	.LFB1
+ 1094 001c 1C000000 		.4byte	.LFE1
+ 1095 0020 00000000 		.4byte	.LFB4
+ 1096 0024 44000000 		.4byte	.LFE4
+ 1097 0028 00000000 		.4byte	.LFB5
+ 1098 002c 58000000 		.4byte	.LFE5
+ 1099 0030 00000000 		.4byte	.LFB7
+ 1100 0034 1C000000 		.4byte	.LFE7
+ 1101 0038 00000000 		.4byte	.LFB6
+ 1102 003c 88000000 		.4byte	.LFE6
+ 1103 0040 00000000 		.4byte	0
+ 1104 0044 00000000 		.4byte	0
+ 1105              		.section	.debug_line,"",%progbits
+ 1106              	.Ldebug_line0:
+ 1107 0000 42010000 		.section	.debug_str,"MS",%progbits,1
+ 1107      02009200 
+ 1107      00000201 
+ 1107      FB0E0D00 
+ 1107      01010101 
+ 1108              	.LASF32:
+ 1109 0000 546F7563 		.ascii	"TouchScreen_ADC_Enable\000"
+ 1109      68536372 
+ 1109      65656E5F 
+ 1109      4144435F 
+ 1109      456E6162 
+ 1110              	.LASF26:
+ 1111 0017 72657375 		.ascii	"result\000"
+ 1111      6C7400
+ 1112              	.LASF36:
+ 1113 001e 546F7563 		.ascii	"TouchScreen_ADC_GetResult16\000"
+ 1113      68536372 
+ 1113      65656E5F 
+ 1113      4144435F 
+ 1113      47657452 
+ 1114              	.LASF4:
+ 1115 003a 73686F72 		.ascii	"short unsigned int\000"
+ 1115      7420756E 
+ 1115      7369676E 
+ 1115      65642069 
+ 1115      6E7400
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 26
+
+
+ 1116              	.LASF41:
+ 1117 004d 546F7563 		.ascii	"TouchScreen_ADC_IsEndConversion\000"
+ 1117      68536372 
+ 1117      65656E5F 
+ 1117      4144435F 
+ 1117      4973456E 
+ 1118              	.LASF39:
+ 1119 006d 433A5C55 		.ascii	"C:\\Users\\student\\Documents\\PSoC Creator\\Worksp"
+ 1119      73657273 
+ 1119      5C737475 
+ 1119      64656E74 
+ 1119      5C446F63 
+ 1120 009b 61636530 		.ascii	"ace02\\Design01.cydsn\000"
+ 1120      325C4465 
+ 1120      7369676E 
+ 1120      30312E63 
+ 1120      7964736E 
+ 1121              	.LASF31:
+ 1122 00b0 546F7563 		.ascii	"TouchScreen_AMux_Stop\000"
+ 1122      68536372 
+ 1122      65656E5F 
+ 1122      414D7578 
+ 1122      5F53746F 
+ 1123              	.LASF22:
+ 1124 00c6 546F7563 		.ascii	"TouchScreen_ActivateX\000"
+ 1124      68536372 
+ 1124      65656E5F 
+ 1124      41637469 
+ 1124      76617465 
+ 1125              	.LASF29:
+ 1126 00dc 546F7563 		.ascii	"TouchScreen_ADC_Init\000"
+ 1126      68536372 
+ 1126      65656E5F 
+ 1126      4144435F 
+ 1126      496E6974 
+ 1127              	.LASF34:
+ 1128 00f1 546F7563 		.ascii	"TouchScreen_ADC_StartConvert\000"
+ 1128      68536372 
+ 1128      65656E5F 
+ 1128      4144435F 
+ 1128      53746172 
+ 1129              	.LASF15:
+ 1130 010e 666C6F61 		.ascii	"float\000"
+ 1130      7400
+ 1131              	.LASF2:
+ 1132 0114 756E7369 		.ascii	"unsigned char\000"
+ 1132      676E6564 
+ 1132      20636861 
+ 1132      7200
+ 1133              	.LASF17:
+ 1134 0122 72656738 		.ascii	"reg8\000"
+ 1134      00
+ 1135              	.LASF23:
+ 1136 0127 546F7563 		.ascii	"TouchScreen_ActivateY\000"
+ 1136      68536372 
+ 1136      65656E5F 
+ 1136      41637469 
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 27
+
+
+ 1136      76617465 
+ 1137              	.LASF14:
+ 1138 013d 696E7431 		.ascii	"int16\000"
+ 1138      3600
+ 1139              	.LASF6:
+ 1140 0143 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1140      20756E73 
+ 1140      69676E65 
+ 1140      6420696E 
+ 1140      7400
+ 1141              	.LASF11:
+ 1142 0155 75696E74 		.ascii	"uint8\000"
+ 1142      3800
+ 1143              	.LASF25:
+ 1144 015b 546F7563 		.ascii	"TouchScreen_TouchDetect\000"
+ 1144      68536372 
+ 1144      65656E5F 
+ 1144      546F7563 
+ 1144      68446574 
+ 1145              	.LASF40:
+ 1146 0173 546F7563 		.ascii	"TouchScreen_initVar\000"
+ 1146      68536372 
+ 1146      65656E5F 
+ 1146      696E6974 
+ 1146      56617200 
+ 1147              	.LASF16:
+ 1148 0187 646F7562 		.ascii	"double\000"
+ 1148      6C6500
+ 1149              	.LASF18:
+ 1150 018e 546F7563 		.ascii	"TouchScreen_Init\000"
+ 1150      68536372 
+ 1150      65656E5F 
+ 1150      496E6974 
+ 1150      00
+ 1151              	.LASF12:
+ 1152 019f 75696E74 		.ascii	"uint16\000"
+ 1152      313600
+ 1153              	.LASF13:
+ 1154 01a6 696E7438 		.ascii	"int8\000"
+ 1154      00
+ 1155              	.LASF19:
+ 1156 01ab 546F7563 		.ascii	"TouchScreen_Stop\000"
+ 1156      68536372 
+ 1156      65656E5F 
+ 1156      53746F70 
+ 1156      00
+ 1157              	.LASF30:
+ 1158 01bc 546F7563 		.ascii	"TouchScreen_ADC_Stop\000"
+ 1158      68536372 
+ 1158      65656E5F 
+ 1158      4144435F 
+ 1158      53746F70 
+ 1159              	.LASF0:
+ 1160 01d1 756E7369 		.ascii	"unsigned int\000"
+ 1160      676E6564 
+ 1160      20696E74 
+ 1160      00
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 28
+
+
+ 1161              	.LASF8:
+ 1162 01de 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1162      206C6F6E 
+ 1162      6720756E 
+ 1162      7369676E 
+ 1162      65642069 
+ 1163              	.LASF35:
+ 1164 01f5 546F7563 		.ascii	"TouchScreen_AMux_GetChannel\000"
+ 1164      68536372 
+ 1164      65656E5F 
+ 1164      414D7578 
+ 1164      5F476574 
+ 1165              	.LASF27:
+ 1166 0211 546F7563 		.ascii	"TouchScreen_measurementFlag\000"
+ 1166      68536372 
+ 1166      65656E5F 
+ 1166      6D656173 
+ 1166      7572656D 
+ 1167              	.LASF20:
+ 1168 022d 546F7563 		.ascii	"TouchScreen_Enable\000"
+ 1168      68536372 
+ 1168      65656E5F 
+ 1168      456E6162 
+ 1168      6C6500
+ 1169              	.LASF33:
+ 1170 0240 546F7563 		.ascii	"TouchScreen_AMux_Next\000"
+ 1170      68536372 
+ 1170      65656E5F 
+ 1170      414D7578 
+ 1170      5F4E6578 
+ 1171              	.LASF21:
+ 1172 0256 546F7563 		.ascii	"TouchScreen_Start\000"
+ 1172      68536372 
+ 1172      65656E5F 
+ 1172      53746172 
+ 1172      7400
+ 1173              	.LASF9:
+ 1174 0268 73697A65 		.ascii	"sizetype\000"
+ 1174      74797065 
+ 1174      00
+ 1175              	.LASF7:
+ 1176 0271 6C6F6E67 		.ascii	"long long int\000"
+ 1176      206C6F6E 
+ 1176      6720696E 
+ 1176      7400
+ 1177              	.LASF42:
+ 1178 027f 43794465 		.ascii	"CyDelayUs\000"
+ 1178      6C617955 
+ 1178      7300
+ 1179              	.LASF10:
+ 1180 0289 63686172 		.ascii	"char\000"
+ 1180      00
+ 1181              	.LASF38:
+ 1182 028e 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\TouchScreen.c\000"
+ 1182      6E657261 
+ 1182      7465645F 
+ 1182      536F7572 
+ARM GAS  C:\Users\student\AppData\Local\Temp\ccoKkcI8.s 			page 29
+
+
+ 1182      63655C50 
+ 1183              	.LASF3:
+ 1184 02b5 73686F72 		.ascii	"short int\000"
+ 1184      7420696E 
+ 1184      7400
+ 1185              	.LASF28:
+ 1186 02bf 546F7563 		.ascii	"TouchScreen_AMux_Init\000"
+ 1186      68536372 
+ 1186      65656E5F 
+ 1186      414D7578 
+ 1186      5F496E69 
+ 1187              	.LASF37:
+ 1188 02d5 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1188      4320342E 
+ 1188      392E3320 
+ 1188      32303135 
+ 1188      30333033 
+ 1189 0308 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 1189      20726576 
+ 1189      6973696F 
+ 1189      6E203232 
+ 1189      31323230 
+ 1190 033b 67202D73 		.ascii	"g -std=gnu99 -ffunction-sections -ffat-lto-objects\000"
+ 1190      74643D67 
+ 1190      6E753939 
+ 1190      202D6666 
+ 1190      756E6374 
+ 1191              	.LASF5:
+ 1192 036e 6C6F6E67 		.ascii	"long int\000"
+ 1192      20696E74 
+ 1192      00
+ 1193              	.LASF1:
+ 1194 0377 7369676E 		.ascii	"signed char\000"
+ 1194      65642063 
+ 1194      68617200 
+ 1195              	.LASF24:
+ 1196 0383 546F7563 		.ascii	"TouchScreen_Measure\000"
+ 1196      68536372 
+ 1196      65656E5F 
+ 1196      4D656173 
+ 1196      75726500 
+ 1197              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
